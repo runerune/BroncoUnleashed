@@ -16,6 +16,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.UUID;
 
+import bike.hackboy.bronco.data.Command;
+import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
+
 public class SpeedSetting extends Fragment {
     private int value = 28;
 

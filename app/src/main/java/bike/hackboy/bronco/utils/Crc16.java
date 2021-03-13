@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.utils;
 
 public class Crc16 {
     private static final int DEFAULT_INITIAL_WINDOW_SIZE = 65535;

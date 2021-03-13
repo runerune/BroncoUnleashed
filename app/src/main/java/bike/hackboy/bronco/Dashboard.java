@@ -12,8 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import bike.hackboy.bronco.data.Command;
+import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.gatt.Gatt;
+
 
 public class Dashboard extends Fragment {
+    private boolean unlocked = false;
+    private boolean lightsOn = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,12 +32,35 @@ public class Dashboard extends Fragment {
         return inflater.inflate(R.layout.dashboard, container, false);
     }
 
+    public void onLockStateReceived(boolean newUnlocked) {
+        unlocked = newUnlocked;
+    }
+
+    public void onLightStateReceived(boolean newLightState) {
+        lightsOn = newLightState;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        try {
+            BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+
+            Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+            Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Failed to request read lock state", Toast.LENGTH_LONG).show();
+            Log.e("read_lock", "failed to read lock state", e);
+        }
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.button_goto_set_speed).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(Dashboard.this)
-                        .navigate(R.id.action_Dashboard_to_SpeedSetting);
+                    .navigate(R.id.action_Dashboard_to_SpeedSetting);
             }
         });
 
@@ -43,7 +72,6 @@ public class Dashboard extends Fragment {
 
                     Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                     Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
-                    Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
                 }
@@ -58,7 +86,38 @@ public class Dashboard extends Fragment {
 
                     Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                     Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
-                    Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        view.findViewById(R.id.button_light_on).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+
+                    byte[] command = Command.withChecksum(Command.LIGHT_ON);
+
+                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
+                    Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        view.findViewById(R.id.button_light_off).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+
+                    byte[] command = Command.withChecksum(Command.LIGHT_OFF);
+
+                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
+                    Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
                 }

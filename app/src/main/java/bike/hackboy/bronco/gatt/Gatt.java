@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.gatt;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,6 +10,8 @@ import android.util.Log;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import bike.hackboy.bronco.utils.Converter;
 
 public class Gatt {
 
@@ -24,6 +26,7 @@ public class Gatt {
                     Log.d("characteristic", characteristic.getUuid().toString().toLowerCase());
 
                     if(characteristic.getUuid().equals(characteristicUuid)) {
+                        Log.d("has_characteristic", "characteristic found");
                         return;
                     }
                 }
@@ -49,6 +52,24 @@ public class Gatt {
 
         boolean success = adapter.writeCharacteristic(characteristic);
         if(!success) throw new Exception("write failed");
+    }
+
+    public static void requestReadCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {
+        BluetoothGattService service = adapter.getService(serviceUuid);
+
+        if (service == null) {
+            Log.e("gatt", "service not found");
+            throw new Exception("service not found");
+        }
+
+        BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
+
+        if (characteristic == null) {
+            Log.e("gatt", "characteristic not found");
+            throw new Exception("characteristic not found");
+        }
+
+        adapter.readCharacteristic(characteristic);
     }
 
     public static String getDeviceMacByName(BluetoothAdapter adapter, String name) throws Exception {

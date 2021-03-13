@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.utils;
 
 public class Converter {
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();

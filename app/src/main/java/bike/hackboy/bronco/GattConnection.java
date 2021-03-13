@@ -9,23 +9,31 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
 
+import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
+
 public class GattConnection {
     private BluetoothAdapter bluetoothAdapter;
-    private Deployable onDiscoveryCallback;
+    private DeployableVoid onDiscoveryCallback;
+    private DeployableCharacteristicRead onCharacteristicRead;
 
     public GattConnection() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     public BluetoothGatt connect(Context context, String name) throws Exception {
-        // why does this even need Context...
         String mac = Gatt.getDeviceMacByName(bluetoothAdapter, name);
         BluetoothDevice device = bluetoothAdapter.getRemoteDevice(mac);
 
         return device.connectGatt(context, false, mGattCallback);
     }
 
-    public GattConnection setOnDiscoveryCallback(Deployable callback) {
+    public GattConnection setOnCharacteristicRead(DeployableCharacteristicRead callback) {
+        onCharacteristicRead = callback;
+        return this;
+    }
+
+    public GattConnection setOnDiscoveryCallback(DeployableVoid callback) {
         onDiscoveryCallback = callback;
         return this;
     }
@@ -34,7 +42,7 @@ public class GattConnection {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.d("onServicesDiscovered", "");
+                Log.e("onConnectionStateChange", "");
                 gatt.discoverServices();
             }
         }
@@ -42,9 +50,9 @@ public class GattConnection {
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("onServicesDiscovered", "");
+                Log.e("onServicesDiscovered", "");
 
-                if (onDiscoveryCallback instanceof Deployable) {
+                if (onDiscoveryCallback instanceof DeployableVoid) {
                     onDiscoveryCallback.deploy();
                 }
             }
@@ -55,6 +63,13 @@ public class GattConnection {
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d("onCharacteristicRead", "");
+
+                if(onCharacteristicRead instanceof DeployableCharacteristicRead) {
+                    onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
+                }
+
+                byte[] value = characteristic.getValue();
+                Log.e("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
             }
         }
 

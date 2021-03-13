@@ -11,16 +11,17 @@
 
     <Button
         android:id="@+id/button_lock"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="109dp"
+        android:layout_height="123dp"
         android:text="@string/lock"
         app:backgroundTint="#E91E63"
+        app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.229"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintVertical_bias="0.182" />
 
     <Button
         android:id="@+id/button_light_off"
@@ -84,16 +85,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.helper.widget.Layer
-        android:id="@+id/layer3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:constraint_referenced_ids="button_light_off,button_lock,button_light_on,button_unlock"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

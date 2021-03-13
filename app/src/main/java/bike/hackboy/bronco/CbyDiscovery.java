@@ -13,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.UUID;
+
+import bike.hackboy.bronco.gatt.Gatt;
+
 public class CbyDiscovery extends Fragment {
 
     @Override
@@ -30,15 +34,20 @@ public class CbyDiscovery extends Fragment {
             Toast.makeText(getActivity(), String.format("Found %s", mac), Toast.LENGTH_SHORT).show();
 
             BluetoothGatt connection = new GattConnection()
-                    // Not gonna do an event listener for just this
-                    // we need services to be discovered before sending commands so connect here
-                    .setOnDiscoveryCallback(new Deployable(){
-                        void deploy() {
-                            NavHostFragment.findNavController(CbyDiscovery.this)
-                                .navigate(R.id.action_CbyDiscovery_to_Dashboard);
-                        }
-                    })
-                    .connect(getContext(), "COWBOY");
+                // we need services to be discovered before sending commands so connect here
+                .setOnDiscoveryCallback(new DeployableVoid() {
+                    void deploy() {
+                        Log.w("foo", "in deploy");
+                        NavHostFragment.findNavController(CbyDiscovery.this)
+                            .navigate(R.id.action_CbyDiscovery_to_Dashboard);
+                    }
+                })
+                .setOnCharacteristicRead(new DeployableCharacteristicRead() {
+                    void deploy(UUID uuid, byte[] value) {
+
+                    }
+                })
+                .connect(getContext(), "COWBOY");
 
             ((MainActivity) getActivity()).setConnection(connection);
         } catch(Exception e) {

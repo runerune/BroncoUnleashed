@@ -1,7 +1,7 @@
 package bike.hackboy.bronco;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-
-import java.util.Set;
 
 public class CbyDiscovery extends Fragment {
 
@@ -27,27 +25,27 @@ public class CbyDiscovery extends Fragment {
     }
 
     public void lookForCboy() {
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            String mac = Gatt.getDeviceMacByName(BluetoothAdapter.getDefaultAdapter(), "COWBOY");
+            Toast.makeText(getActivity(), String.format("Found %s", mac), Toast.LENGTH_SHORT).show();
 
-        Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices) {
-                String deviceName = device.getName().trim();
-                String deviceMacAddress = device.getAddress();
-                Log.d("device found", deviceName);
+            BluetoothGatt connection = new GattConnection()
+                    // Not gonna do an event listener for just this
+                    // we need services to be discovered before sending commands so connect here
 
-                if(deviceName.equals("COWBOY")) {
-                    Toast.makeText(getActivity(), String.format("Found %s", deviceMacAddress), Toast.LENGTH_SHORT).show();
+                    .setOnDiscoveryCallback(new Deployable(){
+                        void deploy() {
+                            NavHostFragment.findNavController(CbyDiscovery.this)
+                                 .navigate(R.id.action_CbyDiscovery_to_SpeedSetting);
+                        }
+                    })
+                    .connect(getContext(), "COWBOY");
 
-                    NavHostFragment.findNavController(CbyDiscovery.this)
-                        .navigate(R.id.action_CbyDiscovery_to_SpeedSetting);
-
-                    return;
-                }
-            }
+            ((MainActivity) getActivity()).setConnection(connection);
+        } catch(Exception e) {
+            Log.w("lookup_fail", e.getMessage());
+            Toast.makeText(getActivity(), "Could not find any bikes", Toast.LENGTH_LONG).show();
         }
-
-        Toast.makeText(getActivity(), String.format("Could not find any bikes"), Toast.LENGTH_LONG).show();
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

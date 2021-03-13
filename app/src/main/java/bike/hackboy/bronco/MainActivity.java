@@ -1,5 +1,6 @@
 package bike.hackboy.bronco;
 
+import android.bluetooth.BluetoothGatt;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    BluetoothGatt connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -54,5 +55,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public BluetoothGatt getConnection() {
+        return connection;
+    }
+
+    public void setConnection(BluetoothGatt newConnection) {
+        if (connection instanceof BluetoothGatt) {
+            connection.close();
+        }
+        connection = newConnection;
     }
 }

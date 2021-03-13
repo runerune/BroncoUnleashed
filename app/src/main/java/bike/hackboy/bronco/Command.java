@@ -1,0 +1,24 @@
+package bike.hackboy.bronco;
+
+import java.util.Arrays;
+
+public class Command {
+    public static final byte[] SET_SPEED = {10, 16, 0, 4, 0, 1, 2, 0, 30};
+
+    public static byte[] withValue(byte[] template, int value) {
+        byte[] changedCommand = Arrays.copyOf(template, 9);
+        changedCommand[8] = (byte) value;
+
+        return changedCommand;
+    }
+
+    public static byte[] withChecksum(byte[] command) {
+        byte[] checksum = Crc16.getChecksum(command);
+        byte[] changedCommandWithChecksum = Arrays.copyOf(command, 11);
+
+        changedCommandWithChecksum[9] = checksum[0];
+        changedCommandWithChecksum[10] = checksum[1];
+
+        return changedCommandWithChecksum;
+    }
+}

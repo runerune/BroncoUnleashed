@@ -43,6 +43,13 @@ public class GattConnection {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.e("onConnectionStateChange", "");
+                gatt.requestMtu(512);
+            }
+        }
+
+        @Override
+        public void onMtuChanged (BluetoothGatt gatt, int mtu, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 gatt.discoverServices();
             }
         }
@@ -76,6 +83,13 @@ public class GattConnection {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             Log.d("onCharacteristicChanged", "");
+
+            if(onCharacteristicRead instanceof DeployableCharacteristicRead) {
+                onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
+            }
+
+            byte[] value = characteristic.getValue();
+            Log.e("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
         }
     };
 }

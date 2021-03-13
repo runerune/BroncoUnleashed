@@ -13,9 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Arrays;
 import java.util.UUID;
 
+import bike.hackboy.bronco.data.Command;
+import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
 
 public class CbyDiscovery extends Fragment {
 
@@ -44,7 +48,14 @@ public class CbyDiscovery extends Fragment {
                 })
                 .setOnCharacteristicRead(new DeployableCharacteristicRead() {
                     void deploy(UUID uuid, byte[] value) {
-
+                        Log.w("on_read", "on characteristic read");
+                        switch(uuid.toString().toUpperCase()) {
+                            case Uuid.characteristicUnlockString:
+                                Log.w("uuid_check", "is a lock service uuid");
+                                Log.w("chara_value", Converter.byteArrayToHexString(value));
+                                ((MainActivity) getActivity()).getObservableLocked().setLocked(Arrays.equals(value, Command.LOCK));
+                            break;
+                        }
                     }
                 })
                 .connect(getContext(), "COWBOY");

@@ -15,13 +15,17 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     BluetoothGatt connection;
+    ObservableLocked lockState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        lockState = new ObservableLocked();
     }
 
     @Override
@@ -55,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public ObservableLocked getObservableLocked() {
+        return lockState;
+    }
+
+    public void setLocked(boolean newLockState) {
+        lockState.setLocked(newLockState);
     }
 
     public BluetoothGatt getConnection() {

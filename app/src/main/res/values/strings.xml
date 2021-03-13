@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Bronco</string>
+    <string name="action_about">About</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="speed_setting_label">First Fragment</string>
+    <string name="cby_discovery_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="apply">Apply</string>
+    <string name="set_new_max_speed">Set new max speed</string>
+    <string name="kmh">km/h</string>
+    <string name="warningNotTested">CAUTION: values over 30 km/h have NOT been tested</string>
+    <string name="howto_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
+    <string name="connect">Connect to bike</string>
+</resources>

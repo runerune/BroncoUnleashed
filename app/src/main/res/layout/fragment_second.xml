@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CbyDiscovery">
+
+    <Button
+        android:id="@+id/button_first2"
+        android:layout_width="197dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="48dp"
+        android:text="@string/connect"
+        app:backgroundTint="#E91E63"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="290dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="220dp"
+        android:gravity="center"
+        android:text="@string/howto_connect"
+        android:textColor="#E91E63"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_first2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textview_second"
+        app:layout_constraintVertical_bias="0.797" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/CbyDiscovery">
+
+    <fragment
+        android:id="@+id/SpeedSetting"
+        android:name="bike.hackboy.bronco.SpeedSetting"
+        android:label="@string/speed_setting_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_SpeedSetting_to_CbyDiscovery"
+            app:destination="@id/CbyDiscovery" />
+    </fragment>
+    <fragment
+        android:id="@+id/CbyDiscovery"
+        android:name="bike.hackboy.bronco.CbyDiscovery"
+        android:label="@string/cby_discovery_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_CbyDiscovery_to_SpeedSetting"
+            app:destination="@id/SpeedSetting" />
+    </fragment>
+</navigation>

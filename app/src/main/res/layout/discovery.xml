@@ -7,8 +7,8 @@
     tools:context=".SpeedSetting">
 
     <Button
-        android:id="@+id/button_first"
-        android:layout_width="129dp"
+        android:id="@+id/button_speed_apply"
+        android:layout_width="128dp"
         android:layout_height="52dp"
         android:layout_marginBottom="48dp"
         android:text="@string/apply"
@@ -84,7 +84,7 @@
         android:gravity="center"
         android:text="@string/warningNotTested"
         android:textColor="#FF5722"
-        app:layout_constraintBottom_toTopOf="@+id/button_first"
+        app:layout_constraintBottom_toTopOf="@+id/button_speed_apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />

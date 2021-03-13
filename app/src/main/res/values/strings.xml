@@ -13,4 +13,12 @@
     <string name="warningNotTested">CAUTION: values over 30 km/h have NOT been tested</string>
     <string name="howto_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
     <string name="connect">Connect to bike</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lock">Lock</string>
+    <string name="unlock">Unlock</string>
+    <string name="set_speed">Set speed limit</string>
+    <string name="light_on">Light on</string>
+    <string name="light_off">Light off</string>
+    <string name="log_in_with_cby">Log in with CBY</string>
 </resources>

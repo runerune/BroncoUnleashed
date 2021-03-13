@@ -12,28 +12,31 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.UUID;
 
 public class SpeedSetting extends Fragment {
     private int value = 28;
 
-    private static final UUID serviceUuid = UUID.fromString("6e400001-b5a3-f393-e0a9-e50e24dcca9e");
-    private static final UUID characteristicUuid = UUID.fromString("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+    private UUID serviceUuid;
+    private UUID characteristicUuid;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        serviceUuid = Uuid.serviceSettings;
+        characteristicUuid = Uuid.characteristicSettingsPcb;
+
+        return inflater.inflate(R.layout.discovery, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_speed_apply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -48,6 +51,7 @@ public class SpeedSetting extends Fragment {
                     Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
                     Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
 
+                    NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
                 } catch(Exception e) {
                     Log.w("write_fail", e.getMessage());
                     Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();

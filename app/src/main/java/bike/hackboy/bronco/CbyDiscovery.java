@@ -21,7 +21,7 @@ public class CbyDiscovery extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false);
+        return inflater.inflate(R.layout.speed_setting, container, false);
     }
 
     public void lookForCboy() {
@@ -32,11 +32,10 @@ public class CbyDiscovery extends Fragment {
             BluetoothGatt connection = new GattConnection()
                     // Not gonna do an event listener for just this
                     // we need services to be discovered before sending commands so connect here
-
                     .setOnDiscoveryCallback(new Deployable(){
                         void deploy() {
                             NavHostFragment.findNavController(CbyDiscovery.this)
-                                 .navigate(R.id.action_CbyDiscovery_to_SpeedSetting);
+                                .navigate(R.id.action_CbyDiscovery_to_Dashboard);
                         }
                     })
                     .connect(getContext(), "COWBOY");
@@ -51,7 +50,7 @@ public class CbyDiscovery extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_first2).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_connect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 lookForCboy();

@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class Command {
     public static final byte[] SET_SPEED = {10, 16, 0, 4, 0, 1, 2, 0, 30};
+    public static final byte[] LOCK = {0};  //yes, seriously.
+    public static final byte[] UNLOCK = {1};
 
     public static byte[] withValue(byte[] template, int value) {
         byte[] changedCommand = Arrays.copyOf(template, 9);

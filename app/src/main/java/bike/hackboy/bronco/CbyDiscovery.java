@@ -41,18 +41,18 @@ public class CbyDiscovery extends Fragment {
                 // we need services to be discovered before sending commands so connect here
                 .setOnDiscoveryCallback(new DeployableVoid() {
                     void deploy() {
-                        Log.w("foo", "in deploy");
+                        Log.d("deploy", "in deploy");
                         NavHostFragment.findNavController(CbyDiscovery.this)
                             .navigate(R.id.action_CbyDiscovery_to_Dashboard);
                     }
                 })
                 .setOnCharacteristicRead(new DeployableCharacteristicRead() {
                     void deploy(UUID uuid, byte[] value) {
-                        Log.w("on_read", "on characteristic read");
+                        Log.d("on_read", "on characteristic read");
                         switch(uuid.toString().toUpperCase()) {
                             case Uuid.characteristicUnlockString:
-                                Log.w("uuid_check", "is a lock service uuid");
-                                Log.w("chara_value", Converter.byteArrayToHexString(value));
+                                Log.d("uuid_check", "is a lock service uuid");
+                                Log.d("ch_value", Converter.byteArrayToHexString(value));
                                 ((MainActivity) getActivity()).getObservableLocked().setLocked(Arrays.equals(value, Command.LOCK));
                             break;
                         }
@@ -62,7 +62,7 @@ public class CbyDiscovery extends Fragment {
 
             ((MainActivity) getActivity()).setConnection(connection);
         } catch(Exception e) {
-            Log.w("lookup_fail", e.getMessage());
+            Log.e("lookup_fail", e.getMessage());
             Toast.makeText(getActivity(), "Could not find any bikes", Toast.LENGTH_LONG).show();
         }
     }

@@ -32,7 +32,7 @@ public class Dashboard extends Fragment {
                 boolean locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
 
                 Dashboard.this.locked.setLocked(locked);
-                Log.w("is_locked", locked ? "LOCKED": "UNLOCKED");
+                Log.d("is_locked", locked ? "LOCKED": "UNLOCKED");
             }
         });
 

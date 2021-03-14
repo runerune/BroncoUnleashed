@@ -58,7 +58,7 @@ public class SpeedSetting extends Fragment {
 
                     NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
                 } catch(Exception e) {
-                    Log.w("write_fail", e.getMessage());
+                    Log.e("write_fail", e.getMessage());
                     Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();
                 }
             }

@@ -20,7 +20,6 @@ import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
 
-
 public class Dashboard extends Fragment {
     private ObservableLocked locked;
     private ObservableDashboard dashboard;
@@ -69,6 +68,10 @@ public class Dashboard extends Fragment {
         view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
             .findNavController(Dashboard.this)
             .navigate(R.id.action_Dashboard_to_SpeedSetting));
+
+        // don't show buttons before callback fires
+        view.findViewById(R.id.button_unlock).setVisibility(View.GONE);
+        view.findViewById(R.id.button_lock).setVisibility(View.GONE);
 
         locked.setListener(() -> {
             try {

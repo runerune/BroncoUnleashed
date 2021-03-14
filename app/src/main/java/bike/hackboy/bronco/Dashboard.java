@@ -1,11 +1,13 @@
 package bike.hackboy.bronco;
 import android.bluetooth.BluetoothGatt;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,6 +69,11 @@ public class Dashboard extends Fragment {
         }
     }
 
+    protected void vibrate() {
+        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(100);
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
             .findNavController(Dashboard.this)
@@ -89,6 +96,8 @@ public class Dashboard extends Fragment {
 
                 Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                 Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
+
+                vibrate();
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
                 Log.e("cmd_unlock", "failed to unlock", e);
@@ -101,6 +110,8 @@ public class Dashboard extends Fragment {
 
                 Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                 Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
+
+                vibrate();
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "Failed to lock", Toast.LENGTH_LONG).show();
             }

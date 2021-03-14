@@ -43,18 +43,10 @@ public class GattConnection {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.e("onConnectionStateChange", "");
-                gatt.requestMtu(512);
-            }
-        }
-
-        @Override
-        public void onMtuChanged (BluetoothGatt gatt, int mtu, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
                 gatt.discoverServices();
             }
         }
 
-        @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.e("onServicesDiscovered", "");

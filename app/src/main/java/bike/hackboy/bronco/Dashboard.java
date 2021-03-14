@@ -63,6 +63,7 @@ public class Dashboard extends Fragment {
             Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 
             Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+            Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
         } catch (Exception e) {
             Toast.makeText(getActivity(), "Failed to request read lock state", Toast.LENGTH_LONG).show();
             Log.e("read_lock", "failed to read lock state", e);

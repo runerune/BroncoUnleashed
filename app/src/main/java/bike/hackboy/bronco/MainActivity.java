@@ -18,6 +18,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
     BluetoothGatt connection;
     ObservableLocked lockState;
+    ObservableDashboard dashboardState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         lockState = new ObservableLocked();
+        dashboardState = new ObservableDashboard();
     }
 
     @Override
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             break;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         return lockState;
     }
 
-    public void setLocked(boolean newLockState) {
-        lockState.setLocked(newLockState);
+    public ObservableDashboard getObservableDashboard() {
+        return dashboardState;
     }
 
     public BluetoothGatt getConnection() {

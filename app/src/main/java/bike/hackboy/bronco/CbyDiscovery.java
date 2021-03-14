@@ -13,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.UnknownFieldSet;
+import com.google.protobuf.UnknownFieldSetLite;
+
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -54,6 +58,16 @@ public class CbyDiscovery extends Fragment {
                                 Log.d("uuid_check", "is a lock service uuid");
                                 Log.d("ch_value", Converter.byteArrayToHexString(value));
                                 ((MainActivity) getActivity()).getObservableLocked().setLocked(Arrays.equals(value, Command.LOCK));
+                            case Uuid.characteristicDashboardString:
+                                Log.d("uuid_check", "is a dashboard uuid");
+                                try {
+                                    UnknownFieldSet dashboardState = UnknownFieldSet.parseFrom(value);
+                                    Log.d("ch_value", dashboardState.toString());
+                                    ((MainActivity) getActivity()).getObservableDashboard().setState(dashboardState);
+                                } catch(InvalidProtocolBufferException e) {
+                                    // ignore, this happens when bike is locked so don't spam it
+                                    // Log.e("ch_value", "could not parse as protobuf", e);
+                                }
                             break;
                         }
                     }

@@ -16,9 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.UnknownFieldSet;
+
+import java.util.Map;
+
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
 
 public class Dashboard extends Fragment {
     private ObservableLocked locked;
@@ -72,23 +78,59 @@ public class Dashboard extends Fragment {
         // don't show buttons before callback fires
         view.findViewById(R.id.button_unlock).setVisibility(View.GONE);
         view.findViewById(R.id.button_lock).setVisibility(View.GONE);
+        view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
+        view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
 
         locked.setListener(() -> {
             requireActivity().runOnUiThread(() -> {
-                view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+                boolean isLocked = locked.isLocked();
+
+                view.findViewById(R.id.button_unlock).setVisibility(isLocked ? View.VISIBLE : View.GONE);
+                view.findViewById(R.id.button_lock).setVisibility(isLocked ? View.GONE : View.VISIBLE);
+
+                if (isLocked) {
+                    view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
+                    view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
+                }
             });
         });
 
         dashboard.setListener(() -> {
             try {
-                Object state = dashboard.getState();
+                UnknownFieldSet state = dashboard.getState();
                 Log.w("dashboard_state", "on dashboard state");
                 Log.w("dashboard_state", state.toString());
 
+                //int speed = Converter.fieldToShort(state.getField(3));
+                //int power = Converter.fieldToShort(state.getField(4));
+                //int battery = Converter.fieldToShort(state.getField(6));
+                //int duration = Converter.fieldToInt(state.getField(2));
+                //int distance = Converter.fieldToInt(state.getField(5));
+
+                //Log.e("foo_duration", String.valueOf(state.getField(2).toByteString(0).toByteArray()[1]));
+
+                //Log.e("foo_speed", String.valueOf(speed));
+                //Log.e("foo_power", String.valueOf(power));
+                //Log.e("foo_battery", String.valueOf(battery));
+                //Log.e("foo_duration", String.valueOf(duration));
+                //Log.e("foo_distance", String.valueOf(distance));
+
                 requireActivity().runOnUiThread(() -> {
-                    //view.findViewById(R.id.button_light_on).setVisibility(state. ? View.VISIBLE : View.GONE);
-                    //view.findViewById(R.id.button_light_off).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+                    try {
+                        short lightStatus = Converter.fieldToShort(state.getField(8));
+                        boolean isLightOn = (lightStatus == 1);
+
+                        if(locked.isLocked()) {
+                            view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
+                            view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
+                            return;
+                        }
+
+                        view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.GONE : View.VISIBLE);
+                        view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.GONE);
+                    } catch(Exception e) {
+                        Log.e("dashboard_state", "failed in ui thread", e);
+                    }
                 });
             } catch(NullPointerException e) {
                 Log.e("dashboard_lsnr", "NPE in dashboard listener", e);

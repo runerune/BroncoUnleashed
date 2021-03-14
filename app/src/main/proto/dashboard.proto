@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "bike.hackboy.bronco";
+option java_outer_classname = "DashboardProto";
+
+message Dashboard {
+    int32 unknown0 = 1;
+    int32 duration = 2;
+    int32 speed = 3;
+    int32 power = 4;
+    int32 distance = 5;
+    int32 batttery = 6;
+    int32 assistance = 7;
+    int32 lights = 8;
+    int32 unknown1 = 9;
+    float unknown2 = 10;
+    int32 unknown3 = 11;
+    int32 unknown4 = 12;
+    int32 unknown5 = 13;
+}

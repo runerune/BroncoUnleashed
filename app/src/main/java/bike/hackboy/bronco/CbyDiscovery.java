@@ -53,16 +53,16 @@ public class CbyDiscovery extends Fragment {
                 .setOnCharacteristicRead(new DeployableCharacteristicRead() {
                     void deploy(UUID uuid, byte[] value) {
                         Log.d("on_read", "on characteristic read");
+                        Log.d("ch_value", Converter.byteArrayToHexString(value));
+
                         switch(uuid.toString().toUpperCase()) {
                             case Uuid.characteristicUnlockString:
                                 Log.d("uuid_check", "is a lock service uuid");
-                                Log.d("ch_value", Converter.byteArrayToHexString(value));
                                 ((MainActivity) getActivity()).getObservableLocked().setLocked(Arrays.equals(value, Command.LOCK));
                             case Uuid.characteristicDashboardString:
                                 Log.d("uuid_check", "is a dashboard uuid");
                                 try {
                                     UnknownFieldSet dashboardState = UnknownFieldSet.parseFrom(value);
-                                    Log.d("ch_value", dashboardState.toString());
                                     ((MainActivity) getActivity()).getObservableDashboard().setState(dashboardState);
                                 } catch(InvalidProtocolBufferException e) {
                                     // ignore, this happens when bike is locked so don't spam it

@@ -23,19 +23,14 @@ import bike.hackboy.bronco.gatt.Gatt;
 
 public class Dashboard extends Fragment {
     private ObservableLocked locked;
-    private boolean lightsOn = false;
+    private ObservableDashboard dashboard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locked = new ObservableLocked();
 
-        ((MainActivity) getActivity()).getObservableLocked().setListener(() -> {
-            boolean locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
-
-            Dashboard.this.locked.setLocked(locked);
-            Log.d("is_locked", locked ? "LOCKED": "UNLOCKED");
-        });
+        locked = ((MainActivity) getActivity()).getObservableLocked();
+        dashboard = ((MainActivity) getActivity()).getObservableDashboard();
 
         setHasOptionsMenu(true);
     }
@@ -70,11 +65,6 @@ public class Dashboard extends Fragment {
         }
     }
 
-    protected void vibrate() {
-        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(100);
-    }
-
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
             .findNavController(Dashboard.this)
@@ -87,7 +77,20 @@ public class Dashboard extends Fragment {
                     view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
                 });
             } catch(NullPointerException e) {
-                // TODO
+                Log.e("locked_lsnr", "NPE in set listener", e);
+            }
+        });
+
+        dashboard.setListener(() -> {
+            try {
+                Log.w("dashboard_state", "on dashboard state");
+                Log.w("dashboard_state", dashboard.getState().toString());
+
+                getActivity().runOnUiThread(() -> {
+
+                });
+            } catch(NullPointerException e) {
+                Log.e("dashboard_lsnr", "NPE in dashboard listener", e);
             }
         });
 
@@ -143,5 +146,10 @@ public class Dashboard extends Fragment {
                 Toast.makeText(getActivity(), "Failed to turn lights off", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    protected void vibrate() {
+        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(100);
     }
 }

@@ -1,5 +1,7 @@
 package bike.hackboy.bronco;
 
+import android.util.Log;
+
 import com.google.protobuf.UnknownFieldSet;
 
 public class ObservableDashboard {
@@ -7,6 +9,8 @@ public class ObservableDashboard {
     private ChangeListener listener;
 
     public Object getState() {
+        Log.w("state", "get state");
+        Log.w("state", state.toString());
         return state;
     }
 

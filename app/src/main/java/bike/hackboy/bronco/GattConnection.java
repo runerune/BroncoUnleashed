@@ -13,7 +13,7 @@ import bike.hackboy.bronco.gatt.Gatt;
 import bike.hackboy.bronco.utils.Converter;
 
 public class GattConnection {
-    private BluetoothAdapter bluetoothAdapter;
+    private final BluetoothAdapter bluetoothAdapter;
     private DeployableVoid onDiscoveryCallback;
     private DeployableCharacteristicRead onCharacteristicRead;
 

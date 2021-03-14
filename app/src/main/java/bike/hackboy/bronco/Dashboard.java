@@ -26,14 +26,11 @@ public class Dashboard extends Fragment {
         super.onCreate(savedInstanceState);
         locked = new ObservableLocked();
 
-        ((MainActivity) getActivity()).getObservableLocked().setListener(new ObservableLocked.ChangeListener() {
-            @Override
-            public void onChange() {
-                boolean locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
+        ((MainActivity) getActivity()).getObservableLocked().setListener(() -> {
+            boolean locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
 
-                Dashboard.this.locked.setLocked(locked);
-                Log.d("is_locked", locked ? "LOCKED": "UNLOCKED");
-            }
+            Dashboard.this.locked.setLocked(locked);
+            Log.d("is_locked", locked ? "LOCKED": "UNLOCKED");
         });
 
     }
@@ -62,85 +59,61 @@ public class Dashboard extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        view.findViewById(R.id.button_goto_set_speed).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(Dashboard.this)
-                    .navigate(R.id.action_Dashboard_to_SpeedSetting);
+        view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
+            .findNavController(Dashboard.this)
+            .navigate(R.id.action_Dashboard_to_SpeedSetting));
+
+        locked.setListener(() -> getActivity().runOnUiThread(() -> {
+            view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
+            view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+        }));
+
+        view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
+            try {
+                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+
+                Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+                Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
+                Log.e("cmd_unlock", "failed to unlock", e);
             }
         });
 
-        locked.setListener(new ObservableLocked.ChangeListener() {
-            @Override
-            public void onChange() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
-                        view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
-                    }
-                });
+        view.findViewById(R.id.button_lock).setOnClickListener(view3 -> {
+            try {
+                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+
+                Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+                Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Failed to lock", Toast.LENGTH_LONG).show();
             }
         });
 
-        view.findViewById(R.id.button_unlock).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+        view.findViewById(R.id.button_light_on).setOnClickListener(view4 -> {
+            try {
+                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
 
-                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-                    Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
-                    Log.e("cmd_unlock", "failed to unlock", e);
-                }
+                byte[] command = Command.withChecksum(Command.LIGHT_ON);
+
+                Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
+                Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Failed to turn lights on", Toast.LENGTH_LONG).show();
             }
         });
 
-        view.findViewById(R.id.button_lock).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+        view.findViewById(R.id.button_light_off).setOnClickListener(view5 -> {
+            try {
+                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
 
-                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-                    Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), "Failed to lock", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                byte[] command = Command.withChecksum(Command.LIGHT_OFF);
 
-        view.findViewById(R.id.button_light_on).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
-
-                    byte[] command = Command.withChecksum(Command.LIGHT_ON);
-
-                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-                    Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), "Failed to turn lights on", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        view.findViewById(R.id.button_light_off).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
-
-                    byte[] command = Command.withChecksum(Command.LIGHT_OFF);
-
-                    Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-                    Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
-                } catch (Exception e) {
-                    Toast.makeText(getActivity(), "Failed to turn lights off", Toast.LENGTH_LONG).show();
-                }
+                Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
+                Gatt.writeCharacteristic(connection,  Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "Failed to turn lights off", Toast.LENGTH_LONG).show();
             }
         });
     }

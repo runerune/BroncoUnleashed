@@ -70,11 +70,6 @@ public class CbyDiscovery extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_connect).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lookForCboy();
-            }
-        });
+        view.findViewById(R.id.button_connect).setOnClickListener(view1 -> lookForCboy());
     }
 }

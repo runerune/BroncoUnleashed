@@ -41,35 +41,29 @@ public class SpeedSetting extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_speed_apply).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+        view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
+            try {
+                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
 
-                    byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
-                    byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
+                byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
+                byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
 
-                    Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
+                Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
 
-                    Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
-                    Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
-                    Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
+                Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
+                Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
+                Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
 
-                    NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
-                } catch(Exception e) {
-                    Log.e("write_fail", e.getMessage());
-                    Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        view.findViewById(R.id.button_speed_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
+            } catch(Exception e) {
+                Log.e("write_fail", e.getMessage());
+                Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();
             }
         });
+
+        view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
+                .findNavController(SpeedSetting.this)
+                .navigate(R.id.action_SpeedSetting_to_Dashboard));
 
         SeekBar slider = view.findViewById(R.id.seekBar);
 

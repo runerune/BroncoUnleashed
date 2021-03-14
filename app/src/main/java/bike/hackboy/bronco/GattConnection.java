@@ -51,11 +51,10 @@ public class GattConnection {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.e("onServicesDiscovered", "");
 
-                if (onDiscoveryCallback instanceof DeployableVoid) {
+                if (onDiscoveryCallback != null) {
                     onDiscoveryCallback.deploy();
                 }
             }
-
         }
 
         @Override
@@ -63,7 +62,7 @@ public class GattConnection {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d("onCharacteristicRead", "");
 
-                if(onCharacteristicRead instanceof DeployableCharacteristicRead) {
+                if(onCharacteristicRead != null) {
                     onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
                 }
 
@@ -76,7 +75,7 @@ public class GattConnection {
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             Log.d("onCharacteristicChanged", "");
 
-            if(onCharacteristicRead instanceof DeployableCharacteristicRead) {
+            if(onCharacteristicRead != null) {
                 onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
             }
 

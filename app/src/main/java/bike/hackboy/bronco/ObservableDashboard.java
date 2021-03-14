@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.google.protobuf.UnknownFieldSet;
 
+import java.util.Map;
+
 public class ObservableDashboard {
-    private Object state = new Object();
+    private Map<Integer, UnknownFieldSet.Field> state = null;
     private ChangeListener listener;
 
     public Object getState() {
@@ -15,7 +17,7 @@ public class ObservableDashboard {
     }
 
     public void setState(UnknownFieldSet state) {
-        this.state = state;
+        this.state = state.asMap();
         if (listener != null) listener.onChange();
     }
 

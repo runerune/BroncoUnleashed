@@ -28,8 +28,8 @@ public class Dashboard extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        locked = ((MainActivity) getActivity()).getObservableLocked();
-        dashboard = ((MainActivity) getActivity()).getObservableDashboard();
+        locked = ((MainActivity) requireActivity()).getObservableLocked();
+        dashboard = ((MainActivity) requireActivity()).getObservableDashboard();
 
         setHasOptionsMenu(true);
     }
@@ -51,7 +51,7 @@ public class Dashboard extends Fragment {
         super.onResume();
 
         try {
-            BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+            BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
             Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
             Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
@@ -74,23 +74,21 @@ public class Dashboard extends Fragment {
         view.findViewById(R.id.button_lock).setVisibility(View.GONE);
 
         locked.setListener(() -> {
-            try {
-                getActivity().runOnUiThread(() -> {
-                    view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
-                    view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
-                });
-            } catch(NullPointerException e) {
-                Log.e("locked_lsnr", "NPE in set listener", e);
-            }
+            requireActivity().runOnUiThread(() -> {
+                view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
+                view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+            });
         });
 
         dashboard.setListener(() -> {
             try {
+                Object state = dashboard.getState();
                 Log.w("dashboard_state", "on dashboard state");
-                Log.w("dashboard_state", dashboard.getState().toString());
+                Log.w("dashboard_state", state.toString());
 
-                getActivity().runOnUiThread(() -> {
-
+                requireActivity().runOnUiThread(() -> {
+                    //view.findViewById(R.id.button_light_on).setVisibility(state. ? View.VISIBLE : View.GONE);
+                    //view.findViewById(R.id.button_light_off).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
                 });
             } catch(NullPointerException e) {
                 Log.e("dashboard_lsnr", "NPE in dashboard listener", e);
@@ -99,7 +97,7 @@ public class Dashboard extends Fragment {
 
         view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
             try {
-                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
                 Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                 Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
@@ -113,7 +111,7 @@ public class Dashboard extends Fragment {
 
         view.findViewById(R.id.button_lock).setOnClickListener(view3 -> {
             try {
-                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
                 Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
                 Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
@@ -126,7 +124,7 @@ public class Dashboard extends Fragment {
 
         view.findViewById(R.id.button_light_on).setOnClickListener(view4 -> {
             try {
-                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
                 byte[] command = Command.withChecksum(Command.LIGHT_ON);
 
@@ -139,7 +137,7 @@ public class Dashboard extends Fragment {
 
         view.findViewById(R.id.button_light_off).setOnClickListener(view5 -> {
             try {
-                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
                 byte[] command = Command.withChecksum(Command.LIGHT_OFF);
 
@@ -152,7 +150,7 @@ public class Dashboard extends Fragment {
     }
 
     protected void vibrate() {
-        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        Vibrator v = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(100);
     }
 }

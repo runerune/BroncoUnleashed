@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import bike.hackboy.bronco.data.Command;
@@ -43,7 +44,7 @@ public class SpeedSetting extends Fragment {
 
         view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
             try {
-                BluetoothGatt connection = ((MainActivity) getActivity()).getConnection();
+                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
                 byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
                 byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);

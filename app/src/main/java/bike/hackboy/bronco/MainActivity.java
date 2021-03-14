@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setConnection(BluetoothGatt newConnection) {
-        if (connection instanceof BluetoothGatt) {
+        if (connection != null) {
             connection.close();
         }
         connection = newConnection;

@@ -8,6 +8,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -33,6 +35,13 @@ public class Dashboard extends Fragment {
             Log.d("is_locked", locked ? "LOCKED": "UNLOCKED");
         });
 
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.disconnect);
+        item.setVisible(true);
     }
 
     @Override
@@ -63,10 +72,16 @@ public class Dashboard extends Fragment {
             .findNavController(Dashboard.this)
             .navigate(R.id.action_Dashboard_to_SpeedSetting));
 
-        locked.setListener(() -> getActivity().runOnUiThread(() -> {
-            view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
-            view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
-        }));
+        locked.setListener(() -> {
+            try {
+                getActivity().runOnUiThread(() -> {
+                    view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
+                    view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+                });
+            } catch(NullPointerException e) {
+                // TODO
+            }
+        });
 
         view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
             try {

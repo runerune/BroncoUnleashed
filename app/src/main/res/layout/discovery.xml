@@ -4,89 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SpeedSetting">
+    tools:context=".CbyDiscovery">
 
     <Button
-        android:id="@+id/button_speed_apply"
-        android:layout_width="128dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="48dp"
-        android:text="@string/apply"
-        app:backgroundTint="#E91E63"
+        android:id="@+id/button_connect"
+        android:layout_width="200dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="56dp"
+        android:text="@string/connect"
+        app:backgroundTint="@color/pink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@android:style/Widget.Material.SeekBar"
-        android:layout_width="311dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="228dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:indeterminate="false"
-        android:max="10"
-        android:progress="3"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:tickMarkTint="#00E91E63" />
-
     <TextView
-        android:id="@+id/textView"
-        style="@style/Widget.AppCompat.TextView"
+        android:id="@+id/textview_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="@string/set_new_max_speed"
-        android:textColor="#E91E63"
-        android:textColorHighlight="#E91E63"
-        android:textColorLink="#E91E63"
-        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="166dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="48dp"
-        android:gravity="center|center_vertical"
-        android:text="28"
-        android:textColor="#E91E63"
-        android:textSize="96sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/kmh"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="216dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/textView2"
+        android:layout_width="290dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="220dp"
         android:gravity="center"
-        android:text="@string/warningNotTested"
-        android:textColor="#FF5722"
-        app:layout_constraintBottom_toTopOf="@+id/button_speed_apply"
+        android:text="@string/howto_connect"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_connect"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textview_second"
+        app:layout_constraintVertical_bias="0.797" />
 </androidx.constraintlayout.widget.ConstraintLayout>

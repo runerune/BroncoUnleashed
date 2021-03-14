@@ -29,7 +29,7 @@ public class CbyDiscovery extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.speed_setting, container, false);
+        return inflater.inflate(R.layout.discovery, container, false);
     }
 
     public void lookForCboy() {

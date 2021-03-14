@@ -9,21 +9,25 @@
         android:id="@+id/SpeedSetting"
         android:name="bike.hackboy.bronco.SpeedSetting"
         android:label="@string/speed_setting_label"
-        tools:layout="@layout/discovery">
+        tools:layout="@layout/speed_setting">
 
         <action
             android:id="@+id/action_SpeedSetting_to_Dashboard"
-            app:destination="@id/Dashboard" />
+            app:destination="@id/Dashboard"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/CbyDiscovery"
         android:name="bike.hackboy.bronco.CbyDiscovery"
         android:label="@string/cby_discovery_label"
-        tools:layout="@layout/speed_setting">
+        tools:layout="@layout/discovery">
 
         <action
             android:id="@+id/action_CbyDiscovery_to_Dashboard"
-            app:destination="@id/Dashboard" />
+            app:destination="@id/Dashboard"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
     </fragment>
     <fragment
         android:id="@+id/Dashboard"
@@ -32,6 +36,8 @@
         tools:layout="@layout/dashboard" >
         <action
             android:id="@+id/action_Dashboard_to_SpeedSetting"
-            app:destination="@id/SpeedSetting" />
+            app:destination="@id/SpeedSetting"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
     </fragment>
 </navigation>

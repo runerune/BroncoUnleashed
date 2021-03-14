@@ -35,7 +35,7 @@ public class SpeedSetting extends Fragment {
         serviceUuid = Uuid.serviceSettings;
         characteristicUuid = Uuid.characteristicSettingsPcb;
 
-        return inflater.inflate(R.layout.discovery, container, false);
+        return inflater.inflate(R.layout.speed_setting, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -61,6 +61,13 @@ public class SpeedSetting extends Fragment {
                     Log.w("write_fail", e.getMessage());
                     Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        view.findViewById(R.id.button_speed_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
             }
         });
 

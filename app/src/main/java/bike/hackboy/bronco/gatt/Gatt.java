@@ -24,10 +24,10 @@ public class Gatt {
                 List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
 
                 for (BluetoothGattCharacteristic characteristic : characteristics) {
-                    Log.d("characteristic", characteristic.getUuid().toString().toLowerCase());
+                    //Log.d("characteristic", characteristic.getUuid().toString().toLowerCase());
 
                     if(characteristic.getUuid().equals(characteristicUuid)) {
-                        Log.d("has_characteristic", "characteristic found");
+                        //Log.d("has_characteristic", "characteristic found");
                         return;
                     }
                 }
@@ -44,7 +44,7 @@ public class Gatt {
         List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
 
         for (BluetoothGattDescriptor descriptor : descriptors) {
-            Log.d("descriptor", descriptor.getUuid().toString());
+            //Log.d("descriptor", descriptor.getUuid().toString());
 
             BluetoothGattDescriptor clientConfig = characteristic.getDescriptor(descriptor.getUuid());
             clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
@@ -56,7 +56,7 @@ public class Gatt {
 
     public static void writeCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid, byte[] data) throws Exception {
         String debugCommand = Converter.byteArrayToHexString(data);
-        Log.d("gatt_cmd_before_write", debugCommand);
+        //Log.d("gatt_cmd_before_write", debugCommand);
 
         BluetoothGattService service = adapter.getService(serviceUuid);
 
@@ -96,7 +96,7 @@ public class Gatt {
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 String deviceName = device.getName().trim();
-                Log.d("device found", deviceName);
+                //Log.d("device found", deviceName);
 
                 if(deviceName.equals(name)) {
                     return device.getAddress();

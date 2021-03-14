@@ -15,17 +15,14 @@ public class Converter {
         return new String(hexChars);
     }
 
-    public static short fieldToShort(UnknownFieldSet.Field field) {
-        return field
-            .toByteString(0)
-            .asReadOnlyByteBuffer()
-            .getShort(0);
-    }
+    // @ me if you're still using this app in 2037
+    public static int[] secondsToTime(int time) {
+        int hours = time / 3600;
+        int remainder = time - hours * 3600;
+        int minutes = remainder / 60;
+        remainder = remainder - minutes * 60;
+        int secs = remainder;
 
-    public static int fieldToInt(UnknownFieldSet.Field field) {
-        return field
-            .toByteString(0)
-            .asReadOnlyByteBuffer()
-            .getInt(0);
+        return new int[]{hours, minutes, secs};
     }
 }

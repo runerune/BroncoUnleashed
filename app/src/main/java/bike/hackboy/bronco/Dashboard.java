@@ -1,4 +1,5 @@
 package bike.hackboy.bronco;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,12 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.protobuf.Descriptors;
-import com.google.protobuf.UnknownFieldSet;
-
-import java.util.Map;
 
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
@@ -70,64 +69,86 @@ public class Dashboard extends Fragment {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
             .findNavController(Dashboard.this)
             .navigate(R.id.action_Dashboard_to_SpeedSetting));
 
         // don't show buttons before callback fires
-        view.findViewById(R.id.button_unlock).setVisibility(View.GONE);
-        view.findViewById(R.id.button_lock).setVisibility(View.GONE);
-        view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
-        view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
+        view.findViewById(R.id.button_unlock).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.button_lock).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
 
         locked.setListener(() -> {
             requireActivity().runOnUiThread(() -> {
                 boolean isLocked = locked.isLocked();
 
-                view.findViewById(R.id.button_unlock).setVisibility(isLocked ? View.VISIBLE : View.GONE);
-                view.findViewById(R.id.button_lock).setVisibility(isLocked ? View.GONE : View.VISIBLE);
+                view.findViewById(R.id.button_unlock).setVisibility(isLocked ? View.VISIBLE : View.INVISIBLE);
+                view.findViewById(R.id.button_lock).setVisibility(isLocked ? View.INVISIBLE : View.VISIBLE);
 
                 if (isLocked) {
-                    view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
-                    view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
+                    view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
+                    view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
+                    view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
+                    view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
                 }
             });
         });
 
         dashboard.setListener(() -> {
             try {
-                UnknownFieldSet state = dashboard.getState();
-                Log.w("dashboard_state", "on dashboard state");
-                Log.w("dashboard_state", state.toString());
+                DashboardProto.Dashboard state = dashboard.getState();
+                //Log.d("dashboard_state", "on dashboard state");
+                //Log.d("dash_parsed", state.toString());
 
-                //int speed = Converter.fieldToShort(state.getField(3));
-                //int power = Converter.fieldToShort(state.getField(4));
-                //int battery = Converter.fieldToShort(state.getField(6));
-                //int duration = Converter.fieldToInt(state.getField(2));
-                //int distance = Converter.fieldToInt(state.getField(5));
+                boolean isLightOn = (state.getLights() == 1);
+                String distance = String.format("%s m", state.getDistance());
+                String speed = String.format("%s m", state.getSpeed());
+                String assistance = state.getAssistance() > 0 ? String.valueOf(state.getAssistance()) : "-";
 
-                //Log.e("foo_duration", String.valueOf(state.getField(2).toByteString(0).toByteArray()[1]));
+                int[] uptime = Converter.secondsToTime(state.getDuration());
+                String duration;
 
-                //Log.e("foo_speed", String.valueOf(speed));
-                //Log.e("foo_power", String.valueOf(power));
-                //Log.e("foo_battery", String.valueOf(battery));
-                //Log.e("foo_duration", String.valueOf(duration));
-                //Log.e("foo_distance", String.valueOf(distance));
+                if (uptime[0] > 0) {
+                    duration = String.format(
+                        "%02d:%02d:%02d",
+                        uptime[0],
+                        uptime[1],
+                        uptime[2]
+                    );
+                } else {
+                    duration = String.format(
+                        "%02d:%02d",
+                        uptime[1],
+                        uptime[2]
+                    );
+                }
 
                 requireActivity().runOnUiThread(() -> {
                     try {
-                        short lightStatus = Converter.fieldToShort(state.getField(8));
-                        boolean isLightOn = (lightStatus == 1);
 
                         if(locked.isLocked()) {
-                            view.findViewById(R.id.button_light_on).setVisibility(View.GONE);
-                            view.findViewById(R.id.button_light_off).setVisibility(View.GONE);
+                            view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
+                            view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
+                            view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
+                            view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
                             return;
                         }
 
-                        view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.GONE : View.VISIBLE);
-                        view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.GONE);
+                        ((TextView) view.findViewById(R.id.distance)).setText(distance);
+                        ((TextView) view.findViewById(R.id.duration)).setText(duration);
+                        ((TextView) view.findViewById(R.id.speed)).setText(speed);
+                        ((ProgressBar) view.findViewById(R.id.assistance)).setProgress(state.getPower());
+                        ((Button) view.findViewById(R.id.button_goto_set_speed)).setText(assistance);
+
+                        view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.INVISIBLE : View.VISIBLE);
+                        view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.INVISIBLE);
+                        view.findViewById(R.id.button_goto_set_speed).setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.gear).setVisibility(View.VISIBLE);
                     } catch(Exception e) {
                         Log.e("dashboard_state", "failed in ui thread", e);
                     }

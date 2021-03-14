@@ -42,14 +42,14 @@ public class GattConnection {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.e("onConnectionStateChange", "");
+                //Log.d("onConnectionStateChange", "");
                 gatt.discoverServices();
             }
         }
 
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.e("onServicesDiscovered", "");
+                //Log.d("onServicesDiscovered", "");
 
                 if (onDiscoveryCallback != null) {
                     onDiscoveryCallback.deploy();
@@ -60,27 +60,27 @@ public class GattConnection {
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("onCharacteristicRead", "");
+                //Log.d("onCharacteristicRead", "");
 
                 if(onCharacteristicRead != null) {
                     onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
                 }
 
                 byte[] value = characteristic.getValue();
-                Log.e("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+                //Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
             }
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-            Log.d("onCharacteristicChanged", "");
+            //Log.d("onCharacteristicChanged", "");
 
             if(onCharacteristicRead != null) {
                 onCharacteristicRead.deploy(characteristic.getUuid(), characteristic.getValue());
             }
 
             byte[] value = characteristic.getValue();
-            Log.e("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+            //Log.d("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
         }
     };
 }

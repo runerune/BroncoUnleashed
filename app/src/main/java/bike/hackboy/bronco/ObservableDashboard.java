@@ -1,19 +1,16 @@
 package bike.hackboy.bronco;
 
 import android.util.Log;
-import com.google.protobuf.UnknownFieldSet;
 
 public class ObservableDashboard {
-    private UnknownFieldSet state = null;
+    private DashboardProto.Dashboard state = null;
     private ChangeListener listener;
 
-    public UnknownFieldSet getState() {
-        Log.w("state", "get state");
-        Log.w("state", state.toString());
+    public DashboardProto.Dashboard getState() {
         return state;
     }
 
-    public void setState(UnknownFieldSet state) {
+    public void setState(DashboardProto.Dashboard state) {
         this.state = state;
         if (listener != null) listener.onChange();
     }

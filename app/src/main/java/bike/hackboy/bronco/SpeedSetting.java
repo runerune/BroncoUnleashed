@@ -49,7 +49,7 @@ public class SpeedSetting extends Fragment {
                 byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
                 byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
 
-                Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
+                //Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
 
                 Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
                 Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
@@ -57,8 +57,8 @@ public class SpeedSetting extends Fragment {
 
                 NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
             } catch(Exception e) {
-                Log.e("write_fail", e.getMessage());
-                Toast.makeText(getActivity(), "Write failed. Check logcat.", Toast.LENGTH_LONG).show();
+                Log.e("write_fail", "failed to write characteristic", e);
+                Toast.makeText(getActivity(), "Write failed.", Toast.LENGTH_LONG).show();
             }
         });
 

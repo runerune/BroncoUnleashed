@@ -9,21 +9,34 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:elevation="20dp"
+        android:text="@string/gear"
+        android:textColor="@color/white"
+        android:textColorLink="@color/white"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/button_goto_set_speed"
+        app:layout_constraintStart_toStartOf="@+id/button_goto_set_speed"
+        app:layout_constraintTop_toTopOf="@+id/button_goto_set_speed" />
+
     <Button
         android:id="@+id/button_light_off"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginBottom="308dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="28dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/light_off"
-        android:textSize="20sp"
+        android:textSize="13sp"
         app:backgroundTint="@color/black"
         app:cornerRadius="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_lock"
+        app:layout_constraintEnd_toStartOf="@+id/button_lock" />
 
     <Button
         android:id="@+id/button_lock"
@@ -54,47 +67,117 @@
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_light_on"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginBottom="308dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="28dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/light_on"
-        android:textSize="20sp"
+        android:textSize="13sp"
         app:backgroundTint="@color/pink"
         app:cornerRadius="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_lock"
+        app:layout_constraintEnd_toStartOf="@+id/button_lock" />
 
     <Button
         android:id="@+id/button_goto_login"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/log_in_with_cby"
-        app:backgroundTint="@color/pink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_goto_set_speed"
-        android:layout_width="200dp"
-        android:layout_height="51dp"
         android:layout_marginBottom="56dp"
-        android:text="@string/set_speed"
+        android:text="@string/log_in_with_cby"
         app:backgroundTint="@color/pink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_goto_set_speed"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="28dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingBottom="24dp"
+        android:text="0"
+        android:textSize="24sp"
+        app:backgroundTint="@color/pink"
+        app:cornerRadius="128dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_lock"
+        app:layout_constraintStart_toEndOf="@+id/button_lock" />
+
+    <TextView
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:width="200dp"
+        android:height="120dp"
+        android:elegantTextHeight="false"
+        android:includeFontPadding="false"
+        android:padding="0dp"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="120sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kmh"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speed" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="00:00"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/distance"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="0 m"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/duration"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <ProgressBar
+        android:id="@+id/assistance"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:max="100"
+        android:progress="0"
+        app:layout_constraintBottom_toTopOf="@+id/speed"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

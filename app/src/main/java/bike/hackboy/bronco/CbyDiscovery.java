@@ -45,28 +45,29 @@ public class CbyDiscovery extends Fragment {
                 // we need services to be discovered before sending commands so connect here
                 .setOnDiscoveryCallback(new DeployableVoid() {
                     void deploy() {
-                        Log.d("deploy", "in deploy");
+                        //Log.d("deploy", "in deploy");
                         NavHostFragment.findNavController(CbyDiscovery.this)
                             .navigate(R.id.action_CbyDiscovery_to_Dashboard);
                     }
                 })
                 .setOnCharacteristicRead(new DeployableCharacteristicRead() {
                     void deploy(UUID uuid, byte[] value) {
-                        Log.d("on_read", "on characteristic read");
-                        Log.d("ch_value", Converter.byteArrayToHexString(value));
+                        //Log.d("on_read", "on characteristic read");
+                        //Log.d("ch_value", Converter.byteArrayToHexString(value));
 
                         switch(uuid.toString().toUpperCase()) {
                             case Uuid.characteristicUnlockString:
-                                Log.d("uuid_check", "is a lock service uuid");
+                                //Log.d("uuid_check", "is a lock service uuid");
                                 ((MainActivity) getActivity()).getObservableLocked().setLocked(Arrays.equals(value, Command.LOCK));
                             case Uuid.characteristicDashboardString:
-                                Log.d("uuid_check", "is a dashboard uuid");
+                                //Log.d("uuid_check", "is a dashboard uuid");
                                 try {
-                                    UnknownFieldSet dashboardState = UnknownFieldSet.parseFrom(value);
+                                    DashboardProto.Dashboard dashboardState = DashboardProto.Dashboard.parseFrom(value);
+
                                     ((MainActivity) getActivity()).getObservableDashboard().setState(dashboardState);
                                 } catch(InvalidProtocolBufferException e) {
                                     // ignore, this happens when bike is locked so don't spam it
-                                    // Log.e("ch_value", "could not parse as protobuf", e);
+                                    //Log.e("ch_value", "could not parse as protobuf", e);
                                 }
                             break;
                         }

@@ -108,7 +108,8 @@ public class Dashboard extends Fragment {
                 boolean isLightOn = (state.getLights() == 1);
                 String distance = String.format("%s m", state.getDistance());
                 String speed = String.format("%s m", state.getSpeed());
-                String assistance = state.getAssistance() > 0 ? String.valueOf(state.getAssistance()) : "-";
+
+                String assistance = (state.getAssistance() == 0 || state.getAssistance() == 3) ? "S" : "D";
 
                 int[] uptime = Converter.secondsToTime(state.getDuration());
                 String duration;

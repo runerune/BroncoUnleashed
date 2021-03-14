@@ -23,7 +23,7 @@ import bike.hackboy.bronco.gatt.Gatt;
 import bike.hackboy.bronco.utils.Converter;
 
 public class SpeedSetting extends Fragment {
-    private int value = 28;
+    private int value = 25;
 
     private UUID serviceUuid;
     private UUID characteristicUuid;

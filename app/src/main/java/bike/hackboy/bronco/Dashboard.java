@@ -18,20 +18,21 @@ import bike.hackboy.bronco.gatt.Gatt;
 
 
 public class Dashboard extends Fragment {
-    private boolean locked = false;
+    private ObservableLocked locked;
     private boolean lightsOn = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        locked = new ObservableLocked();
 
         ((MainActivity) getActivity()).getObservableLocked().setListener(new ObservableLocked.ChangeListener() {
             @Override
             public void onChange() {
-                Dashboard.this.locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
-                Log.w("is_locked", Dashboard.this.locked ? "LOCKED": "UNLOCKED");
+                boolean locked = ((MainActivity) getActivity()).getObservableLocked().isLocked();
 
-
+                Dashboard.this.locked.setLocked(locked);
+                Log.w("is_locked", locked ? "LOCKED": "UNLOCKED");
             }
         });
 
@@ -69,6 +70,19 @@ public class Dashboard extends Fragment {
             }
         });
 
+        locked.setListener(new ObservableLocked.ChangeListener() {
+            @Override
+            public void onChange() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.findViewById(R.id.button_unlock).setVisibility(locked.isLocked() ? View.VISIBLE : View.GONE);
+                        view.findViewById(R.id.button_lock).setVisibility(locked.isLocked() ? View.GONE : View.VISIBLE);
+                    }
+                });
+            }
+        });
+
         view.findViewById(R.id.button_unlock).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +93,7 @@ public class Dashboard extends Fragment {
                     Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Failed to unlock", Toast.LENGTH_LONG).show();
-                    Log.e("cmd_unlosk", "failed to unlock", e);
+                    Log.e("cmd_unlock", "failed to unlock", e);
                 }
             }
         });

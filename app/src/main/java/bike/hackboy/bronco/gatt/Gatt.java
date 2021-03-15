@@ -16,94 +16,94 @@ import bike.hackboy.bronco.utils.Converter;
 
 public class Gatt {
 
-    public static void ensureHasCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {
-        List<BluetoothGattService> serviceList = adapter.getServices();
+	public static void ensureHasCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {
+		List<BluetoothGattService> serviceList = adapter.getServices();
 
-        for (BluetoothGattService service : serviceList) {
-            if(service.getUuid().equals(serviceUuid)) {
-                List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
+		for (BluetoothGattService service : serviceList) {
+			if (service.getUuid().equals(serviceUuid)) {
+				List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
 
-                for (BluetoothGattCharacteristic characteristic : characteristics) {
-                    //Log.d("characteristic", characteristic.getUuid().toString().toLowerCase());
+				for (BluetoothGattCharacteristic characteristic : characteristics) {
+					//Log.d("characteristic", characteristic.getUuid().toString().toLowerCase());
 
-                    if(characteristic.getUuid().equals(characteristicUuid)) {
-                        //Log.d("has_characteristic", "characteristic found");
-                        return;
-                    }
-                }
-            }
-        }
+					if (characteristic.getUuid().equals(characteristicUuid)) {
+						//Log.d("has_characteristic", "characteristic found");
+						return;
+					}
+				}
+			}
+		}
 
-        throw new Exception("characteristic/service combination not found");
-    }
+		throw new Exception("characteristic/service combination not found");
+	}
 
-    public static void enableNotifications(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) {
-        BluetoothGattService service = adapter. getService(serviceUuid);
-        BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
+	public static void enableNotifications(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) {
+		BluetoothGattService service = adapter.getService(serviceUuid);
+		BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
 
-        List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
+		List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
 
-        for (BluetoothGattDescriptor descriptor : descriptors) {
-            //Log.d("descriptor", descriptor.getUuid().toString());
+		for (BluetoothGattDescriptor descriptor : descriptors) {
+			//Log.d("descriptor", descriptor.getUuid().toString());
 
-            BluetoothGattDescriptor clientConfig = characteristic.getDescriptor(descriptor.getUuid());
-            clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            adapter.writeDescriptor(clientConfig);
+			BluetoothGattDescriptor clientConfig = characteristic.getDescriptor(descriptor.getUuid());
+			clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+			adapter.writeDescriptor(clientConfig);
 
-            adapter.setCharacteristicNotification(characteristic, true);
-        }
-    }
+			adapter.setCharacteristicNotification(characteristic, true);
+		}
+	}
 
-    public static void writeCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid, byte[] data) throws Exception {
-        String debugCommand = Converter.byteArrayToHexString(data);
-        //Log.d("gatt_cmd_before_write", debugCommand);
+	public static void writeCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid, byte[] data) throws Exception {
+		String debugCommand = Converter.byteArrayToHexString(data);
+		//Log.d("gatt_cmd_before_write", debugCommand);
 
-        BluetoothGattService service = adapter.getService(serviceUuid);
+		BluetoothGattService service = adapter.getService(serviceUuid);
 
-        if (service == null) {
-            Log.e("gatt", "service not found");
-            throw new Exception("service not found");
-        }
+		if (service == null) {
+			Log.e("gatt", "service not found");
+			throw new Exception("service not found");
+		}
 
-        BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
-        characteristic.setValue(data);
+		BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
+		characteristic.setValue(data);
 
-        boolean success = adapter.writeCharacteristic(characteristic);
-        if(!success) throw new Exception("write failed");
-    }
+		boolean success = adapter.writeCharacteristic(characteristic);
+		if (!success) throw new Exception("write failed");
+	}
 
-    public static void requestReadCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {
-        BluetoothGattService service = adapter.getService(serviceUuid);
+	public static void requestReadCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {
+		BluetoothGattService service = adapter.getService(serviceUuid);
 
-        if (service == null) {
-            Log.e("gatt", "service not found");
-            throw new Exception("service not found");
-        }
+		if (service == null) {
+			Log.e("gatt", "service not found");
+			throw new Exception("service not found");
+		}
 
-        BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
+		BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
 
-        if (characteristic == null) {
-            Log.e("gatt", "characteristic not found");
-            throw new Exception("characteristic not found");
-        }
+		if (characteristic == null) {
+			Log.e("gatt", "characteristic not found");
+			throw new Exception("characteristic not found");
+		}
 
-        adapter.readCharacteristic(characteristic);
-    }
+		adapter.readCharacteristic(characteristic);
+	}
 
-    public static String getDeviceMacByName(BluetoothAdapter adapter, String name) throws Exception {
-        Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
+	public static String getDeviceMacByName(BluetoothAdapter adapter, String name) throws Exception {
+		Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
 
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices) {
-                String deviceName = device.getName().trim();
-                //Log.d("device found", deviceName);
+		if (pairedDevices.size() > 0) {
+			for (BluetoothDevice device : pairedDevices) {
+				String deviceName = device.getName().trim();
+				//Log.d("device found", deviceName);
 
-                if(deviceName.equals(name)) {
-                    return device.getAddress();
-                }
-            }
-        }
+				if (deviceName.equals(name)) {
+					return device.getAddress();
+				}
+			}
+		}
 
-        throw new Exception("could not find device by name");
-    }
+		throw new Exception("could not find device by name");
+	}
 }

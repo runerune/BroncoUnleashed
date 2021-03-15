@@ -23,68 +23,68 @@ import bike.hackboy.bronco.gatt.Gatt;
 import bike.hackboy.bronco.utils.Converter;
 
 public class SpeedSetting extends Fragment {
-    private int value = 25;
+	private int value = 25;
 
-    private UUID serviceUuid;
-    private UUID characteristicUuid;
+	private UUID serviceUuid;
+	private UUID characteristicUuid;
 
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        serviceUuid = Uuid.serviceSettings;
-        characteristicUuid = Uuid.characteristicSettingsPcb;
+	@Override
+	public View onCreateView(
+		LayoutInflater inflater, ViewGroup container,
+		Bundle savedInstanceState
+	) {
+		serviceUuid = Uuid.serviceSettings;
+		characteristicUuid = Uuid.characteristicSettingsPcb;
 
-        return inflater.inflate(R.layout.speed_setting, container, false);
-    }
+		return inflater.inflate(R.layout.speed_setting, container, false);
+	}
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
-            try {
-                BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
+		view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
+			try {
+				BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
 
-                byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
-                byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
+				byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
+				byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
 
-                //Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
+				//Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
 
-                Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
-                Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
-                Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
+				Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
+				Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
+				Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
 
-                NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
-            } catch(Exception e) {
-                Log.e("write_fail", "failed to write characteristic", e);
-                Toast.makeText(getActivity(), "Write failed.", Toast.LENGTH_LONG).show();
-            }
-        });
+				NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
+			} catch (Exception e) {
+				Log.e("write_fail", "failed to write characteristic", e);
+				Toast.makeText(getActivity(), "Write failed.", Toast.LENGTH_LONG).show();
+			}
+		});
 
-        view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
-                .findNavController(SpeedSetting.this)
-                .navigate(R.id.action_SpeedSetting_to_Dashboard));
+		view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
+			.findNavController(SpeedSetting.this)
+			.navigate(R.id.action_SpeedSetting_to_Dashboard));
 
-        SeekBar slider = view.findViewById(R.id.seekBar);
+		SeekBar slider = view.findViewById(R.id.seekBar);
 
-        slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                TextView kph = view.findViewById(R.id.textView3);
-                value = 25 + progress;
-                kph.setText(String.valueOf(value));
-            }
+		slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				TextView kph = view.findViewById(R.id.textView3);
+				value = 25 + progress;
+				kph.setText(String.valueOf(value));
+			}
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
-        });
-    }
-
-
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+		});
+	}
 
 
 }

@@ -35,9 +35,11 @@ import bike.hackboy.bronco.utils.Converter;
 public class Dashboard extends Fragment {
 	private boolean locked = true;
 
-	// for status text in notification
+	// for status text in notification. Memorize this so it's not lost
+	// when GATT notifications stop coming after locking the bike.
 	private String distance = null;
 	private String uptime = null;
+	private String battery = null;
 
 	private View view = null;
 
@@ -123,6 +125,8 @@ public class Dashboard extends Fragment {
 		view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
 		view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
 		view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
+		view.findViewById(R.id.battery_percent).setVisibility(View.INVISIBLE);
+		view.findViewById(R.id.battery).setVisibility(View.INVISIBLE);
 
 		view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
 			sendIntent("unlock");
@@ -158,6 +162,7 @@ public class Dashboard extends Fragment {
 				.putExtra("locked", locked)
 				.putExtra("uptime", uptime)
 				.putExtra("distance", distance)
+				.putExtra("battery", battery)
 		);
 	}
 
@@ -181,6 +186,7 @@ public class Dashboard extends Fragment {
 			}
 
 			String assistance = (state.getAssistance() == 0 || state.getAssistance() == 3) ? "S" : "D";
+			String battery = String.format("%d %%", state.getBattery());
 
 			int[] uptime = Converter.secondsToTime(state.getDuration());
 			String duration;
@@ -200,30 +206,37 @@ public class Dashboard extends Fragment {
 				);
 			}
 
+			this.uptime = duration;
+			this.distance = distance;
+			this.battery = battery;
+
+			sendDashboardIntent();
+
 			requireActivity().runOnUiThread(() -> {
 				if (locked) {
 					view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.battery).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.battery_percent).setVisibility(View.INVISIBLE);
 					return;
 				}
 
 				((TextView) view.findViewById(R.id.distance)).setText(distance);
+				((TextView) view.findViewById(R.id.battery_percent)).setText(battery);
 				((TextView) view.findViewById(R.id.duration)).setText(duration);
 				((TextView) view.findViewById(R.id.speed)).setText(speed);
 				((ProgressBar) view.findViewById(R.id.assistance)).setProgress(state.getPower());
+				((ProgressBar) view.findViewById(R.id.battery)).setProgress(state.getBattery());
 				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(assistance);
 
 				view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.INVISIBLE : View.VISIBLE);
 				view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.INVISIBLE);
 				view.findViewById(R.id.button_goto_set_speed).setVisibility(View.VISIBLE);
 				view.findViewById(R.id.gear).setVisibility(View.VISIBLE);
-
-				this.uptime = duration;
-				this.distance = distance;
-
-				sendDashboardIntent();
+				view.findViewById(R.id.battery).setVisibility(View.VISIBLE);
+				view.findViewById(R.id.battery_percent).setVisibility(View.VISIBLE);
 			});
 		} catch (Exception e) {
 			Log.e("dashboard_update", "failed in dashboard listener", e);

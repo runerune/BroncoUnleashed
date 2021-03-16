@@ -31,7 +31,6 @@ import bike.hackboy.bronco.R;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
-import bike.hackboy.bronco.utils.Converter;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -189,15 +188,18 @@ public class BikeService extends Service {
 			boolean isLocked = intent.getBooleanExtra("locked", true);
 			String uptime = intent.getStringExtra("uptime");
 			String distance = intent.getStringExtra("distance");
+			String battery = intent.getStringExtra("battery");
 
 			if(isLocked) {
 				status = (String) getText(R.string.bike_is_locked);
 			} else {
 				status = String.format(
-					"%s • %s %s • %s %s",
+					"%s • %s %s • %s %s • %s %s",
 					R.string.unlocked,
 					getText(R.string.uptime),
 					uptime,
+					battery,
+					getText(R.string.battery),
 					getText(R.string.distance),
 					distance
 				);
@@ -255,7 +257,7 @@ public class BikeService extends Service {
 		notification = new NotificationCompat.Builder(this, "default")
 			.setContentText(getText(R.string.service_is_running))
 			.setContentTitle(getText(R.string.not_connected))
-			.setSmallIcon(R.drawable.ic_fg3)
+			.setSmallIcon(R.drawable.icon_foreground)
 			.setContentIntent(bringAppToFrontPendingIntent);
 
 		startForeground(666, notification.build());

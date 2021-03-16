@@ -35,4 +35,5 @@
     <string name="unlocked">Unlocked</string>
     <string name="distance">distance</string>
     <string name="uptime">up</string>
+    <string name="battery">battery</string>
 </resources>

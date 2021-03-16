@@ -28,20 +28,20 @@ public class MainActivity extends AppCompatActivity {
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String event = intent.getStringExtra("event");
+        String event = intent.getStringExtra("event");
 
-            if(!event.equals("disconnected")) return;
+        if(!event.equals("disconnected")) return;
 
-            PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
-                .setGraph(R.navigation.nav_graph)
-                .setDestination(R.id.CbyDiscovery)
-                .createPendingIntent();
+        PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
+            .setGraph(R.navigation.nav_graph)
+            .setDestination(R.id.CbyDiscovery)
+            .createPendingIntent();
 
-            try {
-                pendingIntent.send();
-            } catch (PendingIntent.CanceledException e) {
-                Log.e("disconnect", "intent failed", e);
-            }
+        try {
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            Log.e("disconnect", "intent failed", e);
+        }
         }
     };
 
@@ -73,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, BikeService.class);
         ContextCompat.startForegroundService(this, intent);
+
+        if (ACTION_RESET_SPEED.equals(getIntent().getAction())) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
+                new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "reset-speed")
+            );
+
+            this.finishAffinity();
+        }
     }
 
     @Override

@@ -125,13 +125,33 @@ public class BikeService extends Service {
 						byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
 						byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
 
-						Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
+						//Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, changedCommandWithChecksum);
 						BikeService.this.toast("Success");
 					} catch (Exception e) {
 						BikeService.this.toast("Failed to change speed");
+						Log.e("read_lock", "failed to change speed", e);
+					}
+				break;
+
+				case "reset-speed":
+					Log.w("cmd", "reset_speed");
+					try {
+						if (connection == null) {
+							throw new Exception("not connected");
+						}
+
+						byte[] changedCommandWithChecksum = Command.withChecksum(
+							Command.withValue(Command.SET_SPEED, 25)
+						);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, changedCommandWithChecksum);
+						BikeService.this.toast("Success");
+					} catch (Exception e) {
+						BikeService.this.toast("Failed to reset speed");
 						Log.e("read_lock", "failed to change speed", e);
 					}
 				break;

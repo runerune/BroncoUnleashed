@@ -1,7 +1,5 @@
 package bike.hackboy.bronco.utils;
 
-import com.google.protobuf.UnknownFieldSet;
-
 public class Converter {
 	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 

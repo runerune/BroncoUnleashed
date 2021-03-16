@@ -44,9 +44,9 @@ public final class DashboardProto {
     int getDistance();
 
     /**
-     * <code>optional int32 batttery = 6;</code>
+     * <code>optional int32 battery = 6;</code>
      */
-    int getBatttery();
+    int getBattery();
 
     /**
      * <code>optional int32 assistance = 7;</code>
@@ -100,7 +100,7 @@ public final class DashboardProto {
       speed_ = 0;
       power_ = 0;
       distance_ = 0;
-      batttery_ = 0;
+      battery_ = 0;
       assistance_ = 0;
       lights_ = 0;
       unknown1_ = 0;
@@ -162,7 +162,7 @@ public final class DashboardProto {
             }
             case 48: {
 
-              batttery_ = input.readInt32();
+              battery_ = input.readInt32();
               break;
             }
             case 56: {
@@ -268,13 +268,13 @@ public final class DashboardProto {
       return distance_;
     }
 
-    public static final int BATTTERY_FIELD_NUMBER = 6;
-    private int batttery_;
+    public static final int BATTERY_FIELD_NUMBER = 6;
+    private int battery_;
     /**
-     * <code>optional int32 batttery = 6;</code>
+     * <code>optional int32 battery = 6;</code>
      */
-    public int getBatttery() {
-      return batttery_;
+    public int getBattery() {
+      return battery_;
     }
 
     public static final int ASSISTANCE_FIELD_NUMBER = 7;
@@ -367,8 +367,8 @@ public final class DashboardProto {
       if (distance_ != 0) {
         output.writeInt32(5, distance_);
       }
-      if (batttery_ != 0) {
-        output.writeInt32(6, batttery_);
+      if (battery_ != 0) {
+        output.writeInt32(6, battery_);
       }
       if (assistance_ != 0) {
         output.writeInt32(7, assistance_);
@@ -418,9 +418,9 @@ public final class DashboardProto {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, distance_);
       }
-      if (batttery_ != 0) {
+      if (battery_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(6, batttery_);
+          .computeInt32Size(6, battery_);
       }
       if (assistance_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -476,8 +476,8 @@ public final class DashboardProto {
           == other.getPower());
       result = result && (getDistance()
           == other.getDistance());
-      result = result && (getBatttery()
-          == other.getBatttery());
+      result = result && (getBattery()
+          == other.getBattery());
       result = result && (getAssistance()
           == other.getAssistance());
       result = result && (getLights()
@@ -514,8 +514,8 @@ public final class DashboardProto {
       hash = (53 * hash) + getPower();
       hash = (37 * hash) + DISTANCE_FIELD_NUMBER;
       hash = (53 * hash) + getDistance();
-      hash = (37 * hash) + BATTTERY_FIELD_NUMBER;
-      hash = (53 * hash) + getBatttery();
+      hash = (37 * hash) + BATTERY_FIELD_NUMBER;
+      hash = (53 * hash) + getBattery();
       hash = (37 * hash) + ASSISTANCE_FIELD_NUMBER;
       hash = (53 * hash) + getAssistance();
       hash = (37 * hash) + LIGHTS_FIELD_NUMBER;
@@ -659,7 +659,7 @@ public final class DashboardProto {
 
         distance_ = 0;
 
-        batttery_ = 0;
+        battery_ = 0;
 
         assistance_ = 0;
 
@@ -702,7 +702,7 @@ public final class DashboardProto {
         result.speed_ = speed_;
         result.power_ = power_;
         result.distance_ = distance_;
-        result.batttery_ = batttery_;
+        result.battery_ = battery_;
         result.assistance_ = assistance_;
         result.lights_ = lights_;
         result.unknown1_ = unknown1_;
@@ -766,8 +766,8 @@ public final class DashboardProto {
         if (other.getDistance() != 0) {
           setDistance(other.getDistance());
         }
-        if (other.getBatttery() != 0) {
-          setBatttery(other.getBatttery());
+        if (other.getBattery() != 0) {
+          setBattery(other.getBattery());
         }
         if (other.getAssistance() != 0) {
           setAssistance(other.getAssistance());
@@ -946,28 +946,28 @@ public final class DashboardProto {
         return this;
       }
 
-      private int batttery_ ;
+      private int battery_ ;
       /**
-       * <code>optional int32 batttery = 6;</code>
+       * <code>optional int32 battery = 6;</code>
        */
-      public int getBatttery() {
-        return batttery_;
+      public int getBattery() {
+        return battery_;
       }
       /**
-       * <code>optional int32 batttery = 6;</code>
+       * <code>optional int32 battery = 6;</code>
        */
-      public Builder setBatttery(int value) {
+      public Builder setBattery(int value) {
         
-        batttery_ = value;
+        battery_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 batttery = 6;</code>
+       * <code>optional int32 battery = 6;</code>
        */
-      public Builder clearBatttery() {
+      public Builder clearBattery() {
         
-        batttery_ = 0;
+        battery_ = 0;
         onChanged();
         return this;
       }
@@ -1216,14 +1216,14 @@ public final class DashboardProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017dashboard.proto\"\357\001\n\tDashboard\022\020\n\010unkno" +
+      "\n\017dashboard.proto\"\356\001\n\tDashboard\022\020\n\010unkno" +
       "wn0\030\001 \001(\005\022\020\n\010duration\030\002 \001(\005\022\r\n\005speed\030\003 \001" +
-      "(\005\022\r\n\005power\030\004 \001(\005\022\020\n\010distance\030\005 \001(\005\022\020\n\010b" +
-      "atttery\030\006 \001(\005\022\022\n\nassistance\030\007 \001(\005\022\016\n\006lig" +
-      "hts\030\010 \001(\005\022\020\n\010unknown1\030\t \001(\005\022\020\n\010unknown2\030" +
-      "\n \001(\002\022\020\n\010unknown3\030\013 \001(\005\022\020\n\010unknown4\030\014 \001(" +
-      "\005\022\020\n\010unknown5\030\r \001(\005B%\n\023bike.hackboy.bron" +
-      "coB\016DashboardProtob\006proto3"
+      "(\005\022\r\n\005power\030\004 \001(\005\022\020\n\010distance\030\005 \001(\005\022\017\n\007b" +
+      "attery\030\006 \001(\005\022\022\n\nassistance\030\007 \001(\005\022\016\n\006ligh" +
+      "ts\030\010 \001(\005\022\020\n\010unknown1\030\t \001(\005\022\020\n\010unknown2\030\n" +
+      " \001(\002\022\020\n\010unknown3\030\013 \001(\005\022\020\n\010unknown4\030\014 \001(\005" +
+      "\022\020\n\010unknown5\030\r \001(\005B%\n\023bike.hackboy.bronc" +
+      "oB\016DashboardProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1242,7 +1242,7 @@ public final class DashboardProto {
     internal_static_Dashboard_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Dashboard_descriptor,
-        new java.lang.String[] { "Unknown0", "Duration", "Speed", "Power", "Distance", "Batttery", "Assistance", "Lights", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", });
+        new java.lang.String[] { "Unknown0", "Duration", "Speed", "Power", "Distance", "Battery", "Assistance", "Lights", "Unknown1", "Unknown2", "Unknown3", "Unknown4", "Unknown5", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

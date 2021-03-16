@@ -9,7 +9,7 @@ message Dashboard {
     int32 speed = 3;
     int32 power = 4;
     int32 distance = 5;
-    int32 batttery = 6;
+    int32 battery = 6;
     int32 assistance = 7;
     int32 lights = 8;
     int32 unknown1 = 9;

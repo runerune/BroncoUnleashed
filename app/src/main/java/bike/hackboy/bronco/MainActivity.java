@@ -76,11 +76,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.disconnect);
         item.setVisible(false);
@@ -97,28 +92,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id) {
-            case R.id.about:
-                new AlertDialog.Builder(this)
-                    .setTitle("About")
-                    .setMessage("Bike hack & app by /u/runereader for /r/cowboybikes. Use at your own risk.")
-                    .setNegativeButton("Got it", null)
-                    .setPositiveButton("Visit sub", (dialog, whichButton) -> {
-                        dialog.dismiss();
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.reddit.com/r/cowboybikes/"));
-                        startActivity(browserIntent);
-                    })
-                    .show();
-            break;
-            case R.id.disconnect:
-                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
-                    new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
-                );
-            break;
-            case R.id.stop_and_quit:
-                stopService(new Intent(this, BikeService.class));
-                this.finishAffinity();
-            break;
+        if (id == R.id.about) {
+            new AlertDialog.Builder(this)
+                .setTitle("About")
+                .setMessage("Bike hack & app by /u/runereader for /r/cowboybikes. Use at your own risk.")
+                .setNegativeButton("Got it", null)
+                .setPositiveButton("Visit sub", (dialog, whichButton) -> {
+                    dialog.dismiss();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.reddit.com/r/cowboybikes/"));
+                    startActivity(browserIntent);
+                })
+                .show();
+        } else if(id == R.id.disconnect) {
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
+                new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+            );
+        } else if(id == R.id.stop_and_quit) {
+            stopService(new Intent(this, BikeService.class));
+            this.finishAffinity();
         }
 
         return super.onOptionsItemSelected(item);

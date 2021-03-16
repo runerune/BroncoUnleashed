@@ -65,12 +65,7 @@ public class BikeService extends Service {
 						BluetoothDevice device = bluetoothAdapter.getRemoteDevice(mac);
 
 						Handler handler = new Handler(Looper.getMainLooper());
-						handler.post(new Runnable() {
-							@Override
-							public void run() {
-									connection = device.connectGatt(getApplicationContext(), false, mGattCallback);
-								}
-							});
+						handler.post(() -> connection = device.connectGatt(getApplicationContext(), false, mGattCallback));
 
 					} catch (Exception e) {
 						Log.e("lookup_fail", e.getMessage());
@@ -175,14 +170,12 @@ public class BikeService extends Service {
 			String uptime = intent.getStringExtra("uptime");
 			String distance = intent.getStringExtra("distance");
 
-
-
 			if(isLocked) {
 				status = (String) getText(R.string.bike_is_locked);
 			} else {
 				status = String.format(
 					"%s • %s %s • %s %s",
-					getText(isLocked ? R.string.locked : R.string.unlocked),
+					R.string.unlocked,
 					getText(R.string.uptime),
 					uptime,
 					getText(R.string.distance),

@@ -4,9 +4,13 @@
     tools:context="bike.hackboy.bronco.MainActivity">
     <item
         android:id="@+id/about"
-        android:orderInCategory="102"
+        android:orderInCategory="103"
         android:title="@string/about"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/stop_and_quit"
+        android:orderInCategory="104"
+        android:title="@string/exit" />
     <item
         android:id="@+id/disconnect"
         android:orderInCategory="101"

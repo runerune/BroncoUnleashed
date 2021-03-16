@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        // TODO stop service
     }
 
     @Override
@@ -116,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
                     new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
                 );
+            break;
+            case R.id.stop_and_quit:
+                stopService(new Intent(this, BikeService.class));
+                this.finishAffinity();
             break;
         }
 

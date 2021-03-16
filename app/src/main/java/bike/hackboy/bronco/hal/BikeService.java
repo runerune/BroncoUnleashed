@@ -195,12 +195,12 @@ public class BikeService extends Service {
 			} else {
 				status = String.format(
 					"%s • %s %s • %s %s • %s %s",
-					R.string.unlocked,
+					getText(R.string.unlocked),
 					getText(R.string.uptime),
 					uptime,
 					battery,
 					getText(R.string.battery),
-					getText(R.string.distance),
+					"",
 					distance
 				);
 			}

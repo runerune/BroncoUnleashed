@@ -186,7 +186,7 @@ public class Dashboard extends Fragment {
 			}
 
 			String assistance = (state.getAssistance() == 0 || state.getAssistance() == 3) ? "S" : "D";
-			String battery = String.format("%d %%", state.getBattery());
+			String battery = String.format("%d%%", state.getBattery());
 
 			int[] uptime = Converter.secondsToTime(state.getDuration());
 			String duration;

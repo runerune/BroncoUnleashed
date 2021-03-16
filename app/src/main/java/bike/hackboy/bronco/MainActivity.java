@@ -1,7 +1,6 @@
 package bike.hackboy.bronco;
 
 import android.app.PendingIntent;
-import android.bluetooth.BluetoothGatt;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,12 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
-import java.util.Arrays;
-
-import bike.hackboy.bronco.data.Command;
-import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.hal.BikeService;
 
 public class MainActivity extends AppCompatActivity {
     private static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";

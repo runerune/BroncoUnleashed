@@ -1,28 +1,17 @@
 package bike.hackboy.bronco;
 
-import android.bluetooth.BluetoothGatt;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
-
-import java.util.Objects;
-import java.util.UUID;
-
-import bike.hackboy.bronco.data.Command;
-import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.gatt.Gatt;
-import bike.hackboy.bronco.utils.Converter;
 
 public class SpeedSetting extends Fragment {
 	private int value = 25;

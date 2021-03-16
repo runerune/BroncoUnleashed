@@ -34,6 +34,11 @@ import bike.hackboy.bronco.utils.Converter;
 
 public class Dashboard extends Fragment {
 	private boolean locked = true;
+
+	// for status text in notification
+	private String distance = null;
+	private String uptime = null;
+
 	private View view = null;
 
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -146,7 +151,7 @@ public class Dashboard extends Fragment {
 		);
 	}
 
-	protected void sendDashboardIntent(int uptime, int distance) {
+	protected void sendDashboardIntent() {
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
 			new Intent(BuildConfig.APPLICATION_ID)
 				.putExtra("event", "dashboard_notification")
@@ -215,7 +220,10 @@ public class Dashboard extends Fragment {
 				view.findViewById(R.id.button_goto_set_speed).setVisibility(View.VISIBLE);
 				view.findViewById(R.id.gear).setVisibility(View.VISIBLE);
 
-				sendDashboardIntent(state.getDuration(), state.getDistance());
+				this.uptime = duration;
+				this.distance = distance;
+
+				sendDashboardIntent();
 			});
 		} catch (Exception e) {
 			Log.e("dashboard_update", "failed in dashboard listener", e);
@@ -235,6 +243,8 @@ public class Dashboard extends Fragment {
 					view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
 				}
+
+				sendDashboardIntent();
 			});
 		} catch (Exception e) {
 			Log.e("locked_update", "failed in locked update", e);

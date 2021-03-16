@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import bike.hackboy.bronco.utils.Converter;
-
 public class Gatt {
 
 	public static void ensureHasCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) throws Exception {

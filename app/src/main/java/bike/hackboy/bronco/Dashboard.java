@@ -121,12 +121,9 @@ public class Dashboard extends Fragment {
 		// don't show buttons before callback fires
 		view.findViewById(R.id.button_unlock).setVisibility(View.INVISIBLE);
 		view.findViewById(R.id.button_lock).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.battery_percent).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.battery).setVisibility(View.INVISIBLE);
+
+		view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
+		view.findViewById(R.id.gauges_group).setVisibility(View.INVISIBLE);
 
 		view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
 			sendIntent("unlock");
@@ -214,12 +211,8 @@ public class Dashboard extends Fragment {
 
 			requireActivity().runOnUiThread(() -> {
 				if (locked) {
-					view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.battery).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.battery_percent).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.gauges_group).setVisibility(View.INVISIBLE);
 					return;
 				}
 
@@ -231,12 +224,10 @@ public class Dashboard extends Fragment {
 				((ProgressBar) view.findViewById(R.id.battery)).setProgress(state.getBattery());
 				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(assistance);
 
+				view.findViewById(R.id.modifiers_group).setVisibility(View.VISIBLE);
 				view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.INVISIBLE : View.VISIBLE);
 				view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.INVISIBLE);
-				view.findViewById(R.id.button_goto_set_speed).setVisibility(View.VISIBLE);
-				view.findViewById(R.id.gear).setVisibility(View.VISIBLE);
-				view.findViewById(R.id.battery).setVisibility(View.VISIBLE);
-				view.findViewById(R.id.battery_percent).setVisibility(View.VISIBLE);
+				view.findViewById(R.id.gauges_group).setVisibility(View.VISIBLE);
 			});
 		} catch (Exception e) {
 			Log.e("dashboard_update", "failed in dashboard listener", e);
@@ -251,10 +242,7 @@ public class Dashboard extends Fragment {
 				view.findViewById(R.id.button_lock).setVisibility(locked ? View.INVISIBLE : View.VISIBLE);
 
 				if (locked) {
-					view.findViewById(R.id.button_light_on).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.button_goto_set_speed).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.gear).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
 				}
 
 				sendDashboardIntent();

@@ -74,7 +74,7 @@
         android:id="@+id/gear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="42dp"
         android:elevation="20dp"
         android:text="@string/gear"
         android:textColor="@color/white"
@@ -224,5 +224,17 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/assistance" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/gauges_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="battery,imageView,imageView3,assistance,battery_percent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/modifiers_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_set_speed,gear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

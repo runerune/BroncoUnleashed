@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Bronco</string>
-    <string name="about">About</string>
+    <string name="about">About app</string>
     <!-- Strings used for fragments for navigation -->
     <string name="speed_setting_label">Speed setting</string>
     <string name="cby_discovery_label">Discovery</string>
@@ -33,7 +33,7 @@
     <string name="bike_is_locked">Bike is locked</string>
     <string name="locked">Locked</string>
     <string name="unlocked">Unlocked</string>
-    <string name="distance">distance</string>
+    <string name="cycled">cycled</string>
     <string name="uptime">up</string>
     <string name="battery">battery</string>
 </resources>

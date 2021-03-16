@@ -181,9 +181,11 @@ public class BikeService extends Service {
 
 	private void updateNotification(Intent intent) {
 		String status;
+		String subStatus;
 
 		if (intent.getStringExtra("event").equals("disconnect")) {
 			status = (String) getText(R.string.not_connected);
+			subStatus = (String) getText(R.string.service_is_running);
 		} else {
 			boolean isLocked = intent.getBooleanExtra("locked", true);
 			String uptime = intent.getStringExtra("uptime");
@@ -192,22 +194,27 @@ public class BikeService extends Service {
 
 			if(isLocked) {
 				status = (String) getText(R.string.bike_is_locked);
+				subStatus = (String) getText(R.string.service_is_running);
 			} else {
 				status = String.format(
-					"%s • %s %s • %s %s • %s %s",
+					"%s • %s %s",
 					getText(R.string.unlocked),
+					battery,
+					getText(R.string.battery)
+				);
+
+				subStatus = String.format("%s %s • %s %s",
 					getText(R.string.uptime),
 					uptime,
-					battery,
-					getText(R.string.battery),
-					"",
-					distance
+					distance,
+					getText(R.string.cycled)
 				);
 			}
 		}
 
 		NotificationManager nm = getSystemService(NotificationManager.class);
 		notification.setContentTitle(status);
+		notification.setContentText(subStatus);
 		nm.notify(666, notification.build());
 	}
 

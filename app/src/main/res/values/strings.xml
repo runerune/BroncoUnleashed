@@ -27,4 +27,12 @@
     <string name="reset_speed_long">Reset to 25 km/h</string>
 
     <string name="service_is_running">Running in background</string>
+    <string name="exit"><![CDATA[Stop & quit]]></string>
+
+    <string name="not_connected">Not connected</string>
+    <string name="bike_is_locked">Bike is locked</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="distance">distance</string>
+    <string name="uptime">up</string>
 </resources>

@@ -1,6 +1,6 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.hal;
 
-import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -25,6 +25,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.UUID;
 
+import bike.hackboy.bronco.BuildConfig;
+import bike.hackboy.bronco.MainActivity;
+import bike.hackboy.bronco.R;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
@@ -33,7 +36,7 @@ import bike.hackboy.bronco.utils.Converter;
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	private BluetoothGatt connection = null;
-	private Notification notification = null;
+	private NotificationCompat.Builder notification = null;
 
 	// --------------------------------------------------
 
@@ -50,6 +53,7 @@ public class BikeService extends Service {
 						connection.disconnect();
 					}
 
+					updateNotification(intent);
 					BikeService.this.notify("disconnected");
 				break;
 
@@ -151,9 +155,46 @@ public class BikeService extends Service {
 						Log.e("read_lock", "failed to read lock state", e);
 					}
 				break;
+
+				case "dashboard_notification":
+					// don't pollute service with dashboard parsing logic, just accept
+					// whatever and put it in the notification that we are forced to have anyway
+					updateNotification(intent);
+				break;
 			}
 		}
 	};
+
+	private void updateNotification(Intent intent) {
+		String status;
+
+		if (intent.getStringExtra("event").equals("disconnect")) {
+			status = (String) getText(R.string.not_connected);
+		} else {
+			boolean isLocked = intent.getBooleanExtra("locked", true);
+			String uptime = intent.getStringExtra("uptime");
+			String distance = intent.getStringExtra("distance");
+
+
+
+			if(isLocked) {
+				status = (String) getText(R.string.bike_is_locked);
+			} else {
+				status = String.format(
+					"%s • %s %s • %s %s",
+					getText(isLocked ? R.string.locked : R.string.unlocked),
+					getText(R.string.uptime),
+					uptime,
+					getText(R.string.distance),
+					distance
+				);
+			}
+		}
+
+		NotificationManager nm = getSystemService(NotificationManager.class);
+		notification.setContentTitle(status);
+		nm.notify(666, notification.build());
+	}
 
 	private void toast(String message) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
@@ -190,29 +231,26 @@ public class BikeService extends Service {
 		LocalBroadcastManager.getInstance(this)
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
-		Intent notificationIntent = new Intent(this, BikeService.class);
-		PendingIntent pendingIntent =
+		Intent notificationIntent = new Intent(this, MainActivity.class);
+		notificationIntent.setAction(Intent.ACTION_MAIN);
+		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		PendingIntent bringAppToFrontPendingIntent =
 			PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-		notification =
-			new NotificationCompat.Builder(this, "default")
-				.setContentTitle(getText(R.string.service_is_running))
-				.setContentText("status goes here")
-				.setSmallIcon(R.drawable.ic_fg3)
-				.setContentIntent(pendingIntent)
-				.build();
+		notification = new NotificationCompat.Builder(this, "default")
+			.setContentText(getText(R.string.service_is_running))
+			.setContentTitle(getText(R.string.not_connected))
+			.setSmallIcon(R.drawable.ic_fg3)
+			.setContentIntent(bringAppToFrontPendingIntent);
 
-		startForeground(1, notification);
+		startForeground(666, notification.build());
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
-	}
-
-	@Override
-	public void onDestroy() {
-		Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
 	}
 
 	// --------------------------------------------------

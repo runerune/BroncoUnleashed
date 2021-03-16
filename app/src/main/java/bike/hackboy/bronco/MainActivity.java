@@ -2,34 +2,90 @@ package bike.hackboy.bronco;
 
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothGatt;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavDeepLinkBuilder;
 
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import java.util.Arrays;
+
+import bike.hackboy.bronco.data.Command;
+import bike.hackboy.bronco.data.Uuid;
+
 public class MainActivity extends AppCompatActivity {
-    BluetoothGatt connection;
-    ObservableLocked lockState;
-    ObservableDashboard dashboardState;
+    private static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";
+
+    private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String event = intent.getStringExtra("event");
+
+            if(!event.equals("disconnected")) return;
+
+            PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
+                .setGraph(R.navigation.nav_graph)
+                .setDestination(R.id.CbyDiscovery)
+                .createPendingIntent();
+
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                Log.e("disconnect", "intent failed", e);
+            }
+        }
+    };
+
+    // --------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LocalBroadcastManager.getInstance(getApplicationContext())
+            .registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
-        lockState = new ObservableLocked();
-        dashboardState = new ObservableDashboard();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        LocalBroadcastManager.getInstance(getApplicationContext())
+            .unregisterReceiver(messageReceiver);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = new Intent(this, BikeService.class);
+        ContextCompat.startForegroundService(this, intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // TODO stop service
     }
 
     @Override
@@ -63,40 +119,15 @@ public class MainActivity extends AppCompatActivity {
                     .show();
             break;
             case R.id.disconnect:
-                PendingIntent pendingIntent = new NavDeepLinkBuilder(this.getApplicationContext())
-                    .setGraph(R.navigation.nav_graph)
-                    .setDestination(R.id.CbyDiscovery)
-                    .createPendingIntent();
-
-                try {
-                    connection.close();
-                    connection.disconnect();
-                    pendingIntent.send();
-                } catch (PendingIntent.CanceledException e) {
-                    Log.e("disconnect", "intent failed", e);
-                }
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
+                    new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+                );
             break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public ObservableLocked getObservableLocked() {
-        return lockState;
-    }
+    // --------------------------------------------------
 
-    public ObservableDashboard getObservableDashboard() {
-        return dashboardState;
-    }
-
-    public BluetoothGatt getConnection() {
-        return connection;
-    }
-
-    public void setConnection(BluetoothGatt newConnection) {
-        if (connection != null) {
-            connection.close();
-        }
-        connection = newConnection;
-    }
 }

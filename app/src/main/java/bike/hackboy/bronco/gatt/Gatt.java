@@ -38,6 +38,7 @@ public class Gatt {
 	}
 
 	public static void enableNotifications(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) {
+		//Log.d("enableNotifications", "enableNotifications");
 		BluetoothGattService service = adapter.getService(serviceUuid);
 		BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
 
@@ -55,7 +56,7 @@ public class Gatt {
 	}
 
 	public static void writeCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid, byte[] data) throws Exception {
-		String debugCommand = Converter.byteArrayToHexString(data);
+		//String debugCommand = Converter.byteArrayToHexString(data);
 		//Log.d("gatt_cmd_before_write", debugCommand);
 
 		BluetoothGattService service = adapter.getService(serviceUuid);

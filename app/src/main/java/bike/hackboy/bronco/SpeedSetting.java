@@ -1,6 +1,7 @@
 package bike.hackboy.bronco;
 
 import android.bluetooth.BluetoothGatt;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.Objects;
@@ -25,17 +27,11 @@ import bike.hackboy.bronco.utils.Converter;
 public class SpeedSetting extends Fragment {
 	private int value = 25;
 
-	private UUID serviceUuid;
-	private UUID characteristicUuid;
-
 	@Override
 	public View onCreateView(
 		LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState
 	) {
-		serviceUuid = Uuid.serviceSettings;
-		characteristicUuid = Uuid.characteristicSettingsPcb;
-
 		return inflater.inflate(R.layout.speed_setting, container, false);
 	}
 
@@ -43,23 +39,13 @@ public class SpeedSetting extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
-			try {
-				BluetoothGatt connection = ((MainActivity) requireActivity()).getConnection();
+			LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
+				new Intent(BuildConfig.APPLICATION_ID)
+					.putExtra("event", "set-speed")
+					.putExtra("value", value)
+			);
 
-				byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
-				byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
-
-				//Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
-
-				Gatt.ensureHasCharacteristic(connection, serviceUuid, characteristicUuid);
-				Gatt.writeCharacteristic(connection, serviceUuid, characteristicUuid, changedCommandWithChecksum);
-				Toast.makeText(getActivity(), "Success!", Toast.LENGTH_LONG).show();
-
-				NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
-			} catch (Exception e) {
-				Log.e("write_fail", "failed to write characteristic", e);
-				Toast.makeText(getActivity(), "Write failed.", Toast.LENGTH_LONG).show();
-			}
+			NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
 		});
 
 		view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
@@ -85,6 +71,4 @@ public class SpeedSetting extends Fragment {
 			}
 		});
 	}
-
-
 }

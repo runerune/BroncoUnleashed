@@ -22,4 +22,9 @@
     <string name="cancel">Cancel</string>
     <string name="disconnect">Disconnect</string>
     <string name="gear">GEAR</string>
+
+    <string name="reset_speed">Reset speed</string>
+    <string name="reset_speed_long">Reset to 25 km/h</string>
+
+    <string name="service_is_running">Running in background</string>
 </resources>

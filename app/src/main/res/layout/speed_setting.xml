@@ -10,28 +10,28 @@
         android:id="@+id/button_speed_cancel"
         android:layout_width="128dp"
         android:layout_height="52dp"
-        android:layout_marginStart="8dp"
         android:layout_marginBottom="56dp"
         android:text="@string/cancel"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_speed_apply"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_speed_apply" />
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_speed_apply"
         android:layout_width="128dp"
         android:layout_height="52dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="56dp"
         android:text="@string/apply"
         app:backgroundTint="@color/pink"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_speed_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/button_speed_cancel" />
 
     <SeekBar
         android:id="@+id/seekBar"

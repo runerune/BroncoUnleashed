@@ -31,6 +31,7 @@ import bike.hackboy.bronco.R;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -45,136 +46,134 @@ public class BikeService extends Service {
 			String event = intent.getStringExtra("event");
 			//Log.d"event", event);
 
-			switch (event) {
-				case "disconnect":
-					if (connection != null) {
-						connection.close();
-						connection.disconnect();
-					}
+			try {
+				switch (event) {
+					case "disconnect":
+						if (connection != null) {
+							connection.close();
+							connection.disconnect();
+						}
 
-					updateNotification(intent);
-					BikeService.this.notify("disconnected");
-				break;
+						updateNotification(intent);
+						BikeService.this.notify("disconnected");
+					break;
 
-				case "connect":
-					try {
+					case "connect":
 						String mac = Gatt.getDeviceMacByName(bluetoothAdapter, "COWBOY");
-						BikeService.this.toast(String.format("Found %s", mac));
+						BikeService.this.toast(String.format("Connecting...", mac));
 
 						BluetoothDevice device = bluetoothAdapter.getRemoteDevice(mac);
 
 						Handler handler = new Handler(Looper.getMainLooper());
 						handler.post(() -> connection = device.connectGatt(getApplicationContext(), false, mGattCallback));
+					break;
 
-					} catch (Exception e) {
-						Log.e("lookup_fail", e.getMessage());
-						BikeService.this.toast("Could not find any bikes");
-					}
+					case "lights-off":
+						byte[] lightOffCommand = Command.withChecksum(Command.LIGHT_OFF);
 
-				break;
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, lightOffCommand);
+					break;
 
-				case "lights-off":
-					try {
-						byte[] command = Command.withChecksum(Command.LIGHT_OFF);
+					case "lights-on":
+						byte[] lightOnCommand = Command.withChecksum(Command.LIGHT_ON);
 
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to request lights off command");
-						Log.e("read_lock", "failed to request lights off", e);
-					}
-				break;
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, lightOnCommand);
 
-				case "lights-on":
-					try {
-						byte[] command = Command.withChecksum(Command.LIGHT_ON);
+					break;
 
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, command);
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to request lights on command");
-						Log.e("read_lock", "failed to request lights on", e);
-					}
-				break;
-
-				case "lock":
-					try {
+					case "lock":
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to request lock");
-						Log.e("read_lock", "failed to request lock", e);
-					}
-				break;
+					break;
 
-				case "unlock":
-					try {
+					case "unlock":
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to request unlock");
-						Log.e("read_lock", "failed to request unlock", e);
-					}
-				break;
+					break;
 
-				case "set-speed":
-					try {
-						int value = intent.getIntExtra("value", 25);
+					case "set-speed":
+						int newSpeedValue = intent.getIntExtra("value", 25);
 
-						byte[] changedCommand = Command.withValue(Command.SET_SPEED, value);
-						byte[] changedCommandWithChecksum = Command.withChecksum(changedCommand);
+						byte[] setSpeedCommand = Command.withValue(Command.SET_SPEED, newSpeedValue);
+						byte[] setSpeedCommandWithChecksum = Command.withChecksum(setSpeedCommand);
 
 						//Log.d("gatt_command", Converter.byteArrayToHexString(changedCommandWithChecksum));
 
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, changedCommandWithChecksum);
-						BikeService.this.toast("Success");
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to change speed");
-						Log.e("read_lock", "failed to change speed", e);
-					}
-				break;
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setSpeedCommandWithChecksum);
+					break;
 
-				case "reset-speed":
-					Log.w("cmd", "reset_speed");
-					try {
+					case "set-mode-torque":
+						byte[] setModeTorqueCommand = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueCommand);
+					break;
+
+					case "set-mode-torque-with-limit":
+						byte[] setModeTorqueWithLimit = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE_WITH_LIMIT);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueWithLimit);
+					break;
+
+					case "write-flash":
+						byte[] writeFlashCommand = Command.withChecksum(Command.WRITE_FLASH);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, writeFlashCommand);
+					break;
+
+					case "close-flash":
+						byte[] closeFlashCommand = Command.withChecksum(Command.CLOSE_FLASH);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
+					break;
+
+					case "reset-speed":
 						if (connection == null) {
 							throw new Exception("not connected");
 						}
 
-						byte[] changedCommandWithChecksum = Command.withChecksum(
+						byte[] resetSpeedCommandWithChecksum = Command.withChecksum(
 							Command.withValue(Command.SET_SPEED, 25)
 						);
 
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsPcb, changedCommandWithChecksum);
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, resetSpeedCommandWithChecksum);
 						BikeService.this.toast("Success");
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to reset speed");
-						Log.e("read_lock", "failed to change speed", e);
-					}
-				break;
+					break;
 
-				case "enable-notifications":
-					Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-					Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
-				break;
+					case "read-speed":
+						byte[] readSpeedCommandWithChecksum = Command.withChecksum(Command.READ_SPEED);
 
-				case "read-lock":
-					try {
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readSpeedCommandWithChecksum);
+					break;
+
+					case "enable-notifications":
+						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
+						Gatt.enableNotifications(connection, Uuid.serviceSettings, Uuid.characteristicSettingsRead);
+					break;
+
+					case "read-lock":
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-					} catch (Exception e) {
-						BikeService.this.toast("Failed to request read lock state");
-						Log.e("read_lock", "failed to read lock state", e);
-					}
-				break;
+					break;
 
-				case "dashboard_notification":
-					// don't pollute service with dashboard parsing logic, just accept
-					// whatever and put it in the notification that we are forced to have anyway
-					updateNotification(intent);
-				break;
+					case "dashboard_notification":
+						// don't pollute service with dashboard parsing logic, just accept
+						// whatever and put it in the notification that we are forced to have anyway
+						updateNotification(intent);
+					break;
+				}
+			} catch (Exception e) {
+				Log.e("cmd_fail", e.getMessage());
+				BikeService.this.toast("Command failed");
 			}
 		}
 	};
@@ -298,8 +297,19 @@ public class BikeService extends Service {
 				//Log.d("onCharacteristicRead", String.valueOf(status));
 				notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
 
-				//byte[] value = characteristic.getValue();
-				//Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+				byte[] value = characteristic.getValue();
+				Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+			}
+		}
+
+		@Override
+		public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+			if (status == BluetoothGatt.GATT_SUCCESS) {
+				//Log.d("onCharacteristicRead", String.valueOf(status));
+				//notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
+
+				byte[] value = characteristic.getValue();
+				Log.d("TAG", "onCharacteristicWrite: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}
 		}
 
@@ -308,8 +318,8 @@ public class BikeService extends Service {
 			//Log.d("onCharacteristicChanged", characteristic.getUuid().toString());
 			notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
 
-			//byte[] value = characteristic.getValue();
-			//Log.d("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+			byte[] value = characteristic.getValue();
+			Log.d("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 		}
 	};
 }

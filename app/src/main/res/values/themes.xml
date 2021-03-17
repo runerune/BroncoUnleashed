@@ -22,4 +22,26 @@
     <style name="Theme.Bronco.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Bronco.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Bronco.AlertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/DefaultButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ActionButton</item>
+    </style>
+
+    <style name="Theme.Bronco.AlertDialogWarning" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/DangerButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DefaultButton</item>
+    </style>
+
+    <style name="DefaultButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ActionButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/pink</item>
+    </style>
+
+    <style name="DangerButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/red</item>
+    </style>
 </resources>

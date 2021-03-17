@@ -48,6 +48,7 @@ public class BikeService extends Service {
 
 			try {
 				switch (event) {
+					//<editor-fold desc="connection">
 					case "disconnect":
 						if (connection != null) {
 							connection.close();
@@ -67,7 +68,9 @@ public class BikeService extends Service {
 						Handler handler = new Handler(Looper.getMainLooper());
 						handler.post(() -> connection = device.connectGatt(getApplicationContext(), false, mGattCallback));
 					break;
+					//</editor-fold>
 
+					//<editor-fold desc="lights">
 					case "lights-off":
 						byte[] lightOffCommand = Command.withChecksum(Command.LIGHT_OFF);
 
@@ -82,6 +85,13 @@ public class BikeService extends Service {
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, lightOnCommand);
 
 					break;
+					//</editor-fold>
+
+					//<editor-fold desc="lock">
+					case "read-lock":
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+						Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+					break;
 
 					case "lock":
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
@@ -92,7 +102,9 @@ public class BikeService extends Service {
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
 					break;
+					//</editor-fold>
 
+					//<editor-fold desc="speed">
 					case "set-speed":
 						int newSpeedValue = intent.getIntExtra("value", 25);
 
@@ -103,34 +115,6 @@ public class BikeService extends Service {
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setSpeedCommandWithChecksum);
-					break;
-
-					case "set-mode-torque":
-						byte[] setModeTorqueCommand = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE);
-
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueCommand);
-					break;
-
-					case "set-mode-torque-with-limit":
-						byte[] setModeTorqueWithLimit = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE_WITH_LIMIT);
-
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueWithLimit);
-					break;
-
-					case "write-flash":
-						byte[] writeFlashCommand = Command.withChecksum(Command.WRITE_FLASH);
-
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, writeFlashCommand);
-					break;
-
-					case "close-flash":
-						byte[] closeFlashCommand = Command.withChecksum(Command.CLOSE_FLASH);
-
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
-						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
 					break;
 
 					case "reset-speed":
@@ -153,16 +137,51 @@ public class BikeService extends Service {
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readSpeedCommandWithChecksum);
 					break;
+					//</editor-fold>
+
+					//<editor-fold desc="motor">
+					case "read-motor-mode":
+						byte[] readMotorModeCommand = Command.withChecksum(Command.READ_MOTOR_MODE);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readMotorModeCommand);
+					break;
+
+					case "set-motor-mode-torque":
+						byte[] setModeTorqueCommand = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueCommand);
+					break;
+
+					case "set-motor-mode-torque-with-limit":
+						byte[] setModeTorqueWithLimit = Command.withChecksum(Command.SET_MOTOR_MODE_TORQUE_WITH_LIMIT);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueWithLimit);
+					break;
+					//</editor-fold>
+
+					//<editor-fold desc="flash">
+					case "write-flash":
+						byte[] writeFlashCommand = Command.withChecksum(Command.WRITE_FLASH);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, writeFlashCommand);
+					break;
+
+					case "close-flash":
+						byte[] closeFlashCommand = Command.withChecksum(Command.CLOSE_FLASH);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
+					break;
+					//</editor-fold>
 
 					case "enable-notifications":
 						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
 						Gatt.enableNotifications(connection, Uuid.serviceSettings, Uuid.characteristicSettingsRead);
-					break;
-
-					case "read-lock":
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-						Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 					break;
 
 					case "dashboard_notification":
@@ -305,9 +324,6 @@ public class BikeService extends Service {
 		@Override
 		public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
 			if (status == BluetoothGatt.GATT_SUCCESS) {
-				//Log.d("onCharacteristicRead", String.valueOf(status));
-				//notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
-
 				byte[] value = characteristic.getValue();
 				Log.d("TAG", "onCharacteristicWrite: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}

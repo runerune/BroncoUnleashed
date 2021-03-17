@@ -8,6 +8,7 @@ public class Command {
 	public static final byte[] SET_SPEED = {10, 16, 0, 4, 0, 1, 2, 0, 30};
 	public static final byte[] READ_SPEED = {10, 3, 0, 4, 0, 1};
 
+	public static final byte[] READ_MOTOR_MODE = {1, 3, 0, 11, 0, 1};
 	public static final byte[] SET_MOTOR_MODE_TORQUE = {1, 16, 0, 11, 0, 1, 2, 0, 1};
 	public static final byte[] SET_MOTOR_MODE_TORQUE_WITH_LIMIT = {1, 16, 0, 11, 0, 1, 2, 0, 2};
 

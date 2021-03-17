@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".SpeedSetting">
 
+    <TextView
+        android:id="@+id/speed_limit_disabled"
+        android:layout_width="260dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
+        android:text="@string/disabled_in_motor"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button_speed_cancel"
         android:layout_width="128dp"
@@ -18,6 +32,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_speed_cancel_large"
+        android:layout_width="272dp"
+        android:layout_height="52dp"
+        android:text="@string/cancel"
+        app:backgroundTint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_speed_cancel" />
 
     <Button
         android:id="@+id/button_speed_apply"
@@ -39,7 +64,7 @@
         android:layout_width="311dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginTop="212dp"
         android:layout_marginEnd="20dp"
         android:indeterminate="false"
         android:max="10"
@@ -48,11 +73,11 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/speed_limit_header"
         app:tickMarkTint="#00E91E63" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/speed_limit_header"
         style="@style/Widget.AppCompat.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,16 +97,17 @@
         android:id="@+id/max_speed_value"
         android:layout_width="166dp"
         android:layout_height="121dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:gravity="center|center_vertical"
         android:textColor="@color/pink"
         android:textSize="96sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/speed_limit_header" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/km_per_hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kmh"
@@ -90,22 +116,55 @@
         app:layout_constraintTop_toBottomOf="@+id/max_speed_value" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/caution"
         android:layout_width="216dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/warningNotTested"
-        android:textColor="#FF5722"
-        app:layout_constraintBottom_toTopOf="@+id/button_speed_apply"
+        android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_speed_cancel" />
+
+    <Button
+        android:id="@+id/button_disable_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:width="272dp"
+        android:height="52dp"
+        android:text="@string/disable_speed_limit"
+        app:layout_constraintBottom_toTopOf="@+id/button_speed_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_enable_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:width="272dp"
+        android:height="52dp"
+        android:backgroundTint="@color/pink"
+        android:text="@string/enable_speed_limit"
+        app:layout_constraintBottom_toTopOf="@+id/button_speed_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/speed_setting"
+        android:id="@+id/restricted_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="max_speed_bar,max_speed_value,textView4" />
+        android:visibility="invisible"
+        app:constraint_referenced_ids="km_per_hour,caution,button_speed_apply,max_speed_value,button_speed_cancel,max_speed_bar,button_disable_limit" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/unrestricted_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="speed_limit_disabled,button_speed_cancel_large,button_enable_limit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

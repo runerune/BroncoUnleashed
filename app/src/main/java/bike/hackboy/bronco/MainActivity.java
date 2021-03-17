@@ -28,20 +28,20 @@ public class MainActivity extends AppCompatActivity {
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-        String event = intent.getStringExtra("event");
+            String event = intent.getStringExtra("event");
 
-        if(!event.equals("disconnected")) return;
+            if(!event.equals("disconnected")) return;
 
-        PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
-            .setGraph(R.navigation.nav_graph)
-            .setDestination(R.id.CbyDiscovery)
-            .createPendingIntent();
+            PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
+                .setGraph(R.navigation.nav_graph)
+                .setDestination(R.id.CbyDiscovery)
+                .createPendingIntent();
 
-        try {
-            pendingIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            Log.e("disconnect", "intent failed", e);
-        }
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                Log.e("disconnect", "intent failed", e);
+            }
         }
     };
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.about) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this, R.style.Theme_Bronco_AlertDialog)
                 .setTitle("About")
                 .setMessage("Bike hack & app by /u/runereader for /r/cowboybikes. Use at your own risk.")
                 .setNegativeButton("Got it", null)

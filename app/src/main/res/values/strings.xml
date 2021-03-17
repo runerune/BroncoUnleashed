@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bronco</string>
+    <string name="app_name">Bronco Unleashed</string>
     <string name="about">About app</string>
     <!-- Strings used for fragments for navigation -->
     <string name="speed_setting_label">Speed setting</string>
@@ -8,7 +8,7 @@
     <string name="previous">Previous</string>
 
     <string name="apply">Apply</string>
-    <string name="set_new_max_speed">Set new max speed</string>
+    <string name="set_new_max_speed">Speed limit</string>
     <string name="kmh">km/h</string>
     <string name="warningNotTested">CAUTION: values over 30 km/h have NOT been tested</string>
     <string name="howto_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
@@ -36,4 +36,15 @@
     <string name="cycled">cycled</string>
     <string name="uptime">up</string>
     <string name="battery">battery</string>
+
+    <string name="disable_speed_limit">Fully disable speed limit</string>
+    <string name="caution_advanced">This may void your warranty</string>
+    <string name="disable_speed_limit_explanation">
+        You are about to fully remove speed restriction on the bike. This prevents the official app from
+        reapplying it and can only be reverted using Bronco.\n\nProceed at your own risk.
+    </string>
+    <string name="proceed">Proceed</string>
+    <string name="abort">Abort</string>
+    <string name="enable_speed_limit">Enable speed limit</string>
+    <string name="disabled_in_motor">Speed limit has been disabled. Your bike is unrestricted.</string>
 </resources>

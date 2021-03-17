@@ -31,7 +31,6 @@ import bike.hackboy.bronco.R;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
-import bike.hackboy.bronco.utils.Converter;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -165,8 +164,7 @@ public class BikeService extends Service {
 					//<editor-fold desc="flash">
 					case "write-flash":
 						byte[] writeFlashCommand = Command.withChecksum(Command.WRITE_FLASH);
-
-						Log.d("gatt_command", Converter.byteArrayToHexString(writeFlashCommand));
+						//Log.d("gatt_command", Converter.byteArrayToHexString(writeFlashCommand));
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, writeFlashCommand);
@@ -174,8 +172,7 @@ public class BikeService extends Service {
 
 					case "close-flash":
 						byte[] closeFlashCommand = Command.withChecksum(Command.CLOSE_FLASH);
-
-						Log.d("gatt_command", Converter.byteArrayToHexString(closeFlashCommand));
+						//Log.d("gatt_command", Converter.byteArrayToHexString(closeFlashCommand));
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
@@ -327,7 +324,7 @@ public class BikeService extends Service {
 				byte[] value = characteristic.getValue();
 				notifyCharacteristicRead(characteristic.getUuid(), value);
 
-				Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+				//Log.d("gatt", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}
 		}
 
@@ -338,7 +335,7 @@ public class BikeService extends Service {
 				byte[] value = characteristic.getValue();
 				notifyCharacteristicWrite(characteristic.getUuid(), value);
 
-				Log.d("TAG", "onCharacteristicWrite: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+				//Log.d("gatt", "onCharacteristicWrite: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}
 		}
 
@@ -348,7 +345,7 @@ public class BikeService extends Service {
 			byte[] value = characteristic.getValue();
 			notifyCharacteristicRead(characteristic.getUuid(), value);
 
-			Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+			//Log.d("gatt", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 		}
 	};
 }

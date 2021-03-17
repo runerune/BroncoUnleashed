@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
-import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.utils.Converter;
 import bike.hackboy.bronco.utils.FlashWriter;
 
 public class SpeedSetting extends Fragment {
@@ -43,8 +40,6 @@ public class SpeedSetting extends Fragment {
 
 		switch (service) {
 			case 0x0a:
-				Log.w("foo", "received speed setting");
-
 				SpeedSetting.this.speed = value[4];
 				updateView();
 			break;
@@ -61,8 +56,8 @@ public class SpeedSetting extends Fragment {
 						updateView();
 
 						if (commitWrite) {
-							Log.w("write_flash", "in write flash");
-							Log.w("write_flash", Converter.byteArrayToHexString(value));
+							//Log.d("write_flash", "in write flash");
+							//Log.d("write_flash", Converter.byteArrayToHexString(value));
 							writeFlash();
 						}
 					break;
@@ -176,6 +171,7 @@ public class SpeedSetting extends Fragment {
 					view.findViewById(R.id.restricted_layout).setVisibility(View.INVISIBLE);
 				break;
 				case MOTOR_RESTRICTED:
+					((TextView) view.findViewById(R.id.max_speed_value)).setText(String.valueOf(speed));
 					((SeekBar) view.findViewById(R.id.max_speed_bar)).setProgress(speed - 25);
 					view.findViewById(R.id.unrestricted_layout).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.restricted_layout).setVisibility(View.VISIBLE);

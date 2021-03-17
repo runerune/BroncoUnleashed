@@ -34,7 +34,7 @@
         app:layout_constraintStart_toEndOf="@+id/button_speed_cancel" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/max_speed_bar"
         style="@android:style/Widget.Material.SeekBar"
         android:layout_width="311dp"
         android:layout_height="50dp"
@@ -69,12 +69,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/max_speed_value"
         android:layout_width="166dp"
         android:layout_height="121dp"
         android:layout_marginTop="48dp"
         android:gravity="center|center_vertical"
-        android:text="25"
         android:textColor="@color/pink"
         android:textSize="96sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +87,7 @@
         android:text="@string/kmh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/max_speed_value" />
 
     <TextView
         android:id="@+id/textView5"
@@ -102,5 +101,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/speed_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="max_speed_bar,max_speed_value,textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

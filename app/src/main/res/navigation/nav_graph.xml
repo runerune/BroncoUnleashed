@@ -13,9 +13,7 @@
 
         <action
             android:id="@+id/action_SpeedSetting_to_Dashboard"
-            app:destination="@id/Dashboard"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:enterAnim="@anim/fragment_close_enter" />
+            app:destination="@id/Dashboard" />
     </fragment>
     <fragment
         android:id="@+id/CbyDiscovery"
@@ -25,9 +23,7 @@
 
         <action
             android:id="@+id/action_CbyDiscovery_to_Dashboard"
-            app:destination="@id/Dashboard"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit" />
+            app:destination="@id/Dashboard" />
     </fragment>
     <fragment
         android:id="@+id/Dashboard"
@@ -36,8 +32,6 @@
         tools:layout="@layout/dashboard" >
         <action
             android:id="@+id/action_Dashboard_to_SpeedSetting"
-            app:destination="@id/SpeedSetting"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_open_exit" />
+            app:destination="@id/SpeedSetting" />
     </fragment>
 </navigation>

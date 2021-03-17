@@ -166,12 +166,16 @@ public class BikeService extends Service {
 					case "write-flash":
 						byte[] writeFlashCommand = Command.withChecksum(Command.WRITE_FLASH);
 
+						Log.d("gatt_command", Converter.byteArrayToHexString(writeFlashCommand));
+
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, writeFlashCommand);
 					break;
 
 					case "close-flash":
 						byte[] closeFlashCommand = Command.withChecksum(Command.CLOSE_FLASH);
+
+						Log.d("gatt_command", Converter.byteArrayToHexString(closeFlashCommand));
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
@@ -191,8 +195,7 @@ public class BikeService extends Service {
 					break;
 				}
 			} catch (Exception e) {
-				Log.e("cmd_fail", e.getMessage());
-				BikeService.this.toast("Command failed");
+				Log.e("cmd_fail", e.getMessage(), e);
 			}
 		}
 	};
@@ -249,10 +252,17 @@ public class BikeService extends Service {
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
+	private void notifyCharacteristicWrite(UUID uuid, byte[] value) {
+		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
+		intent.putExtra("event", "on-characteristic-write");
+		intent.putExtra("uuid", uuid.toString().toUpperCase());
+		intent.putExtra("value", value);
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+	}
 	private void notifyCharacteristicRead(UUID uuid, byte[] value) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "on-characteristic-read");
-		intent.putExtra("uuid", uuid.toString());
+		intent.putExtra("uuid", uuid.toString().toUpperCase());
 		intent.putExtra("value", value);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
@@ -314,9 +324,9 @@ public class BikeService extends Service {
 		public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
 			if (status == BluetoothGatt.GATT_SUCCESS) {
 				//Log.d("onCharacteristicRead", String.valueOf(status));
-				notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
-
 				byte[] value = characteristic.getValue();
+				notifyCharacteristicRead(characteristic.getUuid(), value);
+
 				Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}
 		}
@@ -324,7 +334,10 @@ public class BikeService extends Service {
 		@Override
 		public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
 			if (status == BluetoothGatt.GATT_SUCCESS) {
+				//Log.d("onCharacteristicWrite", String.valueOf(status));
 				byte[] value = characteristic.getValue();
+				notifyCharacteristicWrite(characteristic.getUuid(), value);
+
 				Log.d("TAG", "onCharacteristicWrite: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 			}
 		}
@@ -332,10 +345,10 @@ public class BikeService extends Service {
 		@Override
 		public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
 			//Log.d("onCharacteristicChanged", characteristic.getUuid().toString());
-			notifyCharacteristicRead(characteristic.getUuid(), characteristic.getValue());
-
 			byte[] value = characteristic.getValue();
-			Log.d("TAG", "onCharacteristicChanged: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+			notifyCharacteristicRead(characteristic.getUuid(), value);
+
+			Log.d("TAG", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
 		}
 	};
 }

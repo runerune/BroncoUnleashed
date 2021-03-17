@@ -18,48 +18,57 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
+import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.utils.Converter;
+import bike.hackboy.bronco.utils.FlashWriter;
 
 public class SpeedSetting extends Fragment {
 	private int speed = 25;
 	private int motorMode = 0;
+	private boolean commitWrite = false;
 
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String event = intent.getStringExtra("event");
+		String event = intent.getStringExtra("event");
 
-			if (!event.equals("on-characteristic-read")) return;
-			if (!intent.getStringExtra("uuid").equals(Uuid.characteristicSettingsReadString))
-				return;
+		if (!event.equals("on-characteristic-read")) return;
+		if (!intent.getStringExtra("uuid").equals(Uuid.characteristicSettingsReadString))
+			return;
 
-			byte[] value = intent.getByteArrayExtra("value");
-			int service = value[0];
-			int operation = value[1];
+		byte[] value = intent.getByteArrayExtra("value");
+		int service = value[0];
+		int operation = value[1];
 
-			switch (service) {
-				case 0x0a:
-					Log.w("foo", "received speed setting");
+		switch (service) {
+			case 0x0a:
+				Log.w("foo", "received speed setting");
 
-					SpeedSetting.this.speed = value[4];
-					updateView();
-				break;
-				case 0x1:
-					switch(operation) {
-						case 0x10: // write notification
-							LocalBroadcastManager.getInstance(requireContext())
-								.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
-									.putExtra("event", "read-motor-mode"));
-						break;
-						case 0x3: // read notification
-							SpeedSetting.this.motorMode = value[4];
-							updateView();
-						break;
-					}
+				SpeedSetting.this.speed = value[4];
+				updateView();
+			break;
+			case 0x1:
+				switch(operation) {
+					case 0x10: // write notification
+						LocalBroadcastManager.getInstance(requireContext())
+							.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
+								.putExtra("event", "read-motor-mode"));
 
+					break;
+					case 0x3: // read notification
+						SpeedSetting.this.motorMode = value[4];
+						updateView();
 
-				break;
-			}
+						if (commitWrite) {
+							Log.w("write_flash", "in write flash");
+							Log.w("write_flash", Converter.byteArrayToHexString(value));
+							writeFlash();
+						}
+					break;
+				}
+			break;
+		}
 		}
 	};
 
@@ -120,6 +129,8 @@ public class SpeedSetting extends Fragment {
 				.setPositiveButton(R.string.proceed, (dialog, whichButton) -> {
 					dialog.dismiss();
 
+					commitWrite = true;
+
 					lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
 						.putExtra("event", "set-motor-mode-torque"));
 				})
@@ -127,6 +138,8 @@ public class SpeedSetting extends Fragment {
 		});
 
 		view.findViewById(R.id.button_enable_limit).setOnClickListener(view4 -> {
+			commitWrite = true;
+
 			lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
 				.putExtra("event", "set-motor-mode-torque-with-limit"));
 		});
@@ -169,5 +182,12 @@ public class SpeedSetting extends Fragment {
 				break;
 			}
 		} catch(Exception ignored) { }
+	}
+
+	private void writeFlash() {
+		// GC should clean this once it's called again
+		commitWrite = false;
+		FlashWriter fw = new FlashWriter(requireContext());
+		fw.run();
 	}
 }

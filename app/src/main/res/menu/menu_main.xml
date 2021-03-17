@@ -8,6 +8,14 @@
         android:title="@string/about"
         app:showAsAction="never" />
     <item
+        android:id="@+id/debug_write_flash"
+        android:orderInCategory="301"
+        android:title="Debug: write flash" />
+    <item
+        android:id="@+id/debug_close_flash"
+        android:orderInCategory="302"
+        android:title="Debug: close flash" />
+    <item
         android:id="@+id/stop_and_quit"
         android:orderInCategory="200"
         android:title="@string/exit" />

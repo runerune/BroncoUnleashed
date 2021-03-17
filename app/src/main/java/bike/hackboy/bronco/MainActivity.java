@@ -118,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
         } else if(id == R.id.stop_and_quit) {
             stopService(new Intent(this, BikeService.class));
             this.finishAffinity();
+        } else if(id == R.id.debug_write_flash) {
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
+                    .putExtra("event", "write-flash"));
+        } else if(id == R.id.debug_close_flash) {
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
+                    .putExtra("event", "close-flash"));
         }
 
         return super.onOptionsItemSelected(item);

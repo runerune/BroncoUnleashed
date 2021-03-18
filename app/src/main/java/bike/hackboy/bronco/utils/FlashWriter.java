@@ -40,7 +40,7 @@ public class FlashWriter {
 						}
 					break;
 					case 1:
-						if(!event.equals("on-characteristic-write")) return;
+						//if(!event.equals("on-characteristic-write")) return;
 						//Log.w("flash_writer", "before stage 2");
 						//Log.d("flash_writer_cmd", Converter.byteArrayToHexString(value));
 

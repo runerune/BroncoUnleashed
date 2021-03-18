@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(
                         MainActivity.this.getApplicationContext(),
                         intent.getStringExtra("message"),
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show();
                 break;
             }

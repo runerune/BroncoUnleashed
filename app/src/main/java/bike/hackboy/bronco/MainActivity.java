@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
-            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "clear-status")
         );
 
         super.onDestroy();

@@ -189,7 +189,8 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
-					case "enable-notifications":
+					//<editor-fold desc="generic gatt">
+					case "enable-notify":
 						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
 						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
 						Gatt.enableNotifications(connection, Uuid.serviceSettings, Uuid.characteristicSettingsRead);
@@ -214,6 +215,11 @@ public class BikeService extends Service {
 								}
 							break;
 						}
+					break;
+					//</editor-fold>
+
+					case "clear-status":
+						removeNotification();
 					break;
 				}
 			} catch (Exception e) {
@@ -328,8 +334,6 @@ public class BikeService extends Service {
 	@Override
 	public void onDestroy() {
 		removeNotification();
-		Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
-
 		super.onDestroy();
 	}
 

@@ -90,7 +90,7 @@ public class Dashboard extends Fragment {
 		setHasOptionsMenu(true);
 
 		sendIntent("read-lock");
-		sendIntent("enable-notifications");
+		sendIntent("enable-notify");
 	}
 
 	@Override

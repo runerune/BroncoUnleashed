@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
@@ -19,19 +20,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.utils.Converter;
 
 public class Dashboard extends Fragment {
 	private boolean locked = true;
@@ -72,6 +72,12 @@ public class Dashboard extends Fragment {
 	public void onPrepareOptionsMenu(Menu menu) {
 		MenuItem item = menu.findItem(R.id.disconnect);
 		item.setVisible(true);
+	}
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
 
 	@Override

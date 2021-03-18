@@ -17,9 +17,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.Process;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -43,6 +43,7 @@ public class BikeService extends Service {
 
 	private BluetoothGatt connection = null;
 	private NotificationCompat.Builder notification = null;
+	private PowerManager.WakeLock wakeLock = null;
 
 	private static int NOTIFICATION_THROTTLE = 3000;
 	private long lastNotification = 0;
@@ -65,6 +66,7 @@ public class BikeService extends Service {
 						}
 
 						removeNotification();
+						releaseWakeLock();
 						BikeService.this.notify("disconnected");
 					break;
 
@@ -206,12 +208,15 @@ public class BikeService extends Service {
 								try {
 									DashboardBean db = (new DashboardBean()).fromProtobuf(DashboardProto.Dashboard.parseFrom(value));
 									updateNotification(db);
+
+									if(wakeLock == null) acquireWakeLock();
 								} catch (InvalidProtocolBufferException ignored) { }
 							break;
 							case Uuid.characteristicUnlockString:
 								//Log.d("uuid_check", "is a lock service uuid");
 								if(Arrays.equals(value, Command.LOCK)) {
 									removeNotification();
+									releaseWakeLock();
 								}
 							break;
 						}
@@ -220,6 +225,7 @@ public class BikeService extends Service {
 
 					case "clear-status":
 						removeNotification();
+						releaseWakeLock();
 					break;
 				}
 			} catch (Exception e) {
@@ -256,6 +262,23 @@ public class BikeService extends Service {
 		notification.setContentTitle(status);
 		notification.setContentText(subStatus);
 		nm.notify(666, notification.build());
+	}
+
+	private void acquireWakeLock() {
+		PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+			String.format("%s::BikeService", getText(R.string.app_name)));
+
+		/* yes, it's 6 hours. Fight me. */
+		wakeLock.acquire(6*60*60*1000L);
+	}
+
+	private void releaseWakeLock() {
+		// this WL is released when the service is killed, too
+		if(wakeLock != null) {
+			wakeLock.release();
+			wakeLock = null;
+		}
 	}
 
 	private void removeNotification() {

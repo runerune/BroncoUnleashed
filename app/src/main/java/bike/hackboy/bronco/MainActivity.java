@@ -52,19 +52,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LocalBroadcastManager.getInstance(getApplicationContext())
-            .registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
 
         LocalBroadcastManager.getInstance(getApplicationContext())
             .unregisterReceiver(messageReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(getApplicationContext())
+            .registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
     }
 
     @Override

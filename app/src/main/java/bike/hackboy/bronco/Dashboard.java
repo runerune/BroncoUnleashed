@@ -74,24 +74,6 @@ public class Dashboard extends Fragment {
 	};
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		LocalBroadcastManager.getInstance(requireContext())
-			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
-
-		setHasOptionsMenu(true);
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-
-		LocalBroadcastManager.getInstance(requireContext())
-			.unregisterReceiver(messageReceiver);
-	}
-
-	@Override
 	public void onPrepareOptionsMenu(Menu menu) {
 		MenuItem item = menu.findItem(R.id.disconnect);
 		item.setVisible(true);
@@ -107,8 +89,21 @@ public class Dashboard extends Fragment {
 	public void onResume() {
 		super.onResume();
 
+		LocalBroadcastManager.getInstance(requireContext())
+			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+
+		setHasOptionsMenu(true);
+
 		sendIntent("read-lock");
 		sendIntent("enable-notifications");
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		LocalBroadcastManager.getInstance(requireContext())
+			.unregisterReceiver(messageReceiver);
 	}
 
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
@@ -37,16 +36,16 @@ public class CbyDiscovery extends Fragment {
 	};
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onResume() {
+		super.onResume();
 
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	public void onPause() {
+		super.onPause();
 
 		LocalBroadcastManager.getInstance(requireContext())
 			.unregisterReceiver(messageReceiver);

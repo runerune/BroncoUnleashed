@@ -225,8 +225,13 @@ public class Dashboard extends Fragment {
 				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(assistance);
 
 				view.findViewById(R.id.modifiers_group).setVisibility(View.VISIBLE);
+
 				view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.INVISIBLE : View.VISIBLE);
+				view.findViewById(R.id.icon_light_on).setVisibility(!isLightOn ? View.INVISIBLE : View.VISIBLE);
+
 				view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.INVISIBLE);
+				view.findViewById(R.id.icon_light_off).setVisibility(!isLightOn ? View.VISIBLE : View.INVISIBLE);
+
 				view.findViewById(R.id.gauges_group).setVisibility(View.VISIBLE);
 			});
 		} catch (Exception e) {

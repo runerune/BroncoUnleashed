@@ -32,9 +32,9 @@
         android:layout_marginBottom="30dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="@string/light_off"
+        android:textColor="@color/pink"
         android:textSize="13sp"
-        app:backgroundTint="@color/black"
+        app:backgroundTint="@color/pink"
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_lock"
         app:layout_constraintEnd_toStartOf="@+id/button_lock" />
@@ -93,9 +93,9 @@
         android:layout_marginBottom="30dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:text="@string/light_on"
+        android:textColor="@color/black"
         android:textSize="13sp"
-        app:backgroundTint="@color/pink"
+        app:backgroundTint="@color/black"
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_lock"
         app:layout_constraintEnd_toStartOf="@+id/button_lock" />
@@ -235,6 +235,28 @@
         android:id="@+id/modifiers_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_set_speed,gear" />
+        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_set_speed,gear,icon_light_on,icon_light_off" />
+
+    <ImageView
+        android:id="@+id/icon_light_on"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_light"
+        app:layout_constraintBottom_toBottomOf="@+id/button_light_off"
+        app:layout_constraintEnd_toEndOf="@+id/button_light_off"
+        app:layout_constraintStart_toStartOf="@+id/button_light_off"
+        app:layout_constraintTop_toTopOf="@+id/button_light_off" />
+
+    <ImageView
+        android:id="@+id/icon_light_off"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_light_off"
+        app:layout_constraintBottom_toBottomOf="@+id/button_light_off"
+        app:layout_constraintEnd_toEndOf="@+id/button_light_off"
+        app:layout_constraintStart_toStartOf="@+id/button_light_off"
+        app:layout_constraintTop_toTopOf="@+id/button_light_off" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

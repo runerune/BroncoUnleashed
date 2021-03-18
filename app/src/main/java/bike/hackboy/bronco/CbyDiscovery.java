@@ -1,5 +1,6 @@
 package bike.hackboy.bronco;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -55,6 +57,11 @@ public class CbyDiscovery extends Fragment {
 	}
 
 	public void lookForCboy() {
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+			Toast.makeText(this.getContext(), R.string.bluetooth_off, Toast.LENGTH_LONG).show();
+		}
+
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "connect");
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);

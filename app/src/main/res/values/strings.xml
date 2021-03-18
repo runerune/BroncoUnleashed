@@ -53,4 +53,6 @@
     </string>
     <string name="visit_sub">Visit sub</string>
     <string name="got_it">Got it</string>
+
+    <string name="bluetooth_off">Bluetooth is off.</string>
 </resources>

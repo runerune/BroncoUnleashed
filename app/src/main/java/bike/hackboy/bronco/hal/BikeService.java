@@ -19,23 +19,33 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Process;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import java.util.Arrays;
 import java.util.UUID;
 
 import bike.hackboy.bronco.BuildConfig;
+import bike.hackboy.bronco.DashboardProto;
 import bike.hackboy.bronco.MainActivity;
 import bike.hackboy.bronco.R;
+import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 	private BluetoothGatt connection = null;
 	private NotificationCompat.Builder notification = null;
+
+	private static int NOTIFICATION_THROTTLE = 3000;
+	private long lastNotification = 0;
 
 	// --------------------------------------------------
 
@@ -54,7 +64,7 @@ public class BikeService extends Service {
 							connection.disconnect();
 						}
 
-						updateNotification(intent);
+						removeNotification();
 						BikeService.this.notify("disconnected");
 					break;
 
@@ -185,10 +195,25 @@ public class BikeService extends Service {
 						Gatt.enableNotifications(connection, Uuid.serviceSettings, Uuid.characteristicSettingsRead);
 					break;
 
-					case "dashboard_notification":
-						// don't pollute service with dashboard parsing logic, just accept
-						// whatever and put it in the notification that we are forced to have anyway
-						updateNotification(intent);
+					case "on-characteristic-read":
+						String uuid = intent.getStringExtra("uuid");
+						byte[] value = (intent.getByteArrayExtra("value"));
+
+						switch (uuid.toUpperCase()) {
+							case Uuid.characteristicDashboardString:
+								//Log.d("uuid_check", "is a dashboard uuid");
+								try {
+									DashboardBean db = (new DashboardBean()).fromProtobuf(DashboardProto.Dashboard.parseFrom(value));
+									updateNotification(db);
+								} catch (InvalidProtocolBufferException ignored) { }
+							break;
+							case Uuid.characteristicUnlockString:
+								//Log.d("uuid_check", "is a lock service uuid");
+								if(Arrays.equals(value, Command.LOCK)) {
+									removeNotification();
+								}
+							break;
+						}
 					break;
 				}
 			} catch (Exception e) {
@@ -197,43 +222,42 @@ public class BikeService extends Service {
 		}
 	};
 
-	private void updateNotification(Intent intent) {
-		String status;
-		String subStatus;
+	private void updateNotification(DashboardBean db) {
+		// edge case: first value after unlocking is incomplete
+		if(db.getRawBattery() < 1) return;
 
-		if (intent.getStringExtra("event").equals("disconnect")) {
-			status = (String) getText(R.string.not_connected);
-			subStatus = (String) getText(R.string.service_is_running);
-		} else {
-			boolean isLocked = intent.getBooleanExtra("locked", true);
-			String uptime = intent.getStringExtra("uptime");
-			String distance = intent.getStringExtra("distance");
-			String battery = intent.getStringExtra("battery");
-
-			if(isLocked) {
-				status = (String) getText(R.string.bike_is_locked);
-				subStatus = (String) getText(R.string.service_is_running);
-			} else {
-				status = String.format(
-					"%s • %s %s",
-					getText(R.string.unlocked),
-					battery,
-					getText(R.string.battery)
-				);
-
-				subStatus = String.format("%s %s • %s %s",
-					getText(R.string.uptime),
-					uptime,
-					distance,
-					getText(R.string.cycled)
-				);
-			}
+		if(lastNotification + NOTIFICATION_THROTTLE > System.currentTimeMillis()) {
+			return;
 		}
+
+		lastNotification = System.currentTimeMillis();
+
+		String status = String.format(
+			"%s • %s %s",
+			getText(R.string.unlocked),
+			db.getBattery(),
+			getText(R.string.battery)
+		);
+
+		String subStatus = String.format("%s %s • %s %s",
+			getText(R.string.uptime),
+			db.getDuration(),
+			db.getDistance(),
+			getText(R.string.cycled)
+		);
 
 		NotificationManager nm = getSystemService(NotificationManager.class);
 		notification.setContentTitle(status);
 		notification.setContentText(subStatus);
 		nm.notify(666, notification.build());
+	}
+
+	private void removeNotification() {
+		NotificationManager nm = getSystemService(NotificationManager.class);
+		nm.cancel(666);
+
+		// clear this so the next notification can show up instantly
+		lastNotification = 0;
 	}
 
 	private void toast(String message) {
@@ -293,12 +317,20 @@ public class BikeService extends Service {
 			.setSmallIcon(R.drawable.ic_unleashed)
 			.setContentIntent(bringAppToFrontPendingIntent);
 
-		startForeground(666, notification.build());
+		//startForeground(666, notification.build());
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
+	}
+
+	@Override
+	public void onDestroy() {
+		removeNotification();
+		Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+
+		super.onDestroy();
 	}
 
 	// --------------------------------------------------

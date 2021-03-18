@@ -12,13 +12,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavDeepLinkBuilder;
 
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import bike.hackboy.bronco.hal.BikeService;
 
@@ -30,17 +30,26 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String event = intent.getStringExtra("event");
 
-            if(!event.equals("disconnected")) return;
+            switch (event) {
+                case "disconnected":
+                    PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
+                        .setGraph(R.navigation.nav_graph)
+                        .setDestination(R.id.CbyDiscovery)
+                        .createPendingIntent();
 
-            PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
-                .setGraph(R.navigation.nav_graph)
-                .setDestination(R.id.CbyDiscovery)
-                .createPendingIntent();
-
-            try {
-                pendingIntent.send();
-            } catch (PendingIntent.CanceledException e) {
-                Log.e("disconnect", "intent failed", e);
+                    try {
+                        pendingIntent.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        Log.e("disconnect", "intent failed", e);
+                    }
+                break;
+                case "toast":
+                    Toast.makeText(
+                        MainActivity.this.getApplicationContext(),
+                        intent.getStringExtra("message"),
+                        Toast.LENGTH_LONG
+                    ).show();
+                break;
             }
         }
     };
@@ -56,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
+            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+        );
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onPause() {
@@ -78,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Intent intent = new Intent(this, BikeService.class);
-        ContextCompat.startForegroundService(this, intent);
+        //ContextCompat.startForegroundService(this, intent);
+
+        startService(intent);
 
         if (ACTION_RESET_SPEED.equals(getIntent().getAction())) {
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(

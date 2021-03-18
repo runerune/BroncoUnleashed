@@ -28,19 +28,13 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
+import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.Converter;
 
 public class Dashboard extends Fragment {
 	private boolean locked = true;
-
-	// for status text in notification. Memorize this so it's not lost
-	// when GATT notifications stop coming after locking the bike.
-	private String distance = null;
-	private String uptime = null;
-	private String battery = null;
-
 	private View view = null;
 
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -63,7 +57,8 @@ public class Dashboard extends Fragment {
 				case Uuid.characteristicDashboardString:
 					//Log.d("uuid_check", "is a dashboard uuid");
 					try {
-						parseDashboard(DashboardProto.Dashboard.parseFrom(value));
+						DashboardBean db = (new DashboardBean()).fromProtobuf(DashboardProto.Dashboard.parseFrom(value));
+						updateDashboard(db);
 					} catch (InvalidProtocolBufferException e) {
 						// ignore, this happens when bike is locked so don't spam it
 						//Log.e("ch_value", "could not parse as protobuf", e);
@@ -147,62 +142,11 @@ public class Dashboard extends Fragment {
 		);
 	}
 
-	protected void sendDashboardIntent() {
-		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
-			new Intent(BuildConfig.APPLICATION_ID)
-				.putExtra("event", "dashboard_notification")
-				.putExtra("locked", locked)
-				.putExtra("uptime", uptime)
-				.putExtra("distance", distance)
-				.putExtra("battery", battery)
-		);
-	}
-
 	@SuppressLint("DefaultLocale")
-	protected void parseDashboard(DashboardProto.Dashboard state) {
+	protected void updateDashboard(DashboardBean db) {
 		try {
 			//Log.d("dashboard_state", "on dashboard state");
-			//Log.d("dash_parsed", state.toString());
-
-			boolean isLightOn = (state.getLights() == 1);
-			String speed = String.format("%s", state.getSpeed());
-
-			int rawDistance = state.getDistance();
-			String distance;
-
-			if (rawDistance < 1000) {
-				distance = String.format("%s m", state.getDistance());
-			} else {
-				DecimalFormat formatter = new DecimalFormat("#,###.00");
-				distance = formatter.format(state.getDistance() / 1000);
-			}
-
-			String assistance = (state.getAssistance() == 0 || state.getAssistance() == 3) ? "S" : "D";
-			String battery = String.format("%d%%", state.getBattery());
-
-			int[] uptime = Converter.secondsToTime(state.getDuration());
-			String duration;
-
-			if (uptime[0] > 0) {
-				duration = String.format(
-					"%02d:%02d:%02d",
-					uptime[0],
-					uptime[1],
-					uptime[2]
-				);
-			} else {
-				duration = String.format(
-					"%02d:%02d",
-					uptime[1],
-					uptime[2]
-				);
-			}
-
-			this.uptime = duration;
-			this.distance = distance;
-			this.battery = battery;
-
-			sendDashboardIntent();
+			//Log.d("dash_parsed", db.toString());
 
 			requireActivity().runOnUiThread(() -> {
 				if (locked) {
@@ -211,21 +155,21 @@ public class Dashboard extends Fragment {
 					return;
 				}
 
-				((TextView) view.findViewById(R.id.distance)).setText(distance);
-				((TextView) view.findViewById(R.id.battery_percent)).setText(battery);
-				((TextView) view.findViewById(R.id.duration)).setText(duration);
-				((TextView) view.findViewById(R.id.speed)).setText(speed);
-				((ProgressBar) view.findViewById(R.id.assistance)).setProgress(state.getPower());
-				((ProgressBar) view.findViewById(R.id.battery)).setProgress(state.getBattery());
-				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(assistance);
+				((TextView) view.findViewById(R.id.distance)).setText(db.getDistance());
+				((TextView) view.findViewById(R.id.battery_percent)).setText(db.getBattery());
+				((TextView) view.findViewById(R.id.duration)).setText(db.getDuration());
+				((TextView) view.findViewById(R.id.speed)).setText(db.getSpeed());
+				((ProgressBar) view.findViewById(R.id.assistance)).setProgress(db.getRawPower());
+				((ProgressBar) view.findViewById(R.id.battery)).setProgress(db.getRawBattery());
+				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(db.getAssistance());
 
 				view.findViewById(R.id.modifiers_group).setVisibility(View.VISIBLE);
 
-				view.findViewById(R.id.button_light_on).setVisibility(isLightOn ? View.INVISIBLE : View.VISIBLE);
-				view.findViewById(R.id.icon_light_on).setVisibility(!isLightOn ? View.INVISIBLE : View.VISIBLE);
+				view.findViewById(R.id.button_light_on).setVisibility(db.isLightOn() ? View.INVISIBLE : View.VISIBLE);
+				view.findViewById(R.id.icon_light_on).setVisibility(db.isLightOn() ? View.VISIBLE : View.INVISIBLE);
 
-				view.findViewById(R.id.button_light_off).setVisibility(isLightOn ? View.VISIBLE : View.INVISIBLE);
-				view.findViewById(R.id.icon_light_off).setVisibility(!isLightOn ? View.VISIBLE : View.INVISIBLE);
+				view.findViewById(R.id.button_light_off).setVisibility(db.isLightOn() ? View.VISIBLE : View.INVISIBLE);
+				view.findViewById(R.id.icon_light_off).setVisibility(db.isLightOn() ? View.INVISIBLE : View.VISIBLE);
 
 				view.findViewById(R.id.gauges_group).setVisibility(View.VISIBLE);
 			});
@@ -244,8 +188,6 @@ public class Dashboard extends Fragment {
 				if (locked) {
 					view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
 				}
-
-				sendDashboardIntent();
 			});
 		} catch (Exception e) {
 			Log.e("locked_update", "failed in locked update", e);

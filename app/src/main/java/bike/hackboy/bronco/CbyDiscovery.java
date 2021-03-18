@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,14 +22,9 @@ public class CbyDiscovery extends Fragment {
 			String event = intent.getStringExtra("event");
 			//Log.d("event", event);
 
-			switch (event) {
-				case "on-discovered":
-					NavHostFragment.findNavController(CbyDiscovery.this)
-						.navigate(R.id.action_CbyDiscovery_to_Dashboard);
-					break;
-				case "toast":
-					Toast.makeText(getActivity(), intent.getStringExtra("message"), Toast.LENGTH_LONG).show();
-					break;
+			if ("on-discovered".equals(event)) {
+				NavHostFragment.findNavController(CbyDiscovery.this)
+					.navigate(R.id.action_CbyDiscovery_to_Dashboard);
 			}
 		}
 	};

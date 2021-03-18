@@ -102,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.about) {
             new AlertDialog.Builder(this, R.style.Theme_Bronco_AlertDialog)
-                .setTitle("About")
-                .setMessage("Bike hack & app by /u/runereader for /r/cowboybikes. Use at your own risk.")
-                .setNegativeButton("Got it", null)
-                .setPositiveButton("Visit sub", (dialog, whichButton) -> {
+                .setTitle(R.string.about_title)
+                .setMessage(R.string.credits)
+                .setNegativeButton(R.string.got_it, null)
+                .setPositiveButton(R.string.visit_sub, (dialog, whichButton) -> {
                     dialog.dismiss();
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.reddit.com/r/cowboybikes/"));
                     startActivity(browserIntent);

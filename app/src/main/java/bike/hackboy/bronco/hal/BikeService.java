@@ -60,7 +60,7 @@ public class BikeService extends Service {
 
 					case "connect":
 						String mac = Gatt.getDeviceMacByName(bluetoothAdapter, "COWBOY");
-						BikeService.this.toast(String.format("Connecting...", mac));
+						BikeService.this.toast("Connecting...");
 
 						BluetoothDevice device = bluetoothAdapter.getRemoteDevice(mac);
 

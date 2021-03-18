@@ -256,6 +256,7 @@ public class BikeService extends Service {
 		intent.putExtra("value", value);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
+
 	private void notifyCharacteristicRead(UUID uuid, byte[] value) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "on-characteristic-read");
@@ -305,8 +306,13 @@ public class BikeService extends Service {
 	private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
 		@Override
 		public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-			if (newState == BluetoothProfile.STATE_CONNECTED) {
-				gatt.discoverServices();
+			switch(newState) {
+				case BluetoothProfile.STATE_CONNECTED:
+					gatt.discoverServices();
+				break;
+				case BluetoothProfile.STATE_DISCONNECTED:
+					BikeService.this.notify("disconnect");
+				break;
 			}
 		}
 

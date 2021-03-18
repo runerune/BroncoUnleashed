@@ -4,23 +4,24 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
 import bike.hackboy.bronco.DashboardProto;
 import bike.hackboy.bronco.utils.Converter;
 
-public class DashboardBean {
-	public boolean lightOn;
-	public int rawDistance;
-	public int rawBattery;
-	public int rawPower;
-	public int[] uptime;
-	public String speed;
-	public String distance;
-	public String assistance;
-	public String battery;
-	public String duration;
+public class DashboardBean implements Serializable {
+	private boolean lightOn;
+	private int rawDistance;
+	private int rawBattery;
+	private int rawPower;
+	private int[] uptime;
+	private String speed;
+	private String distance;
+	private String assistance;
+	private String battery;
+	private String duration;
 
 	@SuppressLint("DefaultLocale")
 	public DashboardBean fromProtobuf(DashboardProto.Dashboard d) {

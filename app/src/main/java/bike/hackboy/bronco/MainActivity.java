@@ -1,6 +1,5 @@
 package bike.hackboy.bronco;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +12,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavDeepLinkBuilder;
+import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -32,16 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
             switch (event) {
                 case "disconnected":
-                    PendingIntent pendingIntent = new NavDeepLinkBuilder(MainActivity.this.getApplicationContext())
-                        .setGraph(R.navigation.nav_graph)
-                        .setDestination(R.id.CbyDiscovery)
-                        .createPendingIntent();
+                    Navigation
+                        .findNavController(MainActivity.this, R.id.nav_host_fragment)
+                        .navigate(R.id.CbyDiscovery);
 
-                    try {
-                        pendingIntent.send();
-                    } catch (PendingIntent.CanceledException e) {
-                        Log.e("disconnect", "intent failed", e);
-                    }
+                    Toast.makeText(
+                        MainActivity.this.getApplicationContext(),
+                        "Connection lost",
+                        Toast.LENGTH_SHORT
+                    ).show();
                 break;
                 case "toast":
                     Toast.makeText(
@@ -86,8 +83,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        LocalBroadcastManager.getInstance(getApplicationContext())
-            .registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+        LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
+        bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+
+       bm.sendBroadcast(
+            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")
+       );
     }
 
     @Override

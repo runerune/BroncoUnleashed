@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,6 +28,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import bike.hackboy.bronco.BuildConfig;
@@ -78,6 +80,18 @@ public class BikeService extends Service {
 
 						Handler handler = new Handler(Looper.getMainLooper());
 						handler.post(() -> connection = device.connectGatt(getApplicationContext(), false, mGattCallback));
+					break;
+
+					case "check-connected":
+						BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+						List<BluetoothDevice> devices = bluetoothManager.getConnectedDevices(BluetoothProfile.GATT);
+
+						for (BluetoothDevice d : devices) {
+							if(d.getName().equals("COWBOY")) return;
+						}
+
+						//Log.d("disconnect", "device disconnected");
+						BikeService.this.notify("disconnected");
 					break;
 					//</editor-fold>
 

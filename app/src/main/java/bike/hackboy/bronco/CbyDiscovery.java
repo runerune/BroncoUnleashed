@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
-
 public class CbyDiscovery extends Fragment {
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override

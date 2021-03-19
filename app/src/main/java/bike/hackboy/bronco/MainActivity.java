@@ -33,12 +33,6 @@ public class MainActivity extends AppCompatActivity {
                     Navigation
                         .findNavController(MainActivity.this, R.id.nav_host_fragment)
                         .navigate(R.id.CbyDiscovery);
-
-                    Toast.makeText(
-                        MainActivity.this.getApplicationContext(),
-                        "Connection lost",
-                        Toast.LENGTH_SHORT
-                    ).show();
                 break;
                 case "toast":
                     Toast.makeText(

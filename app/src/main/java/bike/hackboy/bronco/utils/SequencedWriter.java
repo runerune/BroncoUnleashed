@@ -3,7 +3,6 @@ package bike.hackboy.bronco.utils;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
-import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -84,7 +83,7 @@ public class SequencedWriter {
 			lastCommandTime = System.currentTimeMillis();
 
 			SequencedWriter.WriteRequestBean item = list.get(0);
-			Log.d("writer_loop", item.toString());
+			//Log.d("writer_loop", item.toString());
 
 			boolean success = write(item.getService(), item.getCharacteristic(), item.getData());
 			if (success) list.remove(0);
@@ -94,7 +93,7 @@ public class SequencedWriter {
 	}
 
 	public void end() {
-		Log.d("writer", "completed");
+		//Log.d("writer", "completed");
 	}
 
 	protected boolean write(UUID serviceUuid, UUID characteristicUuid, byte[] data) {

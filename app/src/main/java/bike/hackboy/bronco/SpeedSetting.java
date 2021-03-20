@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
@@ -21,7 +22,7 @@ import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.FlashWriter;
 
 public class SpeedSetting extends Fragment {
-	private int speed = 25;
+	private int speed = 0;
 	private int motorMode = 0;
 	private boolean commitWrite = false;
 
@@ -40,12 +41,26 @@ public class SpeedSetting extends Fragment {
 
 		switch (service) {
 			case 0x0a:
+//				Toast.makeText(context, String.format("received motor speed value %s", value[4]), Toast.LENGTH_LONG).show();
+//				new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
+//					.setTitle("debug")
+//					.setMessage(String.format("received command\n\n%s", Converter.byteArrayToHexString(value)))
+//					.setPositiveButton("close", null)
+//					.show();
+
 				SpeedSetting.this.speed = value[4];
 				updateView();
 			break;
 			case 0x1:
 				switch(operation) {
 					case 0x10: // write notification
+//						Toast.makeText(context, "received write notification", Toast.LENGTH_LONG).show();
+//						new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
+//							.setTitle("debug")
+//							.setMessage(String.format("received command\n\n%s", Converter.byteArrayToHexString(value)))
+//							.setPositiveButton("close", null)
+//							.show();
+
 						LocalBroadcastManager.getInstance(requireContext())
 							.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
 								.putExtra("event", "read-motor-mode"));
@@ -54,6 +69,13 @@ public class SpeedSetting extends Fragment {
 					case 0x3: // read notification
 						SpeedSetting.this.motorMode = value[4];
 						updateView();
+
+//						Toast.makeText(context, String.format("received motor mode, value %s", value[4]), Toast.LENGTH_LONG).show();
+//						new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
+//							.setTitle("debug")
+//							.setMessage(String.format("received command\n\n%s", Converter.byteArrayToHexString(value)))
+//							.setPositiveButton("close", null)
+//							.show();
 
 						if (commitWrite) {
 							//Log.d("write_flash", "in write flash");
@@ -71,8 +93,19 @@ public class SpeedSetting extends Fragment {
 	public void onResume() {
 		super.onResume();
 
+		setHasOptionsMenu(true);
+
+		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
+		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed-and-motor-mode"));
+
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		//menu.findItem(R.id.debug_read_speed).setVisible(true);
+		//menu.findItem(R.id.debug_read_motor_state).setVisible(true);
 	}
 
 	@Override
@@ -95,8 +128,6 @@ public class SpeedSetting extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
-		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed"));
-		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-motor-mode"));
 
 		view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
 			LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
@@ -159,6 +190,8 @@ public class SpeedSetting extends Fragment {
 	}
 
 	private void updateView() {
+		if(speed < 1 || motorMode < 1) return;
+
 		final int MOTOR_UNRESTRICTED = 1;
 		final int MOTOR_RESTRICTED = 2;
 
@@ -167,12 +200,15 @@ public class SpeedSetting extends Fragment {
 		try {
 			switch(motorMode) {
 				case MOTOR_UNRESTRICTED:
+					view.findViewById(R.id.reading_from_bike).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.unrestricted_layout).setVisibility(View.VISIBLE);
 					view.findViewById(R.id.restricted_layout).setVisibility(View.INVISIBLE);
 				break;
 				case MOTOR_RESTRICTED:
 					((TextView) view.findViewById(R.id.max_speed_value)).setText(String.valueOf(speed));
 					((SeekBar) view.findViewById(R.id.max_speed_bar)).setProgress(speed - 25);
+
+					view.findViewById(R.id.reading_from_bike).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.unrestricted_layout).setVisibility(View.INVISIBLE);
 					view.findViewById(R.id.restricted_layout).setVisibility(View.VISIBLE);
 				break;

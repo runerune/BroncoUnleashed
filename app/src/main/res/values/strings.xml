@@ -55,4 +55,5 @@
     <string name="got_it">Got it</string>
 
     <string name="bluetooth_off">Bluetooth is off.</string>
+    <string name="reading_from_bike">Reading data from the bike...</string>
 </resources>

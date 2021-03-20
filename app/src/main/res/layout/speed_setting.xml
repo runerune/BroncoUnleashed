@@ -16,7 +16,19 @@
         android:textColor="@color/pink"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reading_from_bike"
+        android:layout_width="260dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="196dp"
+        android:gravity="center"
+        android:text="@string/reading_from_bike"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

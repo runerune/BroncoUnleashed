@@ -8,6 +8,16 @@
         android:title="@string/about"
         app:showAsAction="never" />
     <item
+        android:id="@+id/debug_read_speed"
+        android:orderInCategory="302"
+        android:title="DEBUG: read speed"
+        android:visible="false" />
+    <item
+        android:id="@+id/debug_read_motor_state"
+        android:orderInCategory="303"
+        android:title="DEBUG: read motor mode"
+        android:visible="false" />
+    <item
         android:id="@+id/debug_write_flash"
         android:orderInCategory="301"
         android:title="Debug: write flash"

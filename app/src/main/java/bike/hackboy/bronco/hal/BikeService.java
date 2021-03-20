@@ -40,6 +40,7 @@ import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
 import bike.hackboy.bronco.utils.NotificationEnabler;
+import bike.hackboy.bronco.utils.SequencedWriter;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -185,6 +186,21 @@ public class BikeService extends Service {
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setModeTorqueWithLimit);
+					break;
+					//</editor-fold>
+
+					//<editor-fold desc="combo speed+motor mode">
+					case "read-speed-and-motor-mode":
+						byte[] readMotorModeCommandSeq = Command.withChecksum(Command.READ_MOTOR_MODE);
+						byte[] readSpeedCommandWithChecksumSeq = Command.withChecksum(Command.READ_SPEED);
+
+						SequencedWriter writer = new SequencedWriter();
+						writer.setConnection(connection);
+
+						writer.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readMotorModeCommandSeq);
+						writer.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readSpeedCommandWithChecksumSeq);
+
+						writer.run();
 					break;
 					//</editor-fold>
 

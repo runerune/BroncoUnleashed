@@ -146,6 +146,12 @@ public class MainActivity extends AppCompatActivity {
             LocalBroadcastManager.getInstance(getApplicationContext())
                 .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
                     .putExtra("event", "close-flash"));
+        } else if(id == R.id.debug_read_motor_state) {
+            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
+            lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-motor-mode"));
+        } else if(id == R.id.debug_read_speed) {
+            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
+            lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed"));
         }
 
         return super.onOptionsItemSelected(item);

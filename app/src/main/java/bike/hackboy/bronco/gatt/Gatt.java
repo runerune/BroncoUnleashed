@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.util.Log;
 
@@ -33,24 +32,6 @@ public class Gatt {
 		}
 
 		throw new Exception("characteristic/service combination not found");
-	}
-
-	public static void enableNotifications(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid) {
-		//Log.d("enableNotifications", "enableNotifications");
-		BluetoothGattService service = adapter.getService(serviceUuid);
-		BluetoothGattCharacteristic characteristic = service.getCharacteristic(characteristicUuid);
-
-		List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
-
-		for (BluetoothGattDescriptor descriptor : descriptors) {
-			//Log.d("descriptor", descriptor.getUuid().toString());
-
-			BluetoothGattDescriptor clientConfig = characteristic.getDescriptor(descriptor.getUuid());
-			clientConfig.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-			adapter.writeDescriptor(clientConfig);
-
-			adapter.setCharacteristicNotification(characteristic, true);
-		}
 	}
 
 	public static void writeCharacteristic(BluetoothGatt adapter, UUID serviceUuid, UUID characteristicUuid, byte[] data) throws Exception {

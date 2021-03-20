@@ -39,6 +39,7 @@ import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.NotificationEnabler;
 
 public class BikeService extends Service {
 	private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -114,18 +115,18 @@ public class BikeService extends Service {
 
 					//<editor-fold desc="lock">
 					case "read-lock":
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-						Gatt.requestReadCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock);
+						Gatt.requestReadCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock);
 					break;
 
 					case "lock":
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-						Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.LOCK);
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock);
+						Gatt.writeCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock, Command.LOCK);
 					break;
 
 					case "unlock":
-						Gatt.ensureHasCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-						Gatt.writeCharacteristic(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock, Command.UNLOCK);
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock);
+						Gatt.writeCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicUnlock, Command.UNLOCK);
 					break;
 					//</editor-fold>
 
@@ -207,9 +208,14 @@ public class BikeService extends Service {
 
 					//<editor-fold desc="generic gatt">
 					case "enable-notify":
-						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicUnlock);
-						Gatt.enableNotifications(connection, Uuid.serviceUnlock, Uuid.characteristicDashboard);
-						Gatt.enableNotifications(connection, Uuid.serviceSettings, Uuid.characteristicSettingsRead);
+						NotificationEnabler ne = new NotificationEnabler();
+						ne.setConnection(connection);
+
+						ne.add(Uuid.serviceCby, Uuid.characteristicUnlock);
+						ne.add(Uuid.serviceCby, Uuid.characteristicDashboard);
+						ne.add(Uuid.serviceSettings, Uuid.characteristicSettingsRead);
+
+						ne.run();
 					break;
 
 					case "on-characteristic-read":
@@ -424,7 +430,7 @@ public class BikeService extends Service {
 			byte[] value = characteristic.getValue();
 			notifyCharacteristicRead(characteristic.getUuid(), value);
 
-			//Log.d("gatt", "onCharacteristicRead: " + Converter.byteArrayToHexString(value) + " UUID " + characteristic.getUuid().toString() );
+			//Log.d("gatt", "onCharacteristicChanged: " + " UUID " + characteristic.getUuid().toString() );
 		}
 	};
 }

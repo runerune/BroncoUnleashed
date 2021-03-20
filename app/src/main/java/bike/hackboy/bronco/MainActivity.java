@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
+       super.onResume();
 
-        LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
-        bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+       LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
+       bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
        bm.sendBroadcast(
             new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")

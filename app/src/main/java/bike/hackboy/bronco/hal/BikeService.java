@@ -294,7 +294,7 @@ public class BikeService extends Service {
 			getText(R.string.cycled)
 		);
 
-		NotificationManager nm = getSystemService(NotificationManager.class);
+		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		notification.setContentTitle(status);
 		notification.setContentText(subStatus);
 		nm.notify(666, notification.build());
@@ -318,7 +318,7 @@ public class BikeService extends Service {
 	}
 
 	private void removeNotification() {
-		NotificationManager nm = getSystemService(NotificationManager.class);
+		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nm.cancel(666);
 
 		// clear this so the next notification can show up instantly

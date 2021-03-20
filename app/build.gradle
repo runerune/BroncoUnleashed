@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId "bike.hackboy.bronco"
-        minSdkVersion 25
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
-        versionName "2.0"
+        versionName "2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,6 +22,11 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles 'proguard-rules.pro'
+        }
+        debug_public {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {

@@ -35,6 +35,7 @@ import bike.hackboy.bronco.data.Uuid;
 
 public class Dashboard extends Fragment {
 	private boolean locked = true;
+	private boolean hasEnabledNotifications = false;
 	private View view = null;
 
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -96,7 +97,11 @@ public class Dashboard extends Fragment {
 		setHasOptionsMenu(true);
 
 		sendIntent("read-lock");
-		sendIntent("enable-notify");
+
+		if(!hasEnabledNotifications) {
+			sendIntent("enable-notify");
+			hasEnabledNotifications = true;
+		}
 	}
 
 	@Override

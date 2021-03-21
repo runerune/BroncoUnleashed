@@ -40,8 +40,13 @@ public class DashboardBean implements Serializable {
 		if (rawDistance < 1000) {
 			setDistance(String.format("%s m", d.getDistance()));
 		} else {
-			DecimalFormat formatter = new DecimalFormat("#,###.00");
-			setDistance(formatter.format(d.getDistance() / 1000));
+			DecimalFormat formatter = new DecimalFormat("#.0");
+			setDistance(
+				String.format(
+					"%s km",
+					formatter.format((float) rawDistance / 1000)
+				)
+			);
 		}
 
 		if (uptime[0] > 0) {

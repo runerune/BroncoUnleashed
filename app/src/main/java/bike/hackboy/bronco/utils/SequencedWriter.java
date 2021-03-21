@@ -3,7 +3,6 @@ package bike.hackboy.bronco.utils;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,21 +74,23 @@ public class SequencedWriter {
 		if(adapter == null) throw new Exception("adapter not set");
 		if(list.isEmpty()) throw new Exception("nothing to run");
 
-		do {
-			if(lastCommandTime + THROTTLE_MILIS > System.currentTimeMillis()) {
-				continue;
-			}
+		Thread thread = new Thread(() -> {
+			do {
+				if(lastCommandTime + THROTTLE_MILIS > System.currentTimeMillis()) {
+					continue;
+				}
 
-			lastCommandTime = System.currentTimeMillis();
+				lastCommandTime = System.currentTimeMillis();
+				SequencedWriter.WriteRequestBean item = list.get(0);
+				//Log.d("writer_loop", item.toString());
 
-			SequencedWriter.WriteRequestBean item = list.get(0);
-			//Log.d("writer_loop", item.toString());
+				boolean success = write(item.getService(), item.getCharacteristic(), item.getData());
+				if (success) list.remove(0);
+			} while (!list.isEmpty());
 
-			boolean success = write(item.getService(), item.getCharacteristic(), item.getData());
-			if (success) list.remove(0);
-		} while (!list.isEmpty());
-
-		end();
+			end();
+		});
+		thread.start();
 	}
 
 	public void end() {

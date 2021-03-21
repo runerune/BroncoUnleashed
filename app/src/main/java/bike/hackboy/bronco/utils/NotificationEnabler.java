@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
-import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +15,9 @@ import bike.hackboy.bronco.data.Uuid;
 public class NotificationEnabler {
 	protected List<notificationRequestBean> list = new ArrayList<notificationRequestBean>();
 	protected BluetoothGatt adapter = null;
+
+	private static final int THROTTLE_MILIS = 200;
+	private long lastCommandTime = 0;
 
 	public static class notificationRequestBean implements Serializable {
 		private UUID service;
@@ -62,15 +64,24 @@ public class NotificationEnabler {
 		if(adapter == null) throw new Exception("adapter not set");
 		if(list.isEmpty()) throw new Exception("nothing to run");
 
-		do {
-			notificationRequestBean item = list.get(0);
-			//Log.d("notification_enabler_loop", item.toString());
-			if (enableNotifications(item.getService(), item.getCharacteristic())) {
-				list.remove(0);
-			}
-		} while (!list.isEmpty());
+		Thread thread = new Thread(() -> {
+			do {
+				if(lastCommandTime + THROTTLE_MILIS > System.currentTimeMillis()) {
+					continue;
+				}
 
-		end();
+				lastCommandTime = System.currentTimeMillis();
+				notificationRequestBean item = list.get(0);
+				//Log.d("notification_enabler_loop", item.toString());
+
+				if (enableNotifications(item.getService(), item.getCharacteristic())) {
+					list.remove(0);
+				}
+			} while (!list.isEmpty());
+
+			end();
+		});
+		thread.start();
 	}
 
 	public void end() {

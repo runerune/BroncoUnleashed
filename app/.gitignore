@@ -1,1 +1,6 @@
 /build
+/debug_public/
+/release/
+/releaseMinify/
+/src/generated/
+/release/

@@ -386,7 +386,7 @@ public class BikeService extends Service {
 		notification = new NotificationCompat.Builder(this, "default")
 			.setContentText(getText(R.string.service_is_running))
 			.setContentTitle(getText(R.string.not_connected))
-			.setSmallIcon(R.drawable.ic_unleashed)
+			.setSmallIcon(R.drawable.ic_unleashed_nogear)
 			.setContentIntent(bringAppToFrontPendingIntent);
 
 		//startForeground(666, notification.build());

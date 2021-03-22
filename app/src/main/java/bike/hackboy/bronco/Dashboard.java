@@ -186,6 +186,7 @@ public class Dashboard extends Fragment {
 			});
 		} catch (Exception e) {
 			Log.e("dashboard_update", "failed in dashboard listener", e);
+			e.printStackTrace();
 		}
 	}
 
@@ -202,6 +203,7 @@ public class Dashboard extends Fragment {
 			});
 		} catch (Exception e) {
 			Log.e("locked_update", "failed in locked update", e);
+			e.printStackTrace();
 		}
 	}
 

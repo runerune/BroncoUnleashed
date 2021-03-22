@@ -273,6 +273,7 @@ public class BikeService extends Service {
 				}
 			} catch (Exception e) {
 				Log.e("cmd_fail", e.getMessage(), e);
+				e.printStackTrace();
 			}
 		}
 	};

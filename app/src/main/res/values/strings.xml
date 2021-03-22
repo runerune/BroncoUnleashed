@@ -56,4 +56,17 @@
 
     <string name="bluetooth_off">Bluetooth is off.</string>
     <string name="reading_from_bike">Reading data from the bike...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_text">You can provide your CBY credentials to view detailed information about your bike.</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="cby_user_details">(BETA) CBY API data</string>
+    <string name="log_out">Log out</string>
+    <string name="last_seen">Last seen at</string>
+    <string name="on">on</string>
+    <string name="total_distance">Total distance</string>
+    <string name="co2_saved">CO2 saved</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 </resources>

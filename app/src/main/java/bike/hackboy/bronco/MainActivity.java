@@ -138,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
         } else if(id == R.id.stop_and_quit) {
             stopService(new Intent(this, BikeService.class));
             this.finishAffinity();
+        } else if(id == R.id.cby_api_data) {
+            Navigation
+                .findNavController(MainActivity.this, R.id.nav_host_fragment)
+                .navigate(R.id.UserData);
         } else if(id == R.id.debug_write_flash) {
             LocalBroadcastManager.getInstance(getApplicationContext())
                 .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)

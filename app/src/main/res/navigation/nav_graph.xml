@@ -38,5 +38,5 @@
         android:id="@+id/UserData"
         android:name="bike.hackboy.bronco.User"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/user" />
 </navigation>

@@ -38,7 +38,7 @@
         android:id="@+id/button_log_out"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/log_out"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +51,7 @@
         android:id="@+id/logged_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:constraint_referenced_ids="button_log_in,login_text,login_layout" />
 
     <androidx.constraintlayout.widget.Group
@@ -107,7 +107,7 @@
         android:id="@+id/bike_name"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:textAlignment="center"
         android:textColor="@color/pink"
         android:textSize="40sp"
@@ -120,13 +120,12 @@
         android:id="@+id/items_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_log_out"
+        android:layout_marginTop="24dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bike_name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/bike_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

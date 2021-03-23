@@ -20,10 +20,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/reading_from_bike"
+        android:id="@+id/reading_from_bike_text"
         android:layout_width="260dp"
         android:layout_height="74dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="280dp"
         android:gravity="center"
         android:text="@string/reading_from_bike"
         android:textColor="@color/pink"
@@ -165,6 +165,15 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/reading_from_bike_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/reading_from_bike_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/restricted_layout"
         android:layout_width="wrap_content"
@@ -178,5 +187,11 @@
         android:layout_height="wrap_content"
         android:visibility="invisible"
         app:constraint_referenced_ids="speed_limit_disabled,button_speed_cancel_large,button_enable_limit" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/reading_from_bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="reading_from_bike_progress,reading_from_bike_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

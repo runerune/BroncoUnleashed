@@ -274,6 +274,7 @@ public class CbyBikeResponseBean {
 		entry = new PropertiesBean();
 		entry.setName("Pairing code");
 		entry.setValue(passkey);
+		entry.setLast(true);
 		list.add(entry);
 
 		return list;

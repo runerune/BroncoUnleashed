@@ -33,6 +33,12 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 		PropertiesBean entry = data.get(position);
 		holder.name.setText(entry.getName());
 		holder.value.setText(entry.getValue());
+
+		if (entry.isLast()) {
+			holder.setIsRecyclable(false);
+			holder.divider.setVisibility(View.INVISIBLE);
+			holder.value.setPadding(0, 0, 0, 156);
+		}
 	}
 
 	@Override
@@ -43,11 +49,13 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 	public static class ViewHolder extends RecyclerView.ViewHolder {
 		TextView name;
 		TextView value;
+		TextView divider;
 
 		ViewHolder(View itemView) {
 			super(itemView);
 			name = itemView.findViewById(R.id.name);
 			value = itemView.findViewById(R.id.value);
+			divider = itemView.findViewById(R.id.divider);
 		}
 	}
 }

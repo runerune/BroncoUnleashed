@@ -9,22 +9,22 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/debug_read_speed"
-        android:orderInCategory="302"
+        android:orderInCategory="970"
         android:title="DEBUG: read speed"
         android:visible="false" />
     <item
         android:id="@+id/debug_read_motor_state"
-        android:orderInCategory="303"
+        android:orderInCategory="980"
         android:title="DEBUG: read motor mode"
         android:visible="false" />
     <item
         android:id="@+id/debug_write_flash"
-        android:orderInCategory="301"
+        android:orderInCategory="990"
         android:title="Debug: write flash"
         android:visible="false" />
     <item
         android:id="@+id/debug_close_flash"
-        android:orderInCategory="302"
+        android:orderInCategory="999"
         android:title="Debug: close flash"
         android:visible="false" />
     <item
@@ -34,11 +34,11 @@
         android:visible="false" />
     <item
         android:id="@+id/cby_api_data"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="@string/cby_user_details" />
     <item
         android:id="@+id/disconnect"
-        android:orderInCategory="101"
+        android:orderInCategory="100"
         android:title="@string/disconnect"
         app:showAsAction="never" />
 </menu>

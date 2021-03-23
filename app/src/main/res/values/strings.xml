@@ -2,6 +2,7 @@
     <string name="app_name">Bronco Unleashed</string>
     <string name="about">About app</string>
     <string name="speed_setting_label">Speed setting</string>
+    <string name="dashboard">Dashboard</string>
     <string name="cby_discovery_label">Discovery</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
@@ -61,7 +62,7 @@
     <string name="login_text">You can provide your CBY credentials to view detailed information about your bike.</string>
     <string name="email">E-mail</string>
     <string name="password">Password</string>
-    <string name="cby_user_details">(BETA) CBY API data</string>
+    <string name="cby_user_details">Bike details</string>
     <string name="log_out">Log out</string>
     <string name="last_seen">Last seen at</string>
     <string name="on">on</string>

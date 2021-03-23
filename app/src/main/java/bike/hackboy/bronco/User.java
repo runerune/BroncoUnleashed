@@ -58,6 +58,8 @@ public class User extends Fragment {
 		View rootView = inflater.inflate(R.layout.user, container, false);
 		recyclerViewBikeDetails = rootView.findViewById(R.id.items_list);
 
+		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.cby_user_details);
+
 		return rootView;
 	}
 

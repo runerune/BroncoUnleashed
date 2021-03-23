@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
        bm.sendBroadcast(
             new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")
        );
+
+       this.getSupportActionBar().setTitle(R.string.app_name);
     }
 
     @Override

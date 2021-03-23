@@ -83,7 +83,7 @@ public class Dashboard extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
+		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.dashboard);
 		return inflater.inflate(R.layout.dashboard, container, false);
 	}
 

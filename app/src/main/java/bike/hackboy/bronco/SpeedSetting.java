@@ -121,6 +121,7 @@ public class SpeedSetting extends Fragment {
 		LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState
 	) {
+		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.speed_setting_label);
 		return inflater.inflate(R.layout.speed_setting, container, false);
 	}
 

@@ -51,7 +51,7 @@ public class CbyDiscovery extends Fragment {
 		LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState
 	) {
-		// Inflate the layout for this fragment
+		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.app_name);
 		return inflater.inflate(R.layout.discovery, container, false);
 	}
 

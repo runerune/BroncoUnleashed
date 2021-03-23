@@ -5,8 +5,11 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
+import java.util.Locale;
 
 import bike.hackboy.bronco.DashboardProto;
 import bike.hackboy.bronco.utils.Converter;
@@ -40,7 +43,10 @@ public class DashboardBean implements Serializable {
 		if (rawDistance < 1000) {
 			setDistance(String.format("%s m", d.getDistance()));
 		} else {
-			DecimalFormat formatter = new DecimalFormat("#.0");
+			DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+			DecimalFormat formatter = new DecimalFormat("#.0", symbols);
+			formatter.setRoundingMode(RoundingMode.CEILING);
+
 			setDistance(
 				String.format(
 					"%s km",

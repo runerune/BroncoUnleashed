@@ -70,4 +70,5 @@
     <string name="co2_saved">CO2 saved</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
 </resources>

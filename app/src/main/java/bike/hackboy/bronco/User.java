@@ -36,6 +36,8 @@ public class User extends Fragment {
 	protected SharedPreferences sharedPref = null;
 
 	protected boolean loggedIn = false;
+	protected boolean loading = true;
+
 	protected CbyBikeResponseBean bike;
 
 	protected String uid;
@@ -110,8 +112,9 @@ public class User extends Fragment {
 		uid = sharedPref.getString("uid", null);
 
 		loggedIn = uid != null && clientId != null && token != null && bikeId > 0;
+		if(!loggedIn) loading = false;
 
-		setupUi(loggedIn);
+		setupUi(loggedIn, loading);
 		if(loggedIn) getBike();
 	}
 
@@ -125,6 +128,9 @@ public class User extends Fragment {
 		EditText passwordField = requireView().findViewById(R.id.password);
 		String username = usernameField.getText().toString();
 		String password = passwordField.getText().toString();
+
+		loading = true;
+		setupUi(loggedIn, true);
 
 		Client client = new Client(new Client.OnDoneCallback() {
 			@Override
@@ -184,6 +190,9 @@ public class User extends Fragment {
 	}
 
 	public void getBike() {
+		loading = true;
+		setupUi(loggedIn, true);
+
 		Client client = new Client(new Client.OnDoneCallback() {
 			@Override
 			public void onResponse(Response response) {
@@ -229,7 +238,10 @@ public class User extends Fragment {
 						}
 
 						requireActivity().runOnUiThread(() -> {
+							loading = false;
+
 							storeBike(bike);
+							setupUi(loggedIn, loading);
 						});
 					} else {
 						throw new IllegalStateException("could not retrieve bike");
@@ -252,9 +264,18 @@ public class User extends Fragment {
 		client.getBike(uid, clientId, token, bikeId);
 	}
 
-	protected void setupUi(boolean loggedIn) {
+	protected void setupUi(boolean loggedIn, boolean loading) {
 		View view = requireView();
 
+		if(loading) {
+			view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.logged_out).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.logged_in).setVisibility(View.INVISIBLE);
+
+			return;
+		}
+
+		view.findViewById(R.id.loading).setVisibility(View.INVISIBLE);
 		view.findViewById(R.id.logged_out).setVisibility(loggedIn ? View.INVISIBLE: View.VISIBLE);
 		view.findViewById(R.id.logged_in).setVisibility(loggedIn ? View.VISIBLE: View.INVISIBLE);
 	}

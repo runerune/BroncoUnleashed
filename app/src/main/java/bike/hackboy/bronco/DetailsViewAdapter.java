@@ -37,7 +37,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 		if (entry.isLast()) {
 			holder.setIsRecyclable(false);
 			holder.divider.setVisibility(View.INVISIBLE);
-			holder.value.setPadding(0, 0, 0, 156);
+			holder.value.setPadding(0, 0, 0, 160);
 		}
 	}
 

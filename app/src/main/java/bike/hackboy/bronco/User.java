@@ -52,7 +52,7 @@ public class User extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		ensureUserData();
+		if(loading) ensureUserData();
 	}
 
 	@Override

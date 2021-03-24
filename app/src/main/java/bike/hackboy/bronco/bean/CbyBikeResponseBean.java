@@ -26,10 +26,19 @@ public class CbyBikeResponseBean {
 	private String serial; //serial_number
 	private String passkey; //passkey
 	private String positionAddress; //position.address
+	private String firmwareVersion; //firmware_version
 
 	private Date activatedAt; //activated_at
 	private Date seenAt; //seen_at
 	private Date positionReceivedAt; //position.received_at
+
+	public String getFirmwareVersion() {
+		return firmwareVersion;
+	}
+
+	public void setFirmwareVersion(String firmwareVersion) {
+		this.firmwareVersion = firmwareVersion;
+	}
 
 	public String getMarket() {
 		return market;
@@ -167,7 +176,6 @@ public class CbyBikeResponseBean {
 		this.positionLon = positionLon;
 	}
 
-	@NotNull
 	@Override
 	public String toString() {
 		return "CbyBikeResponseBean{" +
@@ -185,106 +193,10 @@ public class CbyBikeResponseBean {
 			", serial='" + serial + '\'' +
 			", passkey='" + passkey + '\'' +
 			", positionAddress='" + positionAddress + '\'' +
+			", firmwareVersion='" + firmwareVersion + '\'' +
 			", activatedAt=" + activatedAt +
 			", seenAt=" + seenAt +
 			", positionReceivedAt=" + positionReceivedAt +
 			'}';
 	}
-
-	public List<PropertiesBean> toPropertiesList() {
-		List<PropertiesBean> list = new ArrayList<>();
-
-		PropertiesBean entry;
-
-		entry = new PropertiesBean();
-		entry.setName("Seen on");
-		entry.setValue(seenAt.toString());
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Seen at");
-		entry.setValue(positionAddress);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Latitude");
-		entry.setValue(formatDecimal(positionLat));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Longitude");
-		entry.setValue(formatDecimal(positionLon));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Last position update");
-		entry.setValue(positionReceivedAt.toString());
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Total distance");
-		entry.setValue(String.format("%s km", formatDecimal(totalDistance)));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("CO2 saved");
-		entry.setValue(String.format("%s kg", Math.floor(pcbBatteryCharge)));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Battery");
-		entry.setValue(String.format("%s%%", Math.floor(batteryCharge)));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("PCB battery");
-		entry.setValue(String.format("%s%%", Math.floor(pcbBatteryCharge)));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Range");
-		entry.setValue(String.format("%s km", formatDecimal(autonomy)));
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Serial number");
-		entry.setValue(serial);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Color");
-		entry.setValue(color);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("MAC address");
-		entry.setValue(mac);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Activated at");
-		entry.setValue(activatedAt.toString());
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Market");
-		entry.setValue(market);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("Pairing code");
-		entry.setValue(passkey);
-		entry.setLast(true);
-		list.add(entry);
-
-		return list;
-	}
-
-	private String formatDecimal(float number) {
-		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-		DecimalFormat decimalFormat = new DecimalFormat("#.####", symbols);
-		decimalFormat.setRoundingMode(RoundingMode.CEILING);
-		return decimalFormat.format(number);
-	}
-
 }

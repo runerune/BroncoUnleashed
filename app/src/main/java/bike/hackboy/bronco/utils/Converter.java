@@ -1,5 +1,12 @@
 package bike.hackboy.bronco.utils;
 
+import android.location.Location;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public class Converter {
 	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
@@ -38,5 +45,28 @@ public class Converter {
 			sb.append(c);
 		}
 		return sb.toString();
+	}
+
+	public static String floatCoordsToDegrees(double coords) {
+		StringBuilder builder = new StringBuilder();
+
+		String latitudeDegrees = Location.convert(Math.abs(coords), Location.FORMAT_SECONDS);
+		String[] latitudeSplit = latitudeDegrees.split(":");
+
+		builder.append(latitudeSplit[0]);
+		builder.append("°");
+		builder.append(latitudeSplit[1]);
+		builder.append("′");
+		builder.append(latitudeSplit[2].replace(',', '.'));
+		builder.append("″");
+
+		return builder.toString();
+	}
+
+	public static String formatDecimal(float number) {
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+		DecimalFormat decimalFormat = new DecimalFormat("#.00", symbols);
+		decimalFormat.setRoundingMode(RoundingMode.CEILING);
+		return decimalFormat.format(number);
 	}
 }

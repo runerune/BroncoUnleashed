@@ -4,6 +4,7 @@ public class PropertiesBean {
 	private String name;
 	private String value;
 	private boolean last = false;
+	private boolean isGeoLink = false;
 
 	public String getName() {
 		return name;
@@ -29,12 +30,21 @@ public class PropertiesBean {
 		this.last = last;
 	}
 
+	public boolean isGeoLink() {
+		return isGeoLink;
+	}
+
+	public void setGeoLink(boolean geoLink) {
+		isGeoLink = geoLink;
+	}
+
 	@Override
 	public String toString() {
 		return "PropertiesBean{" +
 			"name='" + name + '\'' +
 			", value='" + value + '\'' +
 			", last=" + last +
+			", isGeoLink=" + isGeoLink +
 			'}';
 	}
 }

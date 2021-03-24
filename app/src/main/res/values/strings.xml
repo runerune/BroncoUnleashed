@@ -16,8 +16,6 @@
     <string name="lock">Lock</string>
     <string name="unlock">Unlock</string>
     <string name="set_speed">Set speed limit</string>
-    <string name="light_on">Light on</string>
-    <string name="light_off">Light off</string>
     <string name="log_in_with_cby">Log in with CBY</string>
     <string name="cancel">Back</string>
     <string name="disconnect">Disconnect</string>
@@ -41,7 +39,7 @@
     <string name="caution_advanced">This may void your warranty</string>
     <string name="disable_speed_limit_explanation">
         You are about to fully remove speed restriction on the bike. This prevents the official app from
-        reapplying it and can only be reverted using Bronco.\n\nProceed at your own risk.
+        reapplying it and can only be reverted using Bronco Unleashed.\n\nProceed at your own risk.
     </string>
     <string name="proceed">Proceed</string>
     <string name="abort">Abort</string>
@@ -57,18 +55,31 @@
 
     <string name="bluetooth_off">Bluetooth is off.</string>
     <string name="reading_from_bike">Retrieving data</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_text">You can provide your CBY credentials to view detailed information about your bike.</string>
+
     <string name="email">E-mail</string>
     <string name="password">Password</string>
     <string name="cby_user_details">Bike details</string>
     <string name="log_out">Log out</string>
-    <string name="last_seen">Last seen at</string>
-    <string name="on">on</string>
+
+    <string name="location">Location</string>
+    <string name="last_seen">Last seen</string>
     <string name="total_distance">Total distance</string>
     <string name="co2_saved">CO2 saved</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="coords">Coordinates</string>
+    <string name="geo_link">geo: link</string>
+    <string name="bike_battery">Bike battery level</string>
+    <string name="pcb_battery">Backup PCB battery</string>
+    <string name="range_estimate">Estimated range with current use</string>
+    <string name="serial_number">Serial number</string>
+    <string name="color">Color</string>
+    <string name="mac_address">MAC address</string>
+    <string name="firmware_version">Firmware version</string>
+    <string name="activated_at">Activated at</string>
+    <string name="market">Market</string>
+    <string name="pairing_code">Pairing code</string>
+
     <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
 </resources>

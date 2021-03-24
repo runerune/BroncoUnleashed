@@ -14,9 +14,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import bike.hackboy.bronco.hal.BikeService;
 
@@ -75,16 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-       super.onResume();
+        super.onResume();
 
-       LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
-       bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+        if(isCurrentFragmentBackable()) {
+            return;
+        }
 
-       bm.sendBroadcast(
-            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")
-       );
-
-       this.getSupportActionBar().setTitle(R.string.app_name);
+        ensureStillConnected();
+        this.getSupportActionBar().setTitle(R.string.app_name);
     }
 
     @Override
@@ -92,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Intent intent = new Intent(this, BikeService.class);
-        //ContextCompat.startForegroundService(this, intent);
 
         startService(intent);
 
@@ -163,8 +164,37 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    protected boolean isCurrentFragmentBackable() {
+        // hacky but getFragmentById is very unreliable
+
+        List<String> backable = new ArrayList<>();
+        backable.add((String) getText(R.string.cby_user_details));
+
+        assert getSupportActionBar() != null;
+        assert getSupportActionBar().getTitle() != null;
+
+        Log.w("backable", backable.toString());
+
+        return backable.contains(getSupportActionBar().getTitle().toString());
+    }
+
+    protected void ensureStillConnected() {
+        LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
+        bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+
+        bm.sendBroadcast(
+            new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")
+        );
+    }
+
     @Override
     public void onBackPressed() {
+        if(isCurrentFragmentBackable()) {
+            ensureStillConnected();
+            super.onBackPressed();
+            return;
+        }
+
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

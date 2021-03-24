@@ -30,6 +30,7 @@ import java.util.List;
 import bike.hackboy.bronco.api.Client;
 import bike.hackboy.bronco.bean.CbyBikeResponseBean;
 import bike.hackboy.bronco.bean.PropertiesBean;
+import bike.hackboy.bronco.utils.BikePropertyBuilder;
 import okhttp3.Response;
 
 public class User extends Fragment {
@@ -94,12 +95,9 @@ public class User extends Fragment {
 		Log.d("bike", bike.toString());
 
 		bikePropertiesList.clear();
-		bikePropertiesList.addAll(bike.toPropertiesList());
-
-		Log.d("list", bike.toPropertiesList().toString());
+		bikePropertiesList.addAll(BikePropertyBuilder.fromBikeBean(bike));
 
 		((TextView) requireView().findViewById(R.id.bike_name)).setText(bike.getName());
-
 		detailsViewAdapter.notifyDataSetChanged();
 	}
 
@@ -223,14 +221,15 @@ public class User extends Fragment {
 							bike.setSerial(bikeJson.getString("serial_number"));
 							bike.setMac(bikeJson.getString("mac_address"));
 							bike.setName(bikeJson.getString("nickname"));
+							bike.setFirmwareVersion(bikeJson.getString("firmware_version"));
 
 							@SuppressLint("SimpleDateFormat")
-							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+							SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
 							try {
-								bike.setSeenAt(format.parse(bikeJson.getString("seen_at")));
-								bike.setActivatedAt(format.parse(bikeJson.getString("activated_at")));
-								bike.setPositionReceivedAt(format.parse(bikeJson.getJSONObject("position").getString("received_at")));
+								bike.setSeenAt(sourceFormat.parse(bikeJson.getString("seen_at")));
+								bike.setActivatedAt(sourceFormat.parse(bikeJson.getString("activated_at")));
+								bike.setPositionReceivedAt(sourceFormat.parse(bikeJson.getJSONObject("position").getString("received_at")));
 							} catch (ParseException ignored) { }
 
 						} catch(JSONException | NullPointerException e) {

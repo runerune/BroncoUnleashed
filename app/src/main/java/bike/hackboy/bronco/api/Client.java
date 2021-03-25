@@ -17,7 +17,7 @@ public class Client {
 	protected static final String magic = Converter.rot13("rlWuoTpvBvWVHmV1AvVfVaE5pPV6VxcKIPW9");
 	protected static final String baseUrl = Converter.rot13("uggcf://ncc-ncv.pbjobl.ovxr");
 
-	protected OnDoneCallback onDoneCallback = null;
+	protected OnDoneCallback onDoneCallback;
 
 	public abstract static class OnDoneCallback {
 		public void onResponse(Response response) { }

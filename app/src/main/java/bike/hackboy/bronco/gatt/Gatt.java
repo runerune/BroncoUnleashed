@@ -1,14 +1,11 @@
 package bike.hackboy.bronco.gatt;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.util.Log;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class Gatt {

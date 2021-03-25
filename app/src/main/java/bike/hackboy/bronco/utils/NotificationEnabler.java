@@ -13,7 +13,7 @@ import java.util.UUID;
 import bike.hackboy.bronco.data.Uuid;
 
 public class NotificationEnabler {
-	protected final List<notificationRequestBean> list = new ArrayList<notificationRequestBean>();
+	protected final List<notificationRequestBean> list = new ArrayList<>();
 	protected BluetoothGatt adapter = null;
 
 	private static final int THROTTLE_MILIS = 200;

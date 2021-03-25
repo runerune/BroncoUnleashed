@@ -51,12 +51,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 		}
 
 		if (onDeviceClickListener != null) {
-			holder.container.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					onDeviceClickListener.onClick(mac);
-				}
-			});
+			holder.container.setOnClickListener(v -> onDeviceClickListener.onClick(mac));
 		}
 	}
 

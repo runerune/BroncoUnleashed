@@ -2,9 +2,6 @@ package bike.hackboy.bronco.utils;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

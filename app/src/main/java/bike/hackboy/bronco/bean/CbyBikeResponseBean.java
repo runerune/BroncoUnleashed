@@ -1,14 +1,6 @@
 package bike.hackboy.bronco.bean;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class CbyBikeResponseBean {
 	private float autonomy; //autonomy

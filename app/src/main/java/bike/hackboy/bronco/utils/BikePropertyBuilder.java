@@ -21,8 +21,8 @@ public class BikePropertyBuilder {
 
 		// ------------------------------------------------------
 
-		float lat = bean.getPositionLon();
-		float lon = bean.getPositionLat();
+		float lat = bean.getPositionLat();
+		float lon = bean.getPositionLon();
 
 		String combinedLatLon = String.format(
 			"%s %s, %s %s",

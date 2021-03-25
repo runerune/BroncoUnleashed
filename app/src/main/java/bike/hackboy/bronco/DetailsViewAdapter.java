@@ -49,15 +49,13 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 			holder.name.setText(context.getString(resourceId));
 			holder.value.setText(entry.getValue());
 
-			if(entry.isGeoLink()) {
+			if(entry.hasLink()) {
 				SpannableString spanStr = new SpannableString(entry.getValue());
 				spanStr.setSpan(new UnderlineSpan(), 0, spanStr.length(), 0);
 				holder.value.setText(spanStr);
 
 				holder.container.setOnClickListener(v -> {
-					Uri uri = Uri.parse(entry.getValue());
-
-					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(entry.getLink()));
 					context.startActivity(intent);
 				});
 

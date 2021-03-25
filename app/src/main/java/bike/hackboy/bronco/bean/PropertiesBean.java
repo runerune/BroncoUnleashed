@@ -3,8 +3,8 @@ package bike.hackboy.bronco.bean;
 public class PropertiesBean {
 	private String name;
 	private String value;
+	private String link;
 	private boolean last = false;
-	private boolean isGeoLink = false;
 
 	public String getName() {
 		return name;
@@ -30,12 +30,16 @@ public class PropertiesBean {
 		this.last = last;
 	}
 
-	public boolean isGeoLink() {
-		return isGeoLink;
+	public String getLink() {
+		return this.link;
 	}
 
-	public void setGeoLink(boolean geoLink) {
-		isGeoLink = geoLink;
+	public boolean hasLink() {
+		return this.link != null && !this.link.isEmpty();
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	@Override
@@ -44,7 +48,7 @@ public class PropertiesBean {
 			"name='" + name + '\'' +
 			", value='" + value + '\'' +
 			", last=" + last +
-			", isGeoLink=" + isGeoLink +
+			", link=" + link +
 			'}';
 	}
 }

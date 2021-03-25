@@ -32,8 +32,6 @@ public class BikePropertyBuilder {
 			lon > 0 ? "E" : "W"
 		);
 
-		String geoLink = String.format("geo:%s,%s", lat, lon);
-
 		// ------------------------------------------------------
 
 		PropertiesBean entry;
@@ -51,12 +49,7 @@ public class BikePropertyBuilder {
 		entry = new PropertiesBean();
 		entry.setName("coords");
 		entry.setValue(combinedLatLon);
-		list.add(entry);
-
-		entry = new PropertiesBean();
-		entry.setName("geo_link");
-		entry.setValue(geoLink);
-		entry.setGeoLink(true);
+		entry.setLink(String.format("geo:%s,%s", lat, lon));
 		list.add(entry);
 
 		entry = new PropertiesBean();

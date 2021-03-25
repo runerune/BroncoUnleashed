@@ -58,7 +58,7 @@ public class CbyDiscovery extends Fragment {
 	public void lookForCboy() {
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-			Toast.makeText(this.getContext(), R.string.bluetooth_off, Toast.LENGTH_LONG).show();
+			if (isAdded()) Toast.makeText(this.getContext(), R.string.bluetooth_off, Toast.LENGTH_LONG).show();
 		}
 
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);

@@ -58,9 +58,9 @@ public class User extends Fragment {
 	}
 
 	@Override
-	public void onPause() {
-		super.onPause();
+	public void onDestroy() {
 		((MainActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+		super.onDestroy();
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class User extends Fragment {
 							storeCredentials(uid, client, token, bikeId);
 							ensureUserData();
 
-							Toast.makeText(requireContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
+							if (isAdded()) Toast.makeText(requireContext(), "Logged in successfully", Toast.LENGTH_LONG).show();
 						});
 					} else {
 						throw new IllegalStateException("invalid credentials");
@@ -188,7 +188,7 @@ public class User extends Fragment {
 			@Override
 			public void onError(Exception e) {
 				requireActivity().runOnUiThread(() -> {
-					Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
+					if (isAdded()) Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
 				});
 
 				e.printStackTrace();
@@ -264,7 +264,7 @@ public class User extends Fragment {
 			@Override
 			public void onError(Exception e) {
 				requireActivity().runOnUiThread(() -> {
-					Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
+					if (isAdded()) Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
 				});
 
 				e.printStackTrace();

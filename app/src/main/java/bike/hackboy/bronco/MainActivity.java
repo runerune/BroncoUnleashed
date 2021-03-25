@@ -14,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -178,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         assert getSupportActionBar().getTitle() != null;
 
-        Log.w("backable", backable.toString());
+        //Log.d("backable", backable.toString());
 
         return backable.contains(getSupportActionBar().getTitle().toString());
     }

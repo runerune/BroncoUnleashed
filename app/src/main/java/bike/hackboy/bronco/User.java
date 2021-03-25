@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,11 +58,21 @@ public class User extends Fragment {
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+		((MainActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.user, container, false);
 		recyclerViewBikeDetails = rootView.findViewById(R.id.items_list);
 
-		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.cby_user_details);
+		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
+		assert bar != null;
+
+		bar.setTitle(R.string.cby_user_details);
+		bar.setDisplayHomeAsUpEnabled(true);
 
 		return rootView;
 	}

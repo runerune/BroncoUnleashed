@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         Intent intent = new Intent(this, BikeService.class);
-
         startService(intent);
 
         if (ACTION_RESET_SPEED.equals(getIntent().getAction())) {
@@ -163,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
         } else if(id == R.id.debug_read_speed) {
             LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
             lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed"));
+        } else if(id == android.R.id.home) {
+            onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);

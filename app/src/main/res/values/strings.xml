@@ -82,4 +82,5 @@
     <string name="pairing_code">Pairing code</string>
 
     <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
+    <string name="retry_scan">Retry scan</string>
 </resources>

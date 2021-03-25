@@ -75,14 +75,7 @@ public class BikeService extends Service {
 					break;
 
 					case "connect":
-						String mac;
-
-						try {
-							mac = Gatt.getDeviceMacByName(bluetoothAdapter, "COWBOY");
-						} catch (Exception e) {
-							BikeService.this.toast("No bikes found");
-							return;
-						}
+						String mac = intent.getStringExtra("mac");
 
 						BikeService.this.toast("Connecting...");
 						BluetoothDevice device = bluetoothAdapter.getRemoteDevice(mac);

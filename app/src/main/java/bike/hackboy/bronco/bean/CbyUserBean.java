@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class CbyUserBean implements Serializable {
 	private String email;
 	private String password;

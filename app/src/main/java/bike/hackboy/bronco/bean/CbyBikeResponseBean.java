@@ -2,6 +2,7 @@ package bike.hackboy.bronco.bean;
 
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class CbyBikeResponseBean {
 	private float autonomy; //autonomy
 	private float batteryCharge; //battery_state_of_charge

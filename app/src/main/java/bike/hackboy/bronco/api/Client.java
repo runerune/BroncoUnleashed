@@ -14,8 +14,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Client {
-	protected static String magic = Converter.rot13("rlWuoTpvBvWVHmV1AvVfVaE5pPV6VxcKIPW9");
-	protected static String baseUrl = Converter.rot13("uggcf://ncc-ncv.pbjobl.ovxr");
+	protected static final String magic = Converter.rot13("rlWuoTpvBvWVHmV1AvVfVaE5pPV6VxcKIPW9");
+	protected static final String baseUrl = Converter.rot13("uggcf://ncc-ncv.pbjobl.ovxr");
 
 	protected OnDoneCallback onDoneCallback = null;
 

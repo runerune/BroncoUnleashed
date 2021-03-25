@@ -47,7 +47,7 @@ public class User extends Fragment {
 	protected String token;
 	protected int bikeId;
 
-	protected List<PropertiesBean> bikePropertiesList = new ArrayList<>();
+	protected final List<PropertiesBean> bikePropertiesList = new ArrayList<>();
 	protected RecyclerView recyclerViewBikeDetails;
 	protected DetailsViewAdapter detailsViewAdapter;
 

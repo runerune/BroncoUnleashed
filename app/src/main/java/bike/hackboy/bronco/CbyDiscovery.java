@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class CbyDiscovery extends Fragment {
-	ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
+	final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
 

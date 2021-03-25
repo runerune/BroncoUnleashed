@@ -70,9 +70,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
-		TextView name;
-		TextView mac;
-		ConstraintLayout container;
+		final TextView name;
+		final TextView mac;
+		final ConstraintLayout container;
 
 		ViewHolder(View itemView) {
 			super(itemView);

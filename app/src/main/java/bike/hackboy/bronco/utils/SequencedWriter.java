@@ -11,7 +11,7 @@ import java.util.UUID;
 
 
 public class SequencedWriter {
-	protected List<WriteRequestBean> list = new ArrayList<>();
+	protected final List<WriteRequestBean> list = new ArrayList<>();
 	protected BluetoothGatt adapter = null;
 
 	private static final int THROTTLE_MILIS = 1000;
@@ -93,6 +93,7 @@ public class SequencedWriter {
 		thread.start();
 	}
 
+	@SuppressWarnings("EmptyMethod")
 	public void end() {
 		//Log.d("writer", "completed");
 	}

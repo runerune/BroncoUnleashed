@@ -69,21 +69,4 @@ public class Gatt {
 
 		adapter.readCharacteristic(characteristic);
 	}
-
-	public static String getDeviceMacByName(BluetoothAdapter adapter, String name) throws Exception {
-		Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
-
-		if (pairedDevices.size() > 0) {
-			for (BluetoothDevice device : pairedDevices) {
-				String deviceName = device.getName().trim();
-				//Log.d("device found", deviceName);
-
-				if (deviceName.equals(name)) {
-					return device.getAddress();
-				}
-			}
-		}
-
-		throw new Exception("could not find device by name");
-	}
 }

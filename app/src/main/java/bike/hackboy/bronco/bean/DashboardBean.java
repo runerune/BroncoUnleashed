@@ -14,6 +14,7 @@ import java.util.Locale;
 import bike.hackboy.bronco.DashboardProto;
 import bike.hackboy.bronco.utils.Converter;
 
+@SuppressWarnings("unused")
 public class DashboardBean implements Serializable {
 	private boolean lightOn;
 	private int rawDistance;

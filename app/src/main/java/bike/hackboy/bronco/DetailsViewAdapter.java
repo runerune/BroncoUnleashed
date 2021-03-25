@@ -80,10 +80,10 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
-		TextView name;
-		TextView value;
-		TextView divider;
-		ConstraintLayout container;
+		final TextView name;
+		final TextView value;
+		final TextView divider;
+		final ConstraintLayout container;
 
 		ViewHolder(View itemView) {
 			super(itemView);

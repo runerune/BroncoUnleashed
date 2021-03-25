@@ -49,7 +49,7 @@ public class BikeService extends Service {
 	private NotificationCompat.Builder notification = null;
 	private PowerManager.WakeLock wakeLock = null;
 
-	private static int NOTIFICATION_THROTTLE = 3000;
+	private static final int NOTIFICATION_THROTTLE = 3000;
 	private long lastNotification = 0;
 
 	// --------------------------------------------------

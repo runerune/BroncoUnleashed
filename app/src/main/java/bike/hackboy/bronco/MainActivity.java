@@ -26,6 +26,7 @@ import bike.hackboy.bronco.hal.BikeService;
 
 public class MainActivity extends AppCompatActivity {
     private static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";
+    private LocalBroadcastManager localBroadcastManager;
 
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        localBroadcastManager.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
         if(isCurrentFragmentBackable()) {
             return;
@@ -179,10 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void ensureStillConnected() {
-        LocalBroadcastManager bm =  LocalBroadcastManager.getInstance(getApplicationContext());
-        bm.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
-
-        bm.sendBroadcast(
+        localBroadcastManager.sendBroadcast(
             new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "check-connected")
         );
     }

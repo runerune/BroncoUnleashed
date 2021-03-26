@@ -10,33 +10,35 @@
         android:id="@+id/speed_limit_disabled"
         android:layout_width="260dp"
         android:layout_height="74dp"
-        android:layout_marginTop="196dp"
         android:gravity="center"
         android:text="@string/disabled_in_motor"
         android:textColor="@color/pink"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_disable_limit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
 
     <TextView
         android:id="@+id/reading_from_bike_text"
         android:layout_width="260dp"
         android:layout_height="74dp"
-        android:layout_marginTop="280dp"
         android:gravity="center"
         android:text="@string/reading_from_bike"
         android:textColor="@color/pink"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/caution"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.54" />
 
     <Button
         android:id="@+id/button_speed_cancel"
         android:layout_width="128dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/cancel"
         app:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,7 +63,7 @@
         android:layout_width="128dp"
         android:layout_height="52dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="48dp"
         android:text="@string/apply"
         app:backgroundTint="@color/pink"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +78,6 @@
         android:layout_width="311dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="212dp"
         android:layout_marginEnd="20dp"
         android:indeterminate="false"
         android:max="10"
@@ -85,7 +86,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speed_limit_header"
+        app:layout_constraintTop_toBottomOf="@+id/km_per_hour"
         app:tickMarkTint="#00E91E63" />
 
     <TextView
@@ -109,14 +110,14 @@
         android:id="@+id/max_speed_value"
         android:layout_width="166dp"
         android:layout_height="121dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:gravity="center|center_vertical"
         android:textColor="@color/pink"
         android:textSize="96sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speed_limit_header" />
+        app:layout_constraintTop_toTopOf="@+id/slider_value_layout" />
 
     <TextView
         android:id="@+id/km_per_hour"
@@ -129,10 +130,9 @@
 
     <TextView
         android:id="@+id/caution"
-        android:layout_width="216dp"
-        android:layout_height="57dp"
+        android:layout_width="224dp"
+        android:layout_height="48dp"
         android:gravity="center"
-        android:text="@string/warningNotTested"
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -192,6 +192,21 @@
         android:id="@+id/reading_from_bike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         app:constraint_referenced_ids="reading_from_bike_progress,reading_from_bike_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slider_value_layout"
+        android:layout_width="0dp"
+        android:layout_height="224dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_disable_limit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speed_limit_header"
+        app:layout_constraintVertical_bias="0.2">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

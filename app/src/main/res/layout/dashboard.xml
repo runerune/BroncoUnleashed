@@ -13,14 +13,13 @@
         android:id="@+id/button_unlock"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginBottom="64dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/unlock"
         android:textSize="20sp"
         app:backgroundTint="@color/pink"
         app:cornerRadius="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/modifiers_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,14 +58,13 @@
         android:id="@+id/button_lock"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginBottom="64dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/lock"
         android:textSize="20sp"
         app:backgroundTint="#000000"
         app:cornerRadius="128dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/modifiers_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -104,7 +102,6 @@
         android:id="@+id/speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
         android:width="200dp"
         android:height="120dp"
         android:elegantTextHeight="false"
@@ -116,7 +113,7 @@
         android:textSize="120sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/gauges_layout" />
 
     <TextView
         android:id="@+id/textView7"
@@ -252,5 +249,30 @@
         app:layout_constraintEnd_toEndOf="@+id/button_light_off"
         app:layout_constraintStart_toStartOf="@+id/button_light_off"
         app:layout_constraintTop_toTopOf="@+id/button_light_off" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modifiers_layout"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gauges_layout"
+        android:layout_width="0dp"
+        android:layout_height="256dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.17">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

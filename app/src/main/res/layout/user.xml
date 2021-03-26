@@ -20,14 +20,15 @@
         android:id="@+id/reading_from_api_text"
         android:layout_width="260dp"
         android:layout_height="74dp"
-        android:layout_marginTop="280dp"
         android:gravity="center"
         android:text="@string/reading_from_bike"
         android:textColor="@color/pink"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/items_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
 
     <TextView
         android:id="@+id/login_text"
@@ -40,7 +41,8 @@
         app:layout_constraintBottom_toTopOf="@+id/login_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57" />
 
     <Button
         android:id="@+id/button_log_in"

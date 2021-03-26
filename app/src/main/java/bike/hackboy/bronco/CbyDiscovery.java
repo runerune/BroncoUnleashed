@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -89,29 +90,31 @@ public class CbyDiscovery extends Fragment {
 	public void listDevices() {
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+		requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
+		requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+		requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+
+		matchingDevices.clear();
+
 		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-			if (isAdded()) Toast.makeText(this.getContext(), R.string.bluetooth_off, Toast.LENGTH_LONG).show();
+			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
 			return;
 		}
 
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-		matchingDevices.clear();
 
 		for(BluetoothDevice device : pairedDevices) {
 			if(device.getName().equals("COWBOY")) {
 				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
-				matchingDevices.add(device);
 			}
 		}
 
+		if (matchingDevices.size() < 1) {
+			requireView().findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
+			return;
+		}
+
+		requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
 		deviceListAdapter.notifyDataSetChanged();
 		//Log.d("devices", matchingDevices.toString());
 	}

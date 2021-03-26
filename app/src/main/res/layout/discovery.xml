@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="320dp"
+        android:layout_width="280dp"
         android:layout_height="74dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
@@ -39,13 +39,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textview_second" />
 
+    <TextView
+        android:id="@+id/no_devices"
+        android:layout_width="280dp"
+        android:layout_height="74dp"
+        android:gravity="center"
+        android:text="@string/no_devices"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/items_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/items_list"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/bluetooth_off"
+        android:layout_width="280dp"
+        android:layout_height="74dp"
+        android:gravity="center"
+        android:text="@string/bluetooth_off"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/items_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/items_list"
+        app:layout_constraintVertical_bias="0.4" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:overScrollMode="never"
         android:id="@+id/items_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
+        android:overScrollMode="never"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_connect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

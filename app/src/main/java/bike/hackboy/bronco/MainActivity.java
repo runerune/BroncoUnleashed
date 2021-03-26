@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ensureStillConnected();
+
+        assert this.getSupportActionBar() != null;
         this.getSupportActionBar().setTitle(R.string.app_name);
     }
 

@@ -3,6 +3,9 @@ package bike.hackboy.bronco.utils;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +50,7 @@ public class SequencedWriter {
 		}
 
 
+		@NotNull
 		@Override
 		public String toString() {
 			return "WriteRequestBean{" +

@@ -13,10 +13,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.FlashWriter;
@@ -103,7 +106,7 @@ public class SpeedSetting extends Fragment {
 	}
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onPrepareOptionsMenu(@NotNull Menu menu) {
 		//menu.findItem(R.id.debug_read_speed).setVisible(true);
 		//menu.findItem(R.id.debug_read_motor_state).setVisible(true);
 	}
@@ -117,11 +120,11 @@ public class SpeedSetting extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(
-		LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState
-	) {
-		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.speed_setting_label);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
+		assert bar != null;
+
+		bar.setTitle(R.string.speed_setting_label);
 		return inflater.inflate(R.layout.speed_setting, container, false);
 	}
 

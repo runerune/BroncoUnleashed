@@ -1,5 +1,7 @@
 package bike.hackboy.bronco.bean;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
 
 @SuppressWarnings("unused")
@@ -169,6 +171,7 @@ public class CbyBikeResponseBean {
 		this.positionLon = positionLon;
 	}
 
+	@NotNull
 	@Override
 	public String toString() {
 		return "CbyBikeResponseBean{" +

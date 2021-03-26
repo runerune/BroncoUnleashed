@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
@@ -83,7 +84,11 @@ public class Dashboard extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.dashboard);
+		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
+
+		assert bar != null;
+		bar.setTitle(R.string.dashboard);
+
 		return inflater.inflate(R.layout.dashboard, container, false);
 	}
 

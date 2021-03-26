@@ -62,6 +62,7 @@ public class User extends Fragment {
 
 	@Override
 	public void onDestroy() {
+		//noinspection ConstantConditions
 		((MainActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		super.onDestroy();
 	}
@@ -171,6 +172,7 @@ public class User extends Fragment {
 						int bikeId;
 
 						try {
+							@SuppressWarnings("ConstantConditions")
 							JSONObject user = new JSONObject(response.body().string());
 							bikeId = user.getJSONObject("data").getJSONObject("bike").getInt("id");
 						} catch(JSONException | NullPointerException e) {
@@ -226,6 +228,7 @@ public class User extends Fragment {
 						CbyBikeResponseBean bike = new CbyBikeResponseBean();
 
 						try {
+							@SuppressWarnings("ConstantConditions")
 							JSONObject bikeJson = new JSONObject(response.body().string());
 
 							bike.setBatteryCharge((float) bikeJson.getLong("battery_state_of_charge"));

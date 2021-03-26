@@ -133,7 +133,8 @@
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_conversion_absoluteHeight="45dp"
-            tools:layout_conversion_absoluteWidth="210dp" />
+            tools:layout_conversion_absoluteWidth="210dp"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/username"
@@ -148,7 +149,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_conversion_absoluteHeight="45dp"
-            tools:layout_conversion_absoluteWidth="210dp" />
+            tools:layout_conversion_absoluteWidth="210dp"
+            android:autofillHints="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

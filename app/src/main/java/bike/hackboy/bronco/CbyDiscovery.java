@@ -12,10 +12,9 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
@@ -69,8 +68,10 @@ public class CbyDiscovery extends Fragment {
 		View rootView =  inflater.inflate(R.layout.discovery, container, false);
 		recyclerViewDevices = rootView.findViewById(R.id.items_list);
 
-		((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.app_name);
-
+		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
+		assert bar != null;
+		
+		bar.setTitle(R.string.app_name);
 		return rootView;
 	}
 

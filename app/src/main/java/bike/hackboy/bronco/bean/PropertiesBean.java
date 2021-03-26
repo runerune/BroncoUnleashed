@@ -1,5 +1,7 @@
 package bike.hackboy.bronco.bean;
 
+import org.jetbrains.annotations.NotNull;
+
 public class PropertiesBean {
 	private String name;
 	private String value;
@@ -42,6 +44,7 @@ public class PropertiesBean {
 		this.link = link;
 	}
 
+	@NotNull
 	@Override
 	public String toString() {
 		return "PropertiesBean{" +

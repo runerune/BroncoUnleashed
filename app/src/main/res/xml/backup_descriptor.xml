@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude the shared preferences file that contains CBY token -->
+    <exclude
+        domain="sharedpref"
+        path="user.xml" />
+</full-backup-content>

@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class NotificationEnabler {
 			this.characteristic = characteristic;
 		}
 
+		@NotNull
 		@Override
 		public String toString() {
 			return "notificationRequestBean{" +

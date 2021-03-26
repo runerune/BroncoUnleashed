@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -50,10 +52,12 @@ public class User extends Fragment {
 	protected final List<PropertiesBean> bikePropertiesList = new ArrayList<>();
 	protected RecyclerView recyclerViewBikeDetails;
 	protected DetailsViewAdapter detailsViewAdapter;
+	protected MenuItem menuItem;
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		setHasOptionsMenu(true);
 		if(loading) ensureUserData();
 	}
 
@@ -75,6 +79,17 @@ public class User extends Fragment {
 		bar.setDisplayHomeAsUpEnabled(true);
 
 		return rootView;
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		menuItem = menu.findItem(R.id.cby_api_data);
+		menuItem.setVisible(false);
+	}
+
+	@Override
+	public void onDestroyOptionsMenu() {
+		menuItem.setVisible(true);
 	}
 
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

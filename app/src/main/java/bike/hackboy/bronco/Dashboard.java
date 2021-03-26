@@ -95,7 +95,6 @@ public class Dashboard extends Fragment {
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
 		setHasOptionsMenu(true);
-
 		sendIntent("read-lock");
 
 		if(!hasEnabledNotifications) {

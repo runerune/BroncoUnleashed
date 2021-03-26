@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,7 +117,7 @@ public class User extends Fragment {
 
 	public void storeBike(CbyBikeResponseBean bike) {
 		this.bike = bike;
-		Log.d("bike", bike.toString());
+		//Log.d("bike", bike.toString());
 
 		bikePropertiesList.clear();
 		bikePropertiesList.addAll(BikePropertyBuilder.fromBikeBean(bike));

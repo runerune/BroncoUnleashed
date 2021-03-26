@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,10 @@ public class CbyDiscovery extends Fragment {
 	final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
+
+	private final Handler loaderThreadHandler = new Handler(Looper.getMainLooper());
+	private final Runnable hideLoader = () ->
+		requireView().findViewById(R.id.loader).setVisibility(View.INVISIBLE);
 
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -101,6 +107,7 @@ public class CbyDiscovery extends Fragment {
 			return;
 		}
 
+		showPlaceboLoader();
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
 		for(BluetoothDevice device : pairedDevices) {
@@ -126,5 +133,14 @@ public class CbyDiscovery extends Fragment {
 		intent.putExtra("event", "connect");
 		intent.putExtra("mac", mac);
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
+	}
+
+	// listing is instant but let's give some fake feedback to the user so
+	// they don't think nothing happened if the list stays the same
+	public void showPlaceboLoader() {
+		loaderThreadHandler.removeCallbacks(hideLoader);
+
+		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);
+		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*400 + 400));
 	}
 }

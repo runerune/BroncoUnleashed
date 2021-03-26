@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,6 +49,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 
 			holder.name.setText(context.getString(resourceId));
 			holder.value.setText(entry.getValue());
+			holder.value.setText(entry.getValue());
 
 			if(entry.hasLink()) {
 				SpannableString spanStr = new SpannableString(entry.getValue());
@@ -59,8 +61,9 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 					context.startActivity(intent);
 				});
 
-
+				holder.arrow.setVisibility(View.VISIBLE);
 			} else {
+				holder.arrow.setVisibility(View.GONE);
 				holder.value.setText(entry.getValue());
 			}
 
@@ -83,6 +86,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 		final TextView name;
 		final TextView value;
 		final TextView divider;
+		final ImageView arrow;
 		final ConstraintLayout container;
 
 		ViewHolder(View itemView) {
@@ -90,6 +94,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 			name = itemView.findViewById(R.id.name);
 			value = itemView.findViewById(R.id.value);
 			divider = itemView.findViewById(R.id.divider);
+			arrow = itemView.findViewById(R.id.arrow);
 			container = itemView.findViewById(R.id.list_item);
 		}
 	}

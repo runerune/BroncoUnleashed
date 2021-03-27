@@ -101,7 +101,7 @@ public class FieldWeakening extends Fragment {
 			if(weakeningAsiValue > 0) {
 				new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialogWarning)
 					.setTitle(R.string.caution_battery)
-					.setMessage(R.string.field_weakening_explanation)
+					.setMessage(R.string.field_weakening_disclaimer)
 					.setNegativeButton(R.string.abort, null)
 					.setPositiveButton(R.string.proceed, (dialog, whichButton) -> {
 						dialog.dismiss();

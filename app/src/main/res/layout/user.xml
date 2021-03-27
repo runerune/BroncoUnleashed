@@ -48,7 +48,7 @@
         android:id="@+id/button_log_in"
         android:layout_width="200dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/log_in_with_cby"
         app:backgroundTint="@color/pink"
         app:layout_constraintBottom_toBottomOf="parent"

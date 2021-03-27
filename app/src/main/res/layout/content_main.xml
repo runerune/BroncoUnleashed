@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/app_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"

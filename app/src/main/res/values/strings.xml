@@ -61,6 +61,7 @@
     <string name="log_out">Log out</string>
     <string name="log_in_with_cby">Log in with CBY</string>
 
+    <string name="bike_name">Bike name</string>
     <string name="location">Location</string>
     <string name="last_seen">Last seen</string>
     <string name="total_distance">Total distance</string>

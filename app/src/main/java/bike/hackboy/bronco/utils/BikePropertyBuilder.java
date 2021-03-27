@@ -34,6 +34,11 @@ public class BikePropertyBuilder {
 		PropertiesBean entry;
 
 		entry = new PropertiesBean();
+		entry.setName("bike_name");
+		entry.setValue(bean.getName());
+		list.add(entry);
+
+		entry = new PropertiesBean();
 		entry.setName("last_seen");
 		entry.setValue(pt.format(bean.getPositionReceivedAt()));
 		list.add(entry);

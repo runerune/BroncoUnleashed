@@ -79,7 +79,6 @@ public class Dashboard extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
 
 	@Override
@@ -96,6 +95,8 @@ public class Dashboard extends Fragment {
 	public void onResume() {
 		super.onResume();
 
+		requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
@@ -111,6 +112,8 @@ public class Dashboard extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+
+		requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		LocalBroadcastManager.getInstance(requireContext())
 			.unregisterReceiver(messageReceiver);

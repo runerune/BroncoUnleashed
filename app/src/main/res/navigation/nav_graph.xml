@@ -33,10 +33,21 @@
         <action
             android:id="@+id/action_Dashboard_to_SpeedSetting"
             app:destination="@id/SpeedSetting" />
+        <action
+            android:id="@+id/action_Dashboard_to_FieldWeakening"
+            app:destination="@id/FieldWeakening" />
     </fragment>
     <fragment
         android:id="@+id/UserData"
         android:name="bike.hackboy.bronco.User"
         android:label="fragment_user"
         tools:layout="@layout/user" />
+    <fragment
+        android:id="@+id/FieldWeakening"
+        android:name="bike.hackboy.bronco.FieldWeakening"
+        android:label="FieldWeakening" >
+        <action
+            android:id="@+id/action_FieldWeakening_to_Dashboard"
+            app:destination="@id/Dashboard" />
+    </fragment>
 </navigation>

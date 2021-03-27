@@ -84,4 +84,11 @@
     <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
     <string name="retry_scan">Retry scan</string>
     <string name="no_devices">No devices found. Try to move closer to your bike.</string>
+
+    <string name="field_weakening">Field weakening</string>
+    <string name="caution_battery">This setting has side effects</string>
+    <string name="field_weakening_explanation">
+        Field weakening puts extra strain on battery and reduces the bike\'s range.\n\nIn CBY app, the range remaining
+        indicator may no longer be accurate.\n\nLong-term effects of this setting on battery life are unknown.
+    </string>
 </resources>

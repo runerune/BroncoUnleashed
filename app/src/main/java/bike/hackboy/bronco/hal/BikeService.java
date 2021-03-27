@@ -166,6 +166,27 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
+					//<editor-fold desc="field weakening">
+					case "set-field-weakening":
+						int newWeakeningValue = intent.getIntExtra("value", 0);
+
+						byte[] setFieldWeakeningCommand = Command.withValue(Command.SET_FIELD_WEAKENING, newWeakeningValue);
+						byte[] setFieldWeakeningCommandWithChecksum = Command.withChecksum(setFieldWeakeningCommand);
+
+						//Log.d("gatt_command", Converter.byteArrayToHexString(setFieldWeakeningCommandWithChecksum));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setFieldWeakeningCommandWithChecksum);
+					break;
+
+					case "read-field-weakening":
+						byte[] readFieldWeakeningCommandWithChecksum = Command.withChecksum(Command.READ_FIELD_WEAKENING);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readFieldWeakeningCommandWithChecksum);
+					break;
+					//</editor-fold>
+
 					//<editor-fold desc="motor">
 					case "read-motor-mode":
 						byte[] readMotorModeCommand = Command.withChecksum(Command.READ_MOTOR_MODE);

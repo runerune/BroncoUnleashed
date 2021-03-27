@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -114,7 +113,7 @@ public class Dashboard extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		this.view = view;
 
-		view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
+		view.findViewById(R.id.button_goto_settings).setOnClickListener(view1 -> NavHostFragment
 			.findNavController(Dashboard.this)
 			.navigate(R.id.action_Dashboard_to_Settings));
 
@@ -171,7 +170,6 @@ public class Dashboard extends Fragment {
 				((TextView) view.findViewById(R.id.speed)).setText(db.getSpeed());
 				((ProgressBar) view.findViewById(R.id.assistance)).setProgress(db.getRawPower());
 				((ProgressBar) view.findViewById(R.id.battery)).setProgress(db.getRawBattery());
-				((Button) view.findViewById(R.id.button_goto_set_speed)).setText(db.getAssistance());
 
 				view.findViewById(R.id.modifiers_group).setVisibility(View.VISIBLE);
 

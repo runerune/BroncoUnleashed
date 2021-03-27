@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_lock" />
 
     <Button
-        android:id="@+id/button_goto_set_speed"
+        android:id="@+id/button_goto_settings"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginStart="16dp"
@@ -47,9 +47,8 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingBottom="24dp"
-        android:text="0"
         android:textSize="24sp"
-        app:backgroundTint="@color/pink"
+        app:backgroundTint="@color/black"
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_lock"
         app:layout_constraintStart_toEndOf="@+id/button_lock" />
@@ -67,21 +66,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/modifiers_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/gear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:elevation="20dp"
-        android:text="@string/gear"
-        android:textColor="@color/white"
-        android:textColorLink="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="@+id/button_goto_set_speed"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="@+id/button_goto_set_speed"
-        app:layout_constraintTop_toTopOf="@+id/button_goto_set_speed" />
 
     <Button
         android:id="@+id/button_light_on"
@@ -116,7 +100,7 @@
         app:layout_constraintTop_toTopOf="@+id/gauges_layout" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/kph_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/kmh"
@@ -138,7 +122,7 @@
         app:layout_constraintEnd_toStartOf="@+id/distance"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/kph_label" />
 
     <TextView
         android:id="@+id/distance"
@@ -152,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/duration"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/kph_label" />
 
     <TextView
         android:id="@+id/battery_percent"
@@ -197,7 +181,7 @@
         app:layout_constraintTop_toBottomOf="@+id/speed" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/battery_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_battery_circle"
@@ -207,7 +191,7 @@
         app:layout_constraintTop_toTopOf="@+id/battery" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/rocket_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_rocket_circle"
@@ -220,13 +204,13 @@
         android:id="@+id/gauges_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="battery,imageView,imageView3,assistance,battery_percent" />
+        app:constraint_referenced_ids="battery,battery_icon,rocket_icon,assistance,battery_percent" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/modifiers_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_set_speed,gear,icon_light_on,icon_light_off" />
+        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_settings,icon_light_on,icon_light_off,icon_settings" />
 
     <ImageView
         android:id="@+id/icon_light_on"
@@ -249,6 +233,17 @@
         app:layout_constraintEnd_toEndOf="@+id/button_light_off"
         app:layout_constraintStart_toStartOf="@+id/button_light_off"
         app:layout_constraintTop_toTopOf="@+id/button_light_off" />
+
+    <ImageView
+        android:id="@+id/icon_settings"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toBottomOf="@+id/button_goto_settings"
+        app:layout_constraintEnd_toEndOf="@+id/button_goto_settings"
+        app:layout_constraintStart_toStartOf="@+id/button_goto_settings"
+        app:layout_constraintTop_toTopOf="@+id/button_goto_settings" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/modifiers_layout"

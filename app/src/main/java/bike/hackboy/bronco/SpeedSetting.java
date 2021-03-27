@@ -153,7 +153,7 @@ public class SpeedSetting extends Fragment {
 
 		view.findViewById(R.id.button_disable_limit).setOnClickListener(view3 -> {
 			new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialogWarning)
-				.setTitle(R.string.caution_advanced)
+				.setTitle(R.string.caution_motor)
 				.setMessage(R.string.disable_speed_limit_explanation)
 				.setNegativeButton(R.string.abort, null)
 				.setPositiveButton(R.string.proceed, (dialog, whichButton) -> {

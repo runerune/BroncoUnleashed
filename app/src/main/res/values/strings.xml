@@ -36,9 +36,9 @@
     <string name="battery">battery</string>
 
     <string name="disable_speed_limit">Fully disable speed limit</string>
-    <string name="caution_advanced">This may void your warranty</string>
+    <string name="caution_motor">This may void your warranty</string>
     <string name="disable_speed_limit_explanation">
-        You are about to fully remove speed restriction on the bike. This prevents the official app from
+        You are about to fully remove speed restriction on the bike.\n\nThis prevents the official app from
         reapplying it and can only be reverted using Bronco Unleashed.\n\nProceed at your own risk.
     </string>
     <string name="proceed">Proceed</string>

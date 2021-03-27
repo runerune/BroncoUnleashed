@@ -70,7 +70,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 			if (entry.isLast()) {
 				holder.setIsRecyclable(false);
 				holder.divider.setVisibility(View.INVISIBLE);
-				holder.value.setPadding(0, 0, 0, 160);
+				holder.value.setPadding(0, 0, 0, 164);
 			}
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 			Log.e("details_view", e.getMessage(), e);

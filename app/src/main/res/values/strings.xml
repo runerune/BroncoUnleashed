@@ -1,32 +1,30 @@
 <resources>
     <string name="app_name">Bronco Unleashed</string>
-    <string name="about">About app</string>
-    <string name="speed_setting_label">Speed setting</string>
-    <string name="dashboard">Dashboard</string>
-    <string name="cby_discovery_label">Discovery</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="cancel">Back</string>
     <string name="apply">Apply</string>
+
+    <string name="about">About app</string>
+
+    <string name="speed_setting">Speed setting</string>
     <string name="set_new_max_speed">Speed limit</string>
     <string name="kmh">km/h</string>
-    <string name="warningNotTested">CAUTION: values over 30 km/h have NOT been tested</string>
-    <string name="howto_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
-    <string name="connect">Connect to bike</string>
-    <string name="lock">Lock</string>
-    <string name="unlock">Unlock</string>
     <string name="set_speed">Set speed limit</string>
-    <string name="log_in_with_cby">Log in with CBY</string>
-    <string name="cancel">Back</string>
-    <string name="disconnect">Disconnect</string>
-    <string name="gear">GEAR</string>
-
     <string name="reset_speed">Reset speed</string>
     <string name="reset_speed_long">Reset to 25 km/h</string>
 
-    <string name="service_is_running">Running in background</string>
-    <string name="exit"><![CDATA[Stop & quit]]></string>
+    <string name="dashboard">Dashboard</string>
+    <string name="lock">Lock</string>
+    <string name="unlock">Unlock</string>
+    <string name="gear">GEAR</string>
 
+    <string name="cby_discovery_label">Discovery</string>
+    <string name="how_to_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
+    <string name="connect">Connect to bike</string>
+    <string name="disconnect">Disconnect</string>
+
+    <string name="service_is_running">Service is running</string>
     <string name="not_connected">Not connected</string>
     <string name="bike_is_locked">Bike is locked</string>
     <string name="locked">Locked</string>
@@ -61,6 +59,7 @@
     <string name="password">Password</string>
     <string name="cby_user_details">Bike details</string>
     <string name="log_out">Log out</string>
+    <string name="log_in_with_cby">Log in with CBY</string>
 
     <string name="location">Location</string>
     <string name="last_seen">Last seen</string>
@@ -91,4 +90,12 @@
         Field weakening puts extra strain on battery and reduces the bike\'s range.\n\nIn CBY app, the range remaining
         indicator may no longer be accurate.\n\nLong-term effects of this setting on battery life are unknown.
     </string>
+
+    <string name="settings">Options</string>
+    <string name="description_speed_setting">Change maximum speed or disable speed limit completely</string>
+    <string name="description_field_weakening">Set how much the motor should compensate for permanent magnets in the stator</string>
+    <string name="description_bike_details">Check last location and other details of your bike (requires login)</string>
+    <string name="description_disconnect">Will send you back to discovery screen</string>
+    <string name="description_about">Credits and links</string>
+
 </resources>

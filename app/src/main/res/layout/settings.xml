@@ -7,9 +7,9 @@
     tools:context=".Settings">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/settings_list"
+        android:id="@+id/items_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="120dp" />
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="185dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,17 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.Navigation;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -111,59 +108,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.disconnect);
-        item.setVisible(false);
-        return true;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.about) {
-            new AlertDialog.Builder(this, R.style.Theme_Bronco_AlertDialog)
-                .setTitle(R.string.about_title)
-                .setMessage(R.string.credits)
-                .setNegativeButton(R.string.got_it, null)
-                .setPositiveButton(R.string.visit_sub, (dialog, whichButton) -> {
-                    dialog.dismiss();
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.reddit.com/r/cowboybikes/"));
-                    startActivity(browserIntent);
-                })
-                .show();
-        } else if(id == R.id.disconnect) {
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(
-                new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
-            );
-        } else if(id == R.id.stop_and_quit) {
-            stopService(new Intent(this, BikeService.class));
-            this.finishAffinity();
-        } else if(id == R.id.cby_api_data) {
-            Navigation
-                .findNavController(MainActivity.this, R.id.nav_host_fragment)
-                .navigate(R.id.UserData);
-        } else if(id == R.id.debug_write_flash) {
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
-                    .putExtra("event", "write-flash"));
-        } else if(id == R.id.debug_close_flash) {
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                .sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
-                    .putExtra("event", "close-flash"));
-        } else if(id == R.id.debug_read_motor_state) {
-            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
-            lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-motor-mode"));
-        } else if(id == R.id.debug_read_speed) {
-            LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
-            lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed"));
-        } else if(id == android.R.id.home) {
+        if(item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
 
@@ -175,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
 
         List<String> backable = new ArrayList<>();
         backable.add((String) getText(R.string.cby_user_details));
+        backable.add((String) getText(R.string.speed_setting));
+        backable.add((String) getText(R.string.field_weakening));
+        backable.add((String) getText(R.string.settings));
 
         assert getSupportActionBar() != null;
         assert getSupportActionBar().getTitle() != null;

@@ -72,6 +72,8 @@ public class CbyDiscovery extends Fragment {
 		assert bar != null;
 		
 		bar.setTitle(R.string.app_name);
+		bar.setDisplayHomeAsUpEnabled(false);
+
 		return rootView;
 	}
 

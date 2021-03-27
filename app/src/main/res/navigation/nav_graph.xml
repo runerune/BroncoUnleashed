@@ -8,12 +8,11 @@
     <fragment
         android:id="@+id/SpeedSetting"
         android:name="bike.hackboy.bronco.SpeedSetting"
-        android:label="@string/speed_setting_label"
+        android:label="@string/speed_setting"
         tools:layout="@layout/speed_setting">
-
         <action
-            android:id="@+id/action_SpeedSetting_to_Dashboard"
-            app:destination="@id/Dashboard" />
+            android:id="@+id/action_SpeedSetting_to_Settings"
+            app:destination="@id/Settings" />
     </fragment>
     <fragment
         android:id="@+id/CbyDiscovery"
@@ -31,23 +30,39 @@
         android:label="Dashboard"
         tools:layout="@layout/dashboard" >
         <action
-            android:id="@+id/action_Dashboard_to_SpeedSetting"
-            app:destination="@id/SpeedSetting" />
-        <action
-            android:id="@+id/action_Dashboard_to_FieldWeakening"
-            app:destination="@id/FieldWeakening" />
+            android:id="@+id/action_Dashboard_to_Settings"
+            app:destination="@id/Settings" />
     </fragment>
     <fragment
         android:id="@+id/UserData"
         android:name="bike.hackboy.bronco.User"
         android:label="fragment_user"
-        tools:layout="@layout/user" />
+        tools:layout="@layout/user" >
+        <action
+            android:id="@+id/action_UserData_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
     <fragment
         android:id="@+id/FieldWeakening"
         android:name="bike.hackboy.bronco.FieldWeakening"
         android:label="FieldWeakening" >
         <action
-            android:id="@+id/action_FieldWeakening_to_Dashboard"
-            app:destination="@id/Dashboard" />
+            android:id="@+id/action_FieldWeakening_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/Settings"
+        android:name="bike.hackboy.bronco.Settings"
+        android:label="Settings"
+        tools:layout="@layout/settings">
+        <action
+            android:id="@+id/action_settings_to_FieldWeakening"
+            app:destination="@id/FieldWeakening" />
+        <action
+            android:id="@+id/action_settings_to_SpeedSetting"
+            app:destination="@id/SpeedSetting" />
+        <action
+            android:id="@+id/action_settings_to_UserData"
+            app:destination="@id/UserData" />
     </fragment>
 </navigation>

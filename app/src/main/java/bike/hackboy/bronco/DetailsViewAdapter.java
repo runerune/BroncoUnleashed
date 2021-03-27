@@ -35,7 +35,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 	@NotNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-		View view = inflater.inflate(R.layout.list_item, parent, false);
+		View view = inflater.inflate(R.layout.bike_data_item, parent, false);
 		return new ViewHolder(view);
 	}
 
@@ -95,7 +95,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 			value = itemView.findViewById(R.id.value);
 			divider = itemView.findViewById(R.id.divider);
 			arrow = itemView.findViewById(R.id.arrow);
-			container = itemView.findViewById(R.id.list_item);
+			container = itemView.findViewById(R.id.bike_data_item);
 		}
 	}
 }

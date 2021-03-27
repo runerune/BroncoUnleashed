@@ -89,6 +89,8 @@ public class FieldWeakening extends Fragment {
 		assert bar != null;
 
 		bar.setTitle(R.string.field_weakening);
+		bar.setDisplayHomeAsUpEnabled(true);
+
 		return inflater.inflate(R.layout.field_weakening, container, false);
 	}
 
@@ -113,7 +115,7 @@ public class FieldWeakening extends Fragment {
 
 		view.findViewById(R.id.button_field_weakening_cancel).setOnClickListener(view1 -> NavHostFragment
 			.findNavController(FieldWeakening.this)
-			.navigate(R.id.action_FieldWeakening_to_Dashboard));
+			.navigate(R.id.action_FieldWeakening_to_Settings));
 
 
 		SeekBar slider = view.findViewById(R.id.field_weakening_bar);

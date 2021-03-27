@@ -17,8 +17,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -71,12 +69,6 @@ public class Dashboard extends Fragment {
 	};
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		MenuItem item = menu.findItem(R.id.disconnect);
-		item.setVisible(true);
-	}
-
-	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -87,6 +79,7 @@ public class Dashboard extends Fragment {
 
 		assert bar != null;
 		bar.setTitle(R.string.dashboard);
+		bar.setDisplayHomeAsUpEnabled(false);
 
 		return inflater.inflate(R.layout.dashboard, container, false);
 	}
@@ -100,7 +93,6 @@ public class Dashboard extends Fragment {
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
-		setHasOptionsMenu(true);
 		sendIntent("read-lock");
 
 		if(!hasEnabledNotifications) {
@@ -124,7 +116,7 @@ public class Dashboard extends Fragment {
 
 		view.findViewById(R.id.button_goto_set_speed).setOnClickListener(view1 -> NavHostFragment
 			.findNavController(Dashboard.this)
-			.navigate(R.id.action_Dashboard_to_SpeedSetting));
+			.navigate(R.id.action_Dashboard_to_Settings));
 
 		// don't show buttons before callback fires
 		view.findViewById(R.id.button_unlock).setVisibility(View.INVISIBLE);

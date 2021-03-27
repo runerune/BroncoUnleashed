@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
@@ -18,8 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
-
-import org.jetbrains.annotations.NotNull;
 
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.FlashWriter;
@@ -96,19 +93,11 @@ public class SpeedSetting extends Fragment {
 	public void onResume() {
 		super.onResume();
 
-		setHasOptionsMenu(true);
-
 		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
 		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-speed-and-motor-mode"));
 
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(@NotNull Menu menu) {
-		//menu.findItem(R.id.debug_read_speed).setVisible(true);
-		//menu.findItem(R.id.debug_read_motor_state).setVisible(true);
 	}
 
 	@Override
@@ -124,7 +113,8 @@ public class SpeedSetting extends Fragment {
 		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
 		assert bar != null;
 
-		bar.setTitle(R.string.speed_setting_label);
+		bar.setTitle(R.string.speed_setting);
+		bar.setDisplayHomeAsUpEnabled(true);
 		return inflater.inflate(R.layout.speed_setting, container, false);
 	}
 
@@ -140,16 +130,16 @@ public class SpeedSetting extends Fragment {
 					.putExtra("value", speed)
 			);
 
-			NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Dashboard);
+			NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Settings);
 		});
 
 		view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
 			.findNavController(SpeedSetting.this)
-			.navigate(R.id.action_SpeedSetting_to_Dashboard));
+			.navigate(R.id.action_SpeedSetting_to_Settings));
 
 		view.findViewById(R.id.button_speed_cancel_large).setOnClickListener(view2 -> NavHostFragment
 			.findNavController(SpeedSetting.this)
-			.navigate(R.id.action_SpeedSetting_to_Dashboard));
+			.navigate(R.id.action_SpeedSetting_to_Settings));
 
 		view.findViewById(R.id.button_disable_limit).setOnClickListener(view3 -> {
 			new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialogWarning)

@@ -26,9 +26,15 @@ public class Command {
 
 	public static byte[] withValue(byte[] template, int value) {
 		byte[] changedCommand = Arrays.copyOf(template, 9);
-		changedCommand[8] = (byte) value;
 
-		return changedCommand;
+		if (value > 0xff) {
+			changedCommand[8] = (byte) (value & 0xff);
+			changedCommand[7] = (byte) (value >> 8 & 0xff);
+			return changedCommand;
+		} else {
+			changedCommand[8] = (byte) value;
+			return changedCommand;
+		}
 	}
 
 	public static byte[] withChecksum(byte[] command) {

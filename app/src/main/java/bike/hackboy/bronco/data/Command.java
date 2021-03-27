@@ -30,11 +30,11 @@ public class Command {
 		if (value > 0xff) {
 			changedCommand[8] = (byte) (value & 0xff);
 			changedCommand[7] = (byte) (value >> 8 & 0xff);
-			return changedCommand;
 		} else {
 			changedCommand[8] = (byte) value;
-			return changedCommand;
 		}
+
+		return changedCommand;
 	}
 
 	public static byte[] withChecksum(byte[] command) {

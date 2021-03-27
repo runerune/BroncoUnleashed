@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.MenuItem;
@@ -142,8 +143,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(isCurrentFragmentBackable()) {
+            assert getSupportActionBar() != null;
+            assert getSupportActionBar().getTitle() != null;
+            CharSequence title = getSupportActionBar().getTitle();
+
+            NavController nav = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
             ensureStillConnected();
-            super.onBackPressed();
+
+            if (title == getText(R.string.settings)) {
+                nav.navigate(R.id.Dashboard);
+            } else {
+                nav.navigate(R.id.Settings);
+            }
+
             return;
         }
 

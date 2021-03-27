@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class CbyDiscovery extends Fragment {
 	final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
+	protected boolean firstRun = true;
 
 	private final Handler loaderThreadHandler = new Handler(Looper.getMainLooper());
 	private final Runnable hideLoader = () ->
@@ -110,7 +112,9 @@ public class CbyDiscovery extends Fragment {
 			return;
 		}
 
-		showPlaceboLoader();
+		if(!firstRun) showPlaceboLoader();
+		firstRun = false;
+
 		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
 		for(BluetoothDevice device : pairedDevices) {

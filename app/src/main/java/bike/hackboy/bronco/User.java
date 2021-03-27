@@ -108,7 +108,6 @@ public class User extends Fragment {
 		bikePropertiesList.clear();
 		bikePropertiesList.addAll(BikePropertyBuilder.fromBikeBean(bike));
 
-		((TextView) requireView().findViewById(R.id.bike_name)).setText(bike.getName());
 		detailsViewAdapter.notifyDataSetChanged();
 	}
 
@@ -238,10 +237,13 @@ public class User extends Fragment {
 
 							@SuppressLint("SimpleDateFormat")
 							SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+							SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+							String activationDate = targetFormat.format(sourceFormat.parse(bikeJson.getString("activated_at")));
 
 							try {
 								bike.setSeenAt(sourceFormat.parse(bikeJson.getString("seen_at")));
-								bike.setActivatedAt(sourceFormat.parse(bikeJson.getString("activated_at")));
+								bike.setActivatedAt(activationDate);
 								bike.setPositionReceivedAt(sourceFormat.parse(bikeJson.getJSONObject("position").getString("received_at")));
 							} catch (ParseException ignored) { }
 

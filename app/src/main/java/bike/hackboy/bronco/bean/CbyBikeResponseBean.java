@@ -22,8 +22,8 @@ public class CbyBikeResponseBean {
 	private String passkey; //passkey
 	private String positionAddress; //position.address
 	private String firmwareVersion; //firmware_version
+	private String activatedAt; //activated_at
 
-	private Date activatedAt; //activated_at
 	private Date seenAt; //seen_at
 	private Date positionReceivedAt; //position.received_at
 
@@ -75,11 +75,11 @@ public class CbyBikeResponseBean {
 		this.passkey = passkey;
 	}
 
-	public Date getActivatedAt() {
+	public String getActivatedAt() {
 		return activatedAt;
 	}
 
-	public void setActivatedAt(Date activatedAt) {
+	public void setActivatedAt(String activatedAt) {
 		this.activatedAt = activatedAt;
 	}
 

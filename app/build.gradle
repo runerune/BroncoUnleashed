@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "bike.hackboy.bronco"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 3
         versionName "2.3"

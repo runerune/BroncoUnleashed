@@ -10,21 +10,63 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.bean.SettingsEntityBean;
+import bike.hackboy.bronco.data.Command;
+import bike.hackboy.bronco.data.Uuid;
 
 public class Settings extends Fragment {
 	protected final ArrayList<SettingsEntityBean> settings = new ArrayList<>();
 	protected RecyclerView recyclerViewSettings;
 	protected SettingsAdapter settingsListAdapter;
+
+	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String event = intent.getStringExtra("event");
+			if(!event.equals("on-characteristic-read")) return;
+
+			String uuid = intent.getStringExtra("uuid");
+			byte[] value = (intent.getByteArrayExtra("value"));
+
+			if(uuid.toUpperCase().equals(Uuid.characteristicUnlockString)) {
+				buildSettings(Arrays.equals(value, Command.UNLOCK));
+			}
+		}
+	};
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		LocalBroadcastManager.getInstance(requireContext())
+			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		LocalBroadcastManager.getInstance(requireContext())
+			.unregisterReceiver(messageReceiver);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,34 +91,35 @@ public class Settings extends Fragment {
 		recyclerViewSettings.setAdapter(settingsListAdapter);
 		recyclerViewSettings.setItemAnimator(new DefaultItemAnimator());
 
-		buildSettings();
+		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
+			new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-lock")
+		);
 	}
 
-	protected void buildSettings() {
+	protected void buildSettings(boolean isUnlocked) {
 		settings.clear();
 
-		settings.add(new SettingsEntityBean()
-			.setVisibility(SettingsEntityBean.Visibility.ONLY_CONNECTED)
-			.setName((String) getText(R.string.speed_setting))
-			.setDescription((String) getText(R.string.description_speed_setting))
-			.setHasArrow(true)
-			.setOnClickListener(v ->
-				NavHostFragment.findNavController(Settings.this)
-					.navigate(R.id.action_settings_to_SpeedSetting))
-		);
+		if (isUnlocked) {
+			settings.add(new SettingsEntityBean()
+				.setName((String) getText(R.string.speed_setting))
+				.setDescription((String) getText(R.string.description_speed_setting))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+					NavHostFragment.findNavController(Settings.this)
+						.navigate(R.id.action_settings_to_SpeedSetting))
+			);
+
+			settings.add(new SettingsEntityBean()
+				.setName((String) getText(R.string.field_weakening))
+				.setDescription((String) getText(R.string.description_field_weakening))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+					NavHostFragment.findNavController(Settings.this)
+						.navigate(R.id.action_settings_to_FieldWeakening))
+			);
+		}
 
 		settings.add(new SettingsEntityBean()
-			.setVisibility(SettingsEntityBean.Visibility.ONLY_CONNECTED)
-			.setName((String) getText(R.string.field_weakening))
-			.setDescription((String) getText(R.string.description_field_weakening))
-			.setHasArrow(true)
-			.setOnClickListener(v ->
-				NavHostFragment.findNavController(Settings.this)
-					.navigate(R.id.action_settings_to_FieldWeakening))
-		);
-
-		settings.add(new SettingsEntityBean()
-			.setVisibility(SettingsEntityBean.Visibility.ALWAYS)
 			.setName((String) getText(R.string.cby_user_details))
 			.setDescription((String) getText(R.string.description_bike_details))
 			.setHasArrow(true)
@@ -85,20 +128,20 @@ public class Settings extends Fragment {
 					.navigate(R.id.action_settings_to_UserData))
 		);
 
-		settings.add(new SettingsEntityBean()
-			.setName((String) getText(R.string.disconnect))
-			.setDescription((String) getText(R.string.description_disconnect))
-			.setVisibility(SettingsEntityBean.Visibility.ONLY_CONNECTED)
-			.setOnClickListener(v ->
-				LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
-					new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
-				))
-		);
+		if (isUnlocked) {
+			settings.add(new SettingsEntityBean()
+				.setName((String) getText(R.string.disconnect))
+				.setDescription((String) getText(R.string.description_disconnect))
+				.setOnClickListener(v ->
+					LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
+						new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+					))
+			);
+		}
 
 		settings.add(new SettingsEntityBean()
 			.setName((String) getText(R.string.about))
 			.setDescription((String) getText(R.string.description_about))
-			.setVisibility(SettingsEntityBean.Visibility.ALWAYS)
 			.setOnClickListener(v ->
 				new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
 					.setTitle(R.string.about_title)

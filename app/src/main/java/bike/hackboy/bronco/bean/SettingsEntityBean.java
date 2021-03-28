@@ -8,15 +8,7 @@ public class SettingsEntityBean {
 	private String name;
 	private String description;
 	private View.OnClickListener onClickListener;
-	private Visibility visibility;
 	private boolean hasArrow;
-
-	public enum Visibility {
-		ALWAYS,
-		ONLY_CONNECTED,
-		ONLY_DISCONNECTED,
-		NEVER
-	}
 
 	public String getName() {
 		return name;
@@ -45,15 +37,6 @@ public class SettingsEntityBean {
 		return this;
 	}
 
-	public Visibility getVisibility() {
-		return visibility;
-	}
-
-	public SettingsEntityBean setVisibility(Visibility visibility) {
-		this.visibility = visibility;
-		return this;
-	}
-
 	public boolean isHasArrow() {
 		return hasArrow;
 	}
@@ -70,7 +53,6 @@ public class SettingsEntityBean {
 			"name='" + name + '\'' +
 			", description='" + description + '\'' +
 			", onClickListener=" + onClickListener +
-			", visibility=" + visibility +
 			", hasArrow=" + hasArrow +
 			'}';
 	}

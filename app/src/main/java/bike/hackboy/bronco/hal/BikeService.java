@@ -54,6 +54,7 @@ public class BikeService extends Service {
 
 	// --------------------------------------------------
 
+	// FYI: BLE GATT is stateless so can't have things like isConnected() etc
 	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {

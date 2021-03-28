@@ -1,7 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Bronco Unleashed</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="cancel">Back</string>
     <string name="apply">Apply</string>
 
@@ -10,24 +8,20 @@
     <string name="speed_setting">Speed setting</string>
     <string name="set_new_max_speed">Speed limit</string>
     <string name="kmh">km/h</string>
-    <string name="set_speed">Set speed limit</string>
     <string name="reset_speed">Reset speed</string>
     <string name="reset_speed_long">Reset to 25 km/h</string>
 
     <string name="dashboard">Dashboard</string>
     <string name="lock">Lock</string>
     <string name="unlock">Unlock</string>
-    <string name="gear">GEAR</string>
 
     <string name="cby_discovery_label">Discovery</string>
     <string name="how_to_connect">Make sure Bluetooth is turned on and your bike is paired with the Cowboy app.</string>
-    <string name="connect">Connect to bike</string>
     <string name="disconnect">Disconnect</string>
 
     <string name="service_is_running">Service is running</string>
     <string name="not_connected">Not connected</string>
     <string name="bike_is_locked">Bike is locked</string>
-    <string name="locked">Locked</string>
     <string name="unlocked">Unlocked</string>
     <string name="cycled">cycled</string>
     <string name="uptime">up</string>
@@ -61,25 +55,22 @@
     <string name="log_out">Log out</string>
     <string name="log_in_with_cby">Log in with CBY</string>
 
-    <string name="bike_name">Bike name</string>
-    <string name="location">Location</string>
-    <string name="last_seen">Last seen</string>
-    <string name="total_distance">Total distance</string>
-    <string name="co2_saved">CO2 saved</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="coords">Coordinates</string>
-    <string name="geo_link">geo: link</string>
-    <string name="bike_battery">Bike battery level</string>
-    <string name="pcb_battery">Backup PCB battery</string>
-    <string name="range_estimate">Estimated range with current use</string>
-    <string name="serial_number">Serial number</string>
-    <string name="color">Color</string>
-    <string name="mac_address">MAC address</string>
-    <string name="firmware_version">Firmware version</string>
-    <string name="activated_at">Activated at</string>
-    <string name="market">Market</string>
-    <string name="pairing_code">Pairing code</string>
+    <string name="bike_name" tools:ignore="UnusedResources">Bike name</string>
+    <string name="location" tools:ignore="UnusedResources">Location</string>
+    <string name="last_seen" tools:ignore="UnusedResources">Last seen</string>
+    <string name="total_distance" tools:ignore="UnusedResources">Total distance</string>
+    <string name="co2_saved" tools:ignore="UnusedResources">CO2 saved</string>
+    <string name="coords" tools:ignore="UnusedResources">Coordinates</string>
+    <string name="bike_battery" tools:ignore="UnusedResources">Bike battery level</string>
+    <string name="pcb_battery" tools:ignore="UnusedResources">Backup PCB battery</string>
+    <string name="range_estimate" tools:ignore="UnusedResources">Estimated range with current use</string>
+    <string name="serial_number" tools:ignore="UnusedResources">Serial number</string>
+    <string name="color" tools:ignore="UnusedResources">Color</string>
+    <string name="mac_address" tools:ignore="UnusedResources">MAC address</string>
+    <string name="firmware_version" tools:ignore="UnusedResources">Firmware version</string>
+    <string name="activated_at" tools:ignore="UnusedResources">Activated at</string>
+    <string name="market" tools:ignore="UnusedResources">Market</string>
+    <string name="pairing_code" tools:ignore="UnusedResources">Pairing code</string>
 
     <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
     <string name="retry_scan">Retry scan</string>

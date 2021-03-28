@@ -6,10 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
+    <TextView
+        android:id="@+id/unlock_for_more_options"
+        android:layout_width="280dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/unlock_for_more_options"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textview_second" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/items_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="185dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/unlock_for_more_options"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="135dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

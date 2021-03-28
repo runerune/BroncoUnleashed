@@ -153,7 +153,9 @@ public class Settings extends Fragment {
 					.show())
 		);
 
+		requireView().findViewById(R.id.unlock_for_more_options).setVisibility(isUnlocked ? View.GONE : View.VISIBLE);
 		requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
+
 		settingsListAdapter.notifyDataSetChanged();
 	}
 

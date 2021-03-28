@@ -9,6 +9,21 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:id="@+id/bike_is_locked"
+        android:layout_width="280dp"
+        android:layout_height="74dp"
+        android:gravity="center"
+        android:text="@string/bike_is_locked"
+        android:textColor="@color/pink"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_unlock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
+
     <Button
         android:id="@+id/button_unlock"
         android:layout_width="128dp"
@@ -28,22 +43,21 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:textColor="@color/pink"
         android:textSize="13sp"
         app:backgroundTint="@color/pink"
         app:cornerRadius="128dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button_lock"
-        app:layout_constraintEnd_toStartOf="@+id/button_lock" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_unlock"
+        app:layout_constraintEnd_toStartOf="@+id/button_lock"
+        app:layout_constraintTop_toTopOf="@+id/button_unlock" />
 
     <Button
         android:id="@+id/button_goto_settings"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="30dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:paddingBottom="24dp"
@@ -51,7 +65,23 @@
         app:backgroundTint="@color/black"
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_lock"
-        app:layout_constraintStart_toEndOf="@+id/button_lock" />
+        app:layout_constraintStart_toEndOf="@+id/button_lock"
+        app:layout_constraintTop_toTopOf="@+id/button_unlock" />
+
+    <Button
+        android:id="@+id/button_disconnect"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginEnd="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:paddingBottom="24dp"
+        android:textSize="24sp"
+        app:backgroundTint="@color/black"
+        app:cornerRadius="128dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_unlock"
+        app:layout_constraintEnd_toStartOf="@+id/button_unlock"
+        app:layout_constraintTop_toTopOf="@+id/button_unlock" />
 
     <Button
         android:id="@+id/button_lock"
@@ -72,7 +102,6 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="30dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:textColor="@color/black"
@@ -80,7 +109,8 @@
         app:backgroundTint="@color/black"
         app:cornerRadius="128dp"
         app:layout_constraintBottom_toBottomOf="@+id/button_lock"
-        app:layout_constraintEnd_toStartOf="@+id/button_lock" />
+        app:layout_constraintEnd_toStartOf="@+id/button_lock"
+        app:layout_constraintTop_toTopOf="@+id/button_unlock" />
 
     <TextView
         android:id="@+id/speed"
@@ -200,35 +230,13 @@
         app:layout_constraintStart_toStartOf="@+id/assistance"
         app:layout_constraintTop_toTopOf="@+id/assistance" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/gauges_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="battery,battery_icon,rocket_icon,assistance,battery_percent" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/modifiers_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="button_light_off,button_light_on,button_goto_settings,icon_light_on,icon_light_off,icon_settings" />
-
-    <ImageView
-        android:id="@+id/icon_light_on"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:elevation="20dp"
-        android:src="@drawable/ic_light"
-        app:layout_constraintBottom_toBottomOf="@+id/button_light_off"
-        app:layout_constraintEnd_toEndOf="@+id/button_light_off"
-        app:layout_constraintStart_toStartOf="@+id/button_light_off"
-        app:layout_constraintTop_toTopOf="@+id/button_light_off" />
-
     <ImageView
         android:id="@+id/icon_light_off"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:elevation="20dp"
         android:src="@drawable/ic_light_off"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/button_light_off"
         app:layout_constraintEnd_toEndOf="@+id/button_light_off"
         app:layout_constraintStart_toStartOf="@+id/button_light_off"
@@ -244,6 +252,30 @@
         app:layout_constraintEnd_toEndOf="@+id/button_goto_settings"
         app:layout_constraintStart_toStartOf="@+id/button_goto_settings"
         app:layout_constraintTop_toTopOf="@+id/button_goto_settings" />
+
+    <ImageView
+        android:id="@+id/icon_light_on"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_light"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_light_off"
+        app:layout_constraintEnd_toEndOf="@+id/button_light_off"
+        app:layout_constraintStart_toStartOf="@+id/button_light_off"
+        app:layout_constraintTop_toTopOf="@+id/button_light_off" />
+
+    <ImageView
+        android:id="@+id/icon_arrow_bold"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="4dp"
+        android:elevation="20dp"
+        android:src="@drawable/ic_arrow_bolder"
+        app:layout_constraintBottom_toBottomOf="@+id/button_disconnect"
+        app:layout_constraintEnd_toEndOf="@+id/button_disconnect"
+        app:layout_constraintStart_toStartOf="@+id/button_disconnect"
+        app:layout_constraintTop_toTopOf="@+id/button_disconnect" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/modifiers_layout"
@@ -269,5 +301,26 @@
         app:layout_constraintVertical_bias="0.17">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_locked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="button_disconnect,button_unlock,icon_arrow_bold,bike_is_locked" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_unlocked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="speed,kph_label,duration,distance,battery_percent,assistance,battery,icon_light_off,rocket_icon,battery_icon,icon_settings,icon_light_on,button_light_on,button_lock,button_goto_settings,button_light_off" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="button_goto_settings,icon_settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

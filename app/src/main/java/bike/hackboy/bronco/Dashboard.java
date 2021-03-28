@@ -117,13 +117,6 @@ public class Dashboard extends Fragment {
 			.findNavController(Dashboard.this)
 			.navigate(R.id.action_Dashboard_to_Settings));
 
-		// don't show buttons before callback fires
-		view.findViewById(R.id.button_unlock).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.button_lock).setVisibility(View.INVISIBLE);
-
-		view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
-		view.findViewById(R.id.gauges_group).setVisibility(View.INVISIBLE);
-
 		view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
 			sendIntent("unlock");
 			vibrate();
@@ -157,10 +150,13 @@ public class Dashboard extends Fragment {
 			//Log.d("dashboard_state", "on dashboard state");
 			//Log.d("dash_parsed", db.toString());
 
+			view.findViewById(R.id.group_settings).setVisibility(View.VISIBLE);
+
 			requireActivity().runOnUiThread(() -> {
 				if (locked) {
-					view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
-					view.findViewById(R.id.gauges_group).setVisibility(View.INVISIBLE);
+					view.findViewById(R.id.group_locked).setVisibility(View.VISIBLE);
+					view.findViewById(R.id.group_unlocked).setVisibility(View.INVISIBLE);
+
 					return;
 				}
 
@@ -171,15 +167,14 @@ public class Dashboard extends Fragment {
 				((ProgressBar) view.findViewById(R.id.assistance)).setProgress(db.getRawPower());
 				((ProgressBar) view.findViewById(R.id.battery)).setProgress(db.getRawBattery());
 
-				view.findViewById(R.id.modifiers_group).setVisibility(View.VISIBLE);
+				view.findViewById(R.id.group_locked).setVisibility(View.INVISIBLE);
+				view.findViewById(R.id.group_unlocked).setVisibility(View.VISIBLE);
 
 				view.findViewById(R.id.button_light_on).setVisibility(db.isLightOn() ? View.INVISIBLE : View.VISIBLE);
 				view.findViewById(R.id.icon_light_on).setVisibility(db.isLightOn() ? View.VISIBLE : View.INVISIBLE);
 
 				view.findViewById(R.id.button_light_off).setVisibility(db.isLightOn() ? View.VISIBLE : View.INVISIBLE);
 				view.findViewById(R.id.icon_light_off).setVisibility(db.isLightOn() ? View.INVISIBLE : View.VISIBLE);
-
-				view.findViewById(R.id.gauges_group).setVisibility(View.VISIBLE);
 			});
 		} catch (Exception e) {
 			Log.e("dashboard_update", "failed in dashboard listener", e);
@@ -191,12 +186,15 @@ public class Dashboard extends Fragment {
 		this.locked = locked;
 		try {
 			requireActivity().runOnUiThread(() -> {
-				view.findViewById(R.id.button_unlock).setVisibility(locked ? View.VISIBLE : View.INVISIBLE);
-				view.findViewById(R.id.button_lock).setVisibility(locked ? View.INVISIBLE : View.VISIBLE);
+				view.findViewById(R.id.group_locked).setVisibility(locked ? View.VISIBLE : View.INVISIBLE);
+				view.findViewById(R.id.group_unlocked).setVisibility(locked ? View.INVISIBLE : View.VISIBLE);
 
-				if (locked) {
-					view.findViewById(R.id.modifiers_group).setVisibility(View.INVISIBLE);
-				}
+				// assume light is off to avoid blinking UI element
+				view.findViewById(R.id.icon_light_on).setVisibility(View.INVISIBLE);
+				view.findViewById(R.id.button_light_off).setVisibility(View.INVISIBLE);
+
+				// needs to show in sync with the rest of the UI
+				view.findViewById(R.id.group_settings).setVisibility(View.VISIBLE);
 			});
 		} catch (Exception e) {
 			Log.e("locked_update", "failed in locked update", e);

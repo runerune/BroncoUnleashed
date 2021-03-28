@@ -141,7 +141,7 @@ public class SpeedSetting extends Fragment {
 			.findNavController(SpeedSetting.this)
 			.navigate(R.id.action_SpeedSetting_to_Settings));
 
-		view.findViewById(R.id.button_disable_limit).setOnClickListener(view3 -> {
+		view.findViewById(R.id.button_disable_limit).setOnClickListener(view3 ->
 			new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialogWarning)
 				.setTitle(R.string.caution_motor)
 				.setMessage(R.string.disable_speed_limit_explanation)
@@ -154,8 +154,7 @@ public class SpeedSetting extends Fragment {
 					lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
 						.putExtra("event", "set-motor-mode-torque"));
 				})
-				.show();
-		});
+				.show());
 
 		view.findViewById(R.id.button_enable_limit).setOnClickListener(view4 -> {
 			commitWrite = true;

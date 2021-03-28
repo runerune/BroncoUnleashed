@@ -128,16 +128,14 @@ public class Settings extends Fragment {
 					.navigate(R.id.action_settings_to_UserData))
 		);
 
-		if (isUnlocked) {
-			settings.add(new SettingsEntityBean()
-				.setName((String) getText(R.string.disconnect))
-				.setDescription((String) getText(R.string.description_disconnect))
-				.setOnClickListener(v ->
-					LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
-						new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
-					))
-			);
-		}
+		settings.add(new SettingsEntityBean()
+			.setName((String) getText(R.string.disconnect))
+			.setDescription((String) getText(R.string.description_disconnect))
+			.setOnClickListener(v ->
+				LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
+					new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "disconnect")
+				))
+		);
 
 		settings.add(new SettingsEntityBean()
 			.setName((String) getText(R.string.about))

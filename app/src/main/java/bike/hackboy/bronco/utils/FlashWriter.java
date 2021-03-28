@@ -12,8 +12,8 @@ import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 
 public class FlashWriter {
-	private final Context context;
-	private final BroadcastReceiver messageReceiver;
+	protected final Context context;
+	protected final BroadcastReceiver messageReceiver;
 
 	private int progress = 0;
 

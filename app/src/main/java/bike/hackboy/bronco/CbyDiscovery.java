@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class CbyDiscovery extends Fragment {
-	final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
+	protected final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
 	protected boolean firstRun = true;
@@ -36,7 +35,7 @@ public class CbyDiscovery extends Fragment {
 	private final Runnable hideLoader = () ->
 		requireView().findViewById(R.id.loader).setVisibility(View.INVISIBLE);
 
-	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String event = intent.getStringExtra("event");
@@ -98,7 +97,7 @@ public class CbyDiscovery extends Fragment {
 		listDevices();
 	}
 
-	public void listDevices() {
+	protected void listDevices() {
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 		requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
@@ -133,7 +132,7 @@ public class CbyDiscovery extends Fragment {
 		//Log.d("devices", matchingDevices.toString());
 	}
 
-	public void connect(String mac) {
+	protected void connect(String mac) {
 		//Log.d("connect", mac);
 
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
@@ -144,7 +143,7 @@ public class CbyDiscovery extends Fragment {
 
 	// listing is instant but let's give some fake feedback to the user so
 	// they don't think nothing happened if the list stays the same
-	public void showPlaceboLoader() {
+	protected void showPlaceboLoader() {
 		loaderThreadHandler.removeCallbacks(hideLoader);
 
 		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);

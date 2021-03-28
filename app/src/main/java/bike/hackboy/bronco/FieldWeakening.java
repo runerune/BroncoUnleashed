@@ -22,13 +22,13 @@ import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.FlashWriter;
 
 public class FieldWeakening extends Fragment {
-	private int weakening = 0;
-	private int weakeningAsiValue = 0;
-	private boolean commitWrite = false;
+	protected int weakening = 0;
+	protected int weakeningAsiValue = 0;
+	protected boolean commitWrite = false;
 
-	private static final double ASI_FIELD_WEAKENING_MULTIPLIER = 40.96;
+	protected static final double ASI_FIELD_WEAKENING_MULTIPLIER = 40.96;
 
-	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String event = intent.getStringExtra("event");

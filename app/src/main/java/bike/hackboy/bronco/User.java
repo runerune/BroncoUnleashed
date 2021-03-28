@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -90,7 +89,7 @@ public class User extends Fragment {
 		view.findViewById(R.id.button_log_out).setOnClickListener(view2 -> logout());
 	}
 
-	public void storeCredentials(String uid, String client, String token, int bikeId) {
+	protected void storeCredentials(String uid, String client, String token, int bikeId) {
 		SharedPreferences.Editor editor = sharedPref.edit();
 
 		editor.putString("uid", uid);
@@ -101,7 +100,7 @@ public class User extends Fragment {
 		editor.apply();
 	}
 
-	public void storeBike(CbyBikeResponseBean bike) {
+	protected void storeBike(CbyBikeResponseBean bike) {
 		this.bike = bike;
 		//Log.d("bike", bike.toString());
 
@@ -111,7 +110,7 @@ public class User extends Fragment {
 		detailsViewAdapter.notifyDataSetChanged();
 	}
 
-	public void ensureUserData() {
+	protected void ensureUserData() {
 		sharedPref = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
 		clientId = sharedPref.getString("client", null);
@@ -126,12 +125,12 @@ public class User extends Fragment {
 		if(loggedIn) getBike();
 	}
 
-	public void logout() {
+	protected void logout() {
 		storeCredentials(null, null, null, 0);
 		ensureUserData();
 	}
 
-	public void login() {
+	protected void login() {
 		EditText usernameField = requireView().findViewById(R.id.username);
 		EditText passwordField = requireView().findViewById(R.id.password);
 		String username = usernameField.getText().toString();
@@ -198,7 +197,7 @@ public class User extends Fragment {
 		client.login(username, password);
 	}
 
-	public void getBike() {
+	protected void getBike() {
 		loading = true;
 		setupUi(loggedIn, true);
 
@@ -237,8 +236,10 @@ public class User extends Fragment {
 
 							@SuppressLint("SimpleDateFormat")
 							SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+							@SuppressLint("SimpleDateFormat")
 							SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+							//noinspection ConstantConditions
 							String activationDate = targetFormat.format(sourceFormat.parse(bikeJson.getString("activated_at")));
 
 							try {

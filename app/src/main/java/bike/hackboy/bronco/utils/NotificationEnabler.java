@@ -88,7 +88,7 @@ public class NotificationEnabler {
 	}
 
 	@SuppressWarnings("EmptyMethod")
-	public void end() {
+	protected void end() {
 		//Log.d("notification_enabler", "completed");
 	}
 

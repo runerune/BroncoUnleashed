@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import bike.hackboy.bronco.bean.SettingsEntityBean;
 
 public class Settings extends Fragment {
-	final ArrayList<SettingsEntityBean> settings = new ArrayList<>();
+	protected final ArrayList<SettingsEntityBean> settings = new ArrayList<>();
 	protected RecyclerView recyclerViewSettings;
 	protected SettingsAdapter settingsListAdapter;
 
@@ -52,7 +52,7 @@ public class Settings extends Fragment {
 		buildSettings();
 	}
 
-	public void buildSettings() {
+	protected void buildSettings() {
 		settings.clear();
 
 		settings.add(new SettingsEntityBean()

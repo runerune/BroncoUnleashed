@@ -98,7 +98,7 @@ public class SequencedWriter {
 	}
 
 	@SuppressWarnings("EmptyMethod")
-	public void end() {
+	protected void end() {
 		//Log.d("writer", "completed");
 	}
 

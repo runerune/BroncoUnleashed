@@ -32,11 +32,11 @@ import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 
 public class Dashboard extends Fragment {
-	private boolean locked = true;
-	private boolean hasEnabledNotifications = false;
-	private View view = null;
+	protected boolean locked = true;
+	protected boolean hasEnabledNotifications = false;
+	protected View view = null;
 
-	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String event = intent.getStringExtra("event");

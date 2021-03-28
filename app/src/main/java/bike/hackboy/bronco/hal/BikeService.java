@@ -58,7 +58,7 @@ public class BikeService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String event = intent.getStringExtra("event");
-			//Log.d"event", event);
+			//Log.d("event", event);
 
 			try {
 				switch (event) {
@@ -292,7 +292,7 @@ public class BikeService extends Service {
 		}
 	};
 
-	private void updateNotification(DashboardBean db) {
+	protected void updateNotification(DashboardBean db) {
 		// edge case: first value after unlocking is incomplete
 		if(db.getRawBattery() < 1) return;
 
@@ -322,7 +322,7 @@ public class BikeService extends Service {
 		nm.notify(666, notification.build());
 	}
 
-	private void acquireWakeLock() {
+	protected void acquireWakeLock() {
 		PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
 		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
 			String.format("%s::BikeService", getText(R.string.app_name)));
@@ -331,7 +331,7 @@ public class BikeService extends Service {
 		wakeLock.acquire(6*60*60*1000L);
 	}
 
-	private void releaseWakeLock() {
+	protected void releaseWakeLock() {
 		// this WL is released when the service is killed, too
 		if(wakeLock != null) {
 			wakeLock.release();
@@ -339,7 +339,7 @@ public class BikeService extends Service {
 		}
 	}
 
-	private void removeNotification() {
+	protected void removeNotification() {
 		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		nm.cancel(666);
 
@@ -347,20 +347,20 @@ public class BikeService extends Service {
 		lastNotification = 0;
 	}
 
-	private void toast(String message) {
+	protected void toast(String message) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "toast");
 		intent.putExtra("message", message);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
-	private void notify(String action) {
+	protected void notify(String action) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", action);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
-	private void notifyCharacteristicWrite(UUID uuid, byte[] value) {
+	protected void notifyCharacteristicWrite(UUID uuid, byte[] value) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "on-characteristic-write");
 		intent.putExtra("uuid", uuid.toString().toUpperCase());
@@ -368,7 +368,7 @@ public class BikeService extends Service {
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
-	private void notifyCharacteristicRead(UUID uuid, byte[] value) {
+	protected void notifyCharacteristicRead(UUID uuid, byte[] value) {
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "on-characteristic-read");
 		intent.putExtra("uuid", uuid.toString().toUpperCase());
@@ -376,7 +376,7 @@ public class BikeService extends Service {
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
-	private void notifyDiscovery() {
+	protected void notifyDiscovery() {
 		notify("on-discovered");
 	}
 
@@ -420,7 +420,7 @@ public class BikeService extends Service {
 
 	// --------------------------------------------------
 
-	private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+	protected final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
 		@Override
 		public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
 			switch(newState) {

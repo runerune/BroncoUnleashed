@@ -16,8 +16,8 @@ import java.util.List;
 import bike.hackboy.bronco.bean.SettingsEntityBean;
 
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> {
-	private final List<SettingsEntityBean> settings;
-	private final LayoutInflater inflater;
+	protected final List<SettingsEntityBean> settings;
+	protected final LayoutInflater inflater;
 
 	SettingsAdapter(Context context, List<SettingsEntityBean> data) {
 		this.inflater = LayoutInflater.from(context);

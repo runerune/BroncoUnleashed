@@ -101,7 +101,7 @@ public class BikePropertyBuilder {
 
 		entry = new PropertiesBean();
 		entry.setName("activated_at");
-		entry.setValue(bean.getActivatedAt().toString());
+		entry.setValue(bean.getActivatedAt());
 		list.add(entry);
 
 		entry = new PropertiesBean();

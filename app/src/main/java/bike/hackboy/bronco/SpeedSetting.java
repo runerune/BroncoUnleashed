@@ -22,11 +22,11 @@ import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.FlashWriter;
 
 public class SpeedSetting extends Fragment {
-	private int speed = 0;
-	private int motorMode = 0;
-	private boolean commitWrite = false;
+	protected int speed = 0;
+	protected int motorMode = 0;
+	protected boolean commitWrite = false;
 
-	private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 		String event = intent.getStringExtra("event");
@@ -183,7 +183,7 @@ public class SpeedSetting extends Fragment {
 		});
 	}
 
-	private void updateView() {
+	protected void updateView() {
 		if(speed < 1 || motorMode < 1) return;
 
 		final int MOTOR_UNRESTRICTED = 1;

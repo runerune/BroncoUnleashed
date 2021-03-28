@@ -22,8 +22,8 @@ import java.util.List;
 import bike.hackboy.bronco.hal.BikeService;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";
-    private LocalBroadcastManager localBroadcastManager;
+    protected static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";
+    protected LocalBroadcastManager localBroadcastManager;
 
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override

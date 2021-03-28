@@ -16,7 +16,8 @@
         android:textColor="@color/gray_600"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@+id/field_weakening_value"
-        app:layout_constraintStart_toEndOf="@+id/field_weakening_value" />
+        app:layout_constraintStart_toEndOf="@+id/field_weakening_value"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/reading_from_bike_text"
@@ -109,7 +110,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slider_value_layout" />
+        app:layout_constraintTop_toTopOf="@+id/slider_value_layout"
+        tools:ignore="HardcodedText" />
 
     <ProgressBar
         android:id="@+id/reading_from_bike_progress"

@@ -127,7 +127,8 @@
         android:textSize="120sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gauges_layout" />
+        app:layout_constraintTop_toTopOf="@+id/gauges_layout"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/kph_label"
@@ -152,7 +153,8 @@
         app:layout_constraintEnd_toStartOf="@+id/distance"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kph_label" />
+        app:layout_constraintTop_toBottomOf="@+id/kph_label"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/distance"
@@ -166,7 +168,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/duration"
-        app:layout_constraintTop_toBottomOf="@+id/kph_label" />
+        app:layout_constraintTop_toBottomOf="@+id/kph_label"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/battery_percent"
@@ -180,7 +183,8 @@
         app:layout_constraintBottom_toTopOf="@+id/battery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <ProgressBar
         android:id="@+id/assistance"

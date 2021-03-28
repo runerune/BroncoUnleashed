@@ -1,7 +1,9 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
   <shortcut
+    android:shortcutId="reset_speed"
     android:enabled="true"
-    android:shortcutLabel="@string/reset_speed">
+    android:shortcutShortLabel="@string/reset_speed"
+    android:shortcutLongLabel="@string/reset_speed_long">
     <intent
       android:action="bike.hackboy.bronco.RESET_SPEED"
       android:targetPackage="bike.hackboy.bronco"

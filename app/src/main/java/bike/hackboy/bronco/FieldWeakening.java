@@ -159,12 +159,24 @@ public class FieldWeakening extends Fragment {
 
 		((TextView) view.findViewById(R.id.field_weakening_value)).setText(String.valueOf(weakening));
 		((SeekBar) view.findViewById(R.id.field_weakening_bar)).setProgress(weakening);
-
 	}
 
 	private void writeFlash() {
 		commitWrite = false;
 		FlashWriter fw = new FlashWriter(requireContext());
+		fw.setOnWriteAction(new FlashWriter.OnWriteAction() {
+			@Override
+			public void onComplete() {
+				requireActivity().runOnUiThread(() -> NavHostFragment
+					.findNavController(FieldWeakening.this)
+					.navigate(R.id.action_FieldWeakening_to_Settings));
+			}
+
+			@Override
+			public void onError() {
+
+			}
+		});
 		fw.run();
 	}
 

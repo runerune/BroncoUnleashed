@@ -14,8 +14,15 @@ import bike.hackboy.bronco.data.Uuid;
 public class FlashWriter {
 	protected final Context context;
 	protected final BroadcastReceiver messageReceiver;
+	protected OnWriteAction onWrite;
 
 	private int progress = 0;
+
+	public abstract static class OnWriteAction {
+		public abstract void onComplete();
+		// TODO implement this
+		public abstract void onError();
+	}
 
 	public FlashWriter(Context c) {
 		this.context = c;
@@ -59,6 +66,10 @@ public class FlashWriter {
 		};
 	}
 
+	public void setOnWriteAction(OnWriteAction action) {
+		this.onWrite = action;
+	}
+
 	public void run() throws IllegalStateException {
 		if(progress > 0) {
 			throw new IllegalStateException("This writer has already run");
@@ -82,6 +93,10 @@ public class FlashWriter {
 
 		LocalBroadcastManager.getInstance(context)
 			.unregisterReceiver(messageReceiver);
+
+		if(onWrite != null) {
+			onWrite.onComplete();
+		}
 	}
 
 	protected void writeFlash() {

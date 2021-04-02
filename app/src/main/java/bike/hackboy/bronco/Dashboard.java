@@ -136,6 +136,10 @@ public class Dashboard extends Fragment {
 			sendIntent("lights-off");
 			vibrate();
 		});
+
+		view.findViewById(R.id.button_disconnect).setOnClickListener(view6 -> {
+			sendIntent("disconnect");
+		});
 	}
 
 	protected void sendIntent(String event) {

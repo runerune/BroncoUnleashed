@@ -85,8 +85,8 @@ public class User extends Fragment {
 		recyclerViewBikeDetails.setAdapter(detailsViewAdapter);
 		recyclerViewBikeDetails.setItemAnimator(new DefaultItemAnimator());
 
-		view.findViewById(R.id.button_log_in).setOnClickListener(view1 -> login());
-		view.findViewById(R.id.button_log_out).setOnClickListener(view2 -> logout());
+		view.findViewById(R.id.button_log_in).setOnClickListener(v -> login());
+		view.findViewById(R.id.button_log_out).setOnClickListener(v -> logout());
 	}
 
 	protected void storeCredentials(String uid, String client, String token, int bikeId) {

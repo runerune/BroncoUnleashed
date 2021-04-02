@@ -93,7 +93,7 @@ public class CbyDiscovery extends Fragment {
 		recyclerViewDevices.setAdapter(deviceListAdapter);
 		recyclerViewDevices.setItemAnimator(new DefaultItemAnimator());
 
-		view.findViewById(R.id.button_connect).setOnClickListener(view1 -> listDevices());
+		view.findViewById(R.id.button_connect).setOnClickListener(v -> listDevices());
 		listDevices();
 	}
 

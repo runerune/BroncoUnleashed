@@ -123,7 +123,7 @@ public class SpeedSetting extends Fragment {
 
 		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
 
-		view.findViewById(R.id.button_speed_apply).setOnClickListener(view1 -> {
+		view.findViewById(R.id.button_speed_apply).setOnClickListener(v -> {
 			LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
 				new Intent(BuildConfig.APPLICATION_ID)
 					.putExtra("event", "set-speed")
@@ -133,15 +133,15 @@ public class SpeedSetting extends Fragment {
 			NavHostFragment.findNavController(SpeedSetting.this).navigate(R.id.action_SpeedSetting_to_Settings);
 		});
 
-		view.findViewById(R.id.button_speed_cancel).setOnClickListener(view1 -> NavHostFragment
+		view.findViewById(R.id.button_speed_cancel).setOnClickListener(v -> NavHostFragment
 			.findNavController(SpeedSetting.this)
 			.navigate(R.id.action_SpeedSetting_to_Settings));
 
-		view.findViewById(R.id.button_speed_cancel_large).setOnClickListener(view2 -> NavHostFragment
+		view.findViewById(R.id.button_speed_cancel_large).setOnClickListener(v -> NavHostFragment
 			.findNavController(SpeedSetting.this)
 			.navigate(R.id.action_SpeedSetting_to_Settings));
 
-		view.findViewById(R.id.button_disable_limit).setOnClickListener(view3 ->
+		view.findViewById(R.id.button_disable_limit).setOnClickListener(v ->
 			new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialogWarning)
 				.setTitle(R.string.caution_motor)
 				.setMessage(R.string.disable_speed_limit_explanation)
@@ -156,7 +156,7 @@ public class SpeedSetting extends Fragment {
 				})
 				.show());
 
-		view.findViewById(R.id.button_enable_limit).setOnClickListener(view4 -> {
+		view.findViewById(R.id.button_enable_limit).setOnClickListener(v -> {
 			commitWrite = true;
 
 			lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)

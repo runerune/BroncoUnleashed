@@ -113,31 +113,31 @@ public class Dashboard extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		this.view = view;
 
-		view.findViewById(R.id.button_goto_settings).setOnClickListener(view1 -> NavHostFragment
+		view.findViewById(R.id.button_goto_settings).setOnClickListener(v -> NavHostFragment
 			.findNavController(Dashboard.this)
 			.navigate(R.id.action_Dashboard_to_Settings));
 
-		view.findViewById(R.id.button_unlock).setOnClickListener(view2 -> {
+		view.findViewById(R.id.button_unlock).setOnClickListener(v -> {
 			sendIntent("unlock");
 			vibrate();
 		});
 
-		view.findViewById(R.id.button_lock).setOnClickListener(view3 -> {
+		view.findViewById(R.id.button_lock).setOnClickListener(v -> {
 			sendIntent("lock");
 			vibrate();
 		});
 
-		view.findViewById(R.id.button_light_on).setOnClickListener(view4 -> {
+		view.findViewById(R.id.button_light_on).setOnClickListener(v -> {
 			sendIntent("lights-on");
 			vibrate();
 		});
 
-		view.findViewById(R.id.button_light_off).setOnClickListener(view5 -> {
+		view.findViewById(R.id.button_light_off).setOnClickListener(v -> {
 			sendIntent("lights-off");
 			vibrate();
 		});
 
-		view.findViewById(R.id.button_disconnect).setOnClickListener(view6 -> sendIntent("disconnect"));
+		view.findViewById(R.id.button_disconnect).setOnClickListener(v -> sendIntent("disconnect"));
 	}
 
 	protected void sendIntent(String event) {

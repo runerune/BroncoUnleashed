@@ -13,9 +13,9 @@ public class Uuid {
 	public static final UUID serviceSettings = UUID.fromString("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 	public static final UUID serviceCby = UUID.fromString("C0B0A000-18EB-499D-B266-2F2910744274");
 
-	public static final UUID characteristicSettingsWrite = UUID.fromString("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
-	public static final UUID characteristicSettingsRead = UUID.fromString("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
-	public static final UUID characteristicUnlock = UUID.fromString("C0B0A001-18EB-499D-B266-2F2910744274");
-	public static final UUID characteristicDashboard = UUID.fromString("C0B0A00A-18EB-499D-B266-2F2910744274");
+	public static final UUID characteristicSettingsWrite = UUID.fromString(Uuid.characteristicSettingsWriteString);
+	public static final UUID characteristicSettingsRead = UUID.fromString(Uuid.characteristicSettingsReadString);
+	public static final UUID characteristicUnlock = UUID.fromString(Uuid.characteristicUnlockString);
+	public static final UUID characteristicDashboard = UUID.fromString(Uuid.characteristicDashboardString);
 
 }

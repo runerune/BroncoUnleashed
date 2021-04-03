@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Set;
 
+import bike.hackboy.bronco.view.DeviceListAdapter;
+
 public class CbyDiscovery extends Fragment {
 	protected final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;

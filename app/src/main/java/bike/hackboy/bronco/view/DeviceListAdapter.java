@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.view;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import bike.hackboy.bronco.R;
+
 public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.ViewHolder> {
 	private final List<BluetoothDevice> data;
 	private final LayoutInflater inflater;
@@ -23,7 +25,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 		public void onClick(String mac) { }
 	}
 
-	DeviceListAdapter(Context context, List<BluetoothDevice> data) {
+	public DeviceListAdapter(Context context, List<BluetoothDevice> data) {
 		this.inflater = LayoutInflater.from(context);
 		this.data = data;
 	}

@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +19,15 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import bike.hackboy.bronco.bean.PropertiesBean;
+import bike.hackboy.bronco.R;
+import bike.hackboy.bronco.bean.BikePropertyBean;
 
 public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.ViewHolder> {
-	private final List<PropertiesBean> data;
+	private final List<BikePropertyBean> data;
 	private final LayoutInflater inflater;
 	private final Context context;
 
-	DetailsViewAdapter(Context context, List<PropertiesBean> data) {
+	public DetailsViewAdapter(Context context, List<BikePropertyBean> data) {
 		this.inflater = LayoutInflater.from(context);
 		this.data = data;
 		this.context = context;
@@ -41,7 +42,7 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		PropertiesBean entry = data.get(position);
+		BikePropertyBean entry = data.get(position);
 
 		try {
 			Field resourceField = R.string.class.getDeclaredField(entry.getName());

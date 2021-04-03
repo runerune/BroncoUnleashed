@@ -23,12 +23,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import bike.hackboy.bronco.bean.SettingsEntityBean;
+import bike.hackboy.bronco.bean.SettingBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.view.SettingsAdapter;
 
 public class Settings extends Fragment {
-	protected final ArrayList<SettingsEntityBean> settings = new ArrayList<>();
+	protected final ArrayList<SettingBean> settings = new ArrayList<>();
 	protected RecyclerView recyclerViewSettings;
 	protected SettingsAdapter settingsListAdapter;
 
@@ -96,7 +97,7 @@ public class Settings extends Fragment {
 		settings.clear();
 
 		if (isUnlocked) {
-			settings.add(new SettingsEntityBean()
+			settings.add(new SettingBean()
 				.setName((String) getText(R.string.speed_setting))
 				.setDescription((String) getText(R.string.description_speed_setting))
 				.setHasArrow(true)
@@ -105,7 +106,7 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_settings_to_SpeedSetting))
 			);
 
-			settings.add(new SettingsEntityBean()
+			settings.add(new SettingBean()
 				.setName((String) getText(R.string.field_weakening))
 				.setDescription((String) getText(R.string.description_field_weakening))
 				.setHasArrow(true)
@@ -115,7 +116,7 @@ public class Settings extends Fragment {
 			);
 		}
 
-		settings.add(new SettingsEntityBean()
+		settings.add(new SettingBean()
 			.setName((String) getText(R.string.cby_user_details))
 			.setDescription((String) getText(R.string.description_bike_details))
 			.setHasArrow(true)
@@ -124,7 +125,7 @@ public class Settings extends Fragment {
 					.navigate(R.id.action_settings_to_UserData))
 		);
 
-		settings.add(new SettingsEntityBean()
+		settings.add(new SettingBean()
 			.setName((String) getText(R.string.disconnect))
 			.setDescription((String) getText(R.string.description_disconnect))
 			.setOnClickListener(v ->
@@ -133,7 +134,7 @@ public class Settings extends Fragment {
 				))
 		);
 
-		settings.add(new SettingsEntityBean()
+		settings.add(new SettingBean()
 			.setName((String) getText(R.string.about))
 			.setDescription((String) getText(R.string.description_about))
 			.setOnClickListener(v ->

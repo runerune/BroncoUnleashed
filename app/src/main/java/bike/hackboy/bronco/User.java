@@ -28,8 +28,9 @@ import java.util.List;
 
 import bike.hackboy.bronco.api.Client;
 import bike.hackboy.bronco.bean.CbyBikeResponseBean;
-import bike.hackboy.bronco.bean.PropertiesBean;
-import bike.hackboy.bronco.utils.BikePropertyBuilder;
+import bike.hackboy.bronco.bean.BikePropertyBean;
+import bike.hackboy.bronco.utils.BikePropertyFactory;
+import bike.hackboy.bronco.view.DetailsViewAdapter;
 import okhttp3.Response;
 
 public class User extends Fragment {
@@ -46,7 +47,7 @@ public class User extends Fragment {
 	protected String token;
 	protected int bikeId;
 
-	protected final List<PropertiesBean> bikePropertiesList = new ArrayList<>();
+	protected final List<BikePropertyBean> bikePropertiesList = new ArrayList<>();
 	protected RecyclerView recyclerViewBikeDetails;
 	protected DetailsViewAdapter detailsViewAdapter;
 
@@ -105,7 +106,7 @@ public class User extends Fragment {
 		//Log.d("bike", bike.toString());
 
 		bikePropertiesList.clear();
-		bikePropertiesList.addAll(BikePropertyBuilder.fromBikeBean(bike));
+		bikePropertiesList.addAll(BikePropertyFactory.fromBikeBean(bike));
 
 		detailsViewAdapter.notifyDataSetChanged();
 	}

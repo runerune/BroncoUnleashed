@@ -4,7 +4,7 @@ import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
 
-public class SettingsEntityBean {
+public class SettingBean {
 	private String name;
 	private String description;
 	private View.OnClickListener onClickListener;
@@ -14,7 +14,7 @@ public class SettingsEntityBean {
 		return name;
 	}
 
-	public SettingsEntityBean setName(String name) {
+	public SettingBean setName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -23,7 +23,7 @@ public class SettingsEntityBean {
 		return description;
 	}
 
-	public SettingsEntityBean setDescription(String description) {
+	public SettingBean setDescription(String description) {
 		this.description = description;
 		return this;
 	}
@@ -32,7 +32,7 @@ public class SettingsEntityBean {
 		return onClickListener;
 	}
 
-	public SettingsEntityBean setOnClickListener(View.OnClickListener onClickListener) {
+	public SettingBean setOnClickListener(View.OnClickListener onClickListener) {
 		this.onClickListener = onClickListener;
 		return this;
 	}
@@ -41,7 +41,7 @@ public class SettingsEntityBean {
 		return hasArrow;
 	}
 
-	public SettingsEntityBean setHasArrow(boolean hasArrow) {
+	public SettingBean setHasArrow(boolean hasArrow) {
 		this.hasArrow = hasArrow;
 		return this;
 	}

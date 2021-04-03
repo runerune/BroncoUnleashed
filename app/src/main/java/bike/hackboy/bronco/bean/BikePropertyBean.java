@@ -2,7 +2,7 @@ package bike.hackboy.bronco.bean;
 
 import org.jetbrains.annotations.NotNull;
 
-public class PropertiesBean {
+public class BikePropertyBean {
 	private String name;
 	private String value;
 	private String link;

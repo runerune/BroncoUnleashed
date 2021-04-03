@@ -1,4 +1,4 @@
-package bike.hackboy.bronco;
+package bike.hackboy.bronco.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
-import bike.hackboy.bronco.bean.SettingsEntityBean;
+import bike.hackboy.bronco.R;
+import bike.hackboy.bronco.bean.SettingBean;
 
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> {
-	protected final List<SettingsEntityBean> settings;
+	protected final List<SettingBean> settings;
 	protected final LayoutInflater inflater;
 
-	SettingsAdapter(Context context, List<SettingsEntityBean> data) {
+	public SettingsAdapter(Context context, List<SettingBean> data) {
 		this.inflater = LayoutInflater.from(context);
 		this.settings = data;
 	}
@@ -33,7 +34,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		SettingsEntityBean entry = settings.get(position);
+		SettingBean entry = settings.get(position);
 
 		holder.name.setText(entry.getName());
 		holder.description.setText(entry.getDescription());

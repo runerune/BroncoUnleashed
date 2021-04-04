@@ -272,7 +272,7 @@ public class BikeService extends Service {
 							break;
 							case Uuid.characteristicUnlockString:
 								//Log.d("uuid_check", "is a lock service uuid");
-								if(Arrays.equals(value, Command.LOCK)) {
+								if(value[0] != 0x1) {
 									removeNotification();
 									releaseWakeLock();
 								}

@@ -43,7 +43,7 @@ public class Settings extends Fragment {
 			byte[] value = (intent.getByteArrayExtra("value"));
 
 			if(uuid.toUpperCase().equals(Uuid.characteristicUnlockString)) {
-				buildSettings(Arrays.equals(value, Command.UNLOCK));
+				buildSettings(value[0] == 0x1);
 			}
 		}
 	};

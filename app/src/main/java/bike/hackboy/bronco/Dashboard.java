@@ -50,7 +50,7 @@ public class Dashboard extends Fragment {
 			switch (uuid.toUpperCase()) {
 				case Uuid.characteristicUnlockString:
 					//Log.d("uuid_check", "is a lock service uuid");
-					onLockedChange(Arrays.equals(value, Command.LOCK));
+					onLockedChange(value[0] != 0x1);
 				break;
 
 				case Uuid.characteristicDashboardString:

@@ -99,7 +99,7 @@ public class CbyDiscovery extends Fragment {
 
 		view.findViewById(R.id.button_connect).setOnClickListener(v -> listDevices());
 
-		showPlaceboLoader();
+		showPlaceboLoader(500);
 		loaderThreadHandler.removeCallbacks(doScan);
 		loaderThreadHandler.postDelayed(doScan, 1000);
 	}
@@ -119,7 +119,7 @@ public class CbyDiscovery extends Fragment {
 				return;
 			}
 
-			if (!firstRun) showPlaceboLoader();
+			if (!firstRun) showPlaceboLoader(0);
 			firstRun = false;
 
 			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -157,10 +157,10 @@ public class CbyDiscovery extends Fragment {
 
 	// listing is instant but let's give some fake feedback to the user so
 	// they don't think nothing happened if the list stays the same
-	protected void showPlaceboLoader() {
+	protected void showPlaceboLoader(int extraLoadingTime) {
 		loaderThreadHandler.removeCallbacks(hideLoader);
 
 		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);
-		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*500 + 500));
+		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*500 + 500 + extraLoadingTime));
 	}
 }

@@ -32,12 +32,10 @@ public class CbyDiscovery extends Fragment {
 	protected final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
-	protected boolean firstRun = true;
+
+	protected View view;
 
 	private final Handler loaderThreadHandler = new Handler(Looper.getMainLooper());
-	private final Runnable hideLoader = () ->
-		requireView().findViewById(R.id.loader).setVisibility(View.INVISIBLE);
-	private final Runnable doScan = this::listDevices;
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -70,12 +68,14 @@ public class CbyDiscovery extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView =  inflater.inflate(R.layout.discovery, container, false);
+		View rootView = inflater.inflate(R.layout.discovery, container, false);
+		this.view = rootView;
+
 		recyclerViewDevices = rootView.findViewById(R.id.items_list);
 
 		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
 		assert bar != null;
-		
+
 		bar.setTitle(R.string.app_name);
 		bar.setDisplayHomeAsUpEnabled(false);
 
@@ -98,19 +98,16 @@ public class CbyDiscovery extends Fragment {
 		recyclerViewDevices.setItemAnimator(new DefaultItemAnimator());
 
 		view.findViewById(R.id.button_connect).setOnClickListener(v -> listDevices());
-
-		showPlaceboLoader(500);
-		loaderThreadHandler.removeCallbacks(doScan);
-		loaderThreadHandler.postDelayed(doScan, 1000);
+		listDevices();
 	}
 
 	protected void listDevices() {
 		try {
 			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
-			requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
-			requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
 
 			matchingDevices.clear();
 
@@ -118,9 +115,6 @@ public class CbyDiscovery extends Fragment {
 				requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
 				return;
 			}
-
-			if (!firstRun) showPlaceboLoader(0);
-			firstRun = false;
 
 			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
@@ -131,18 +125,19 @@ public class CbyDiscovery extends Fragment {
 			}
 
 			if (matchingDevices.size() < 1) {
-				requireView().findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
+				view.findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
 				return;
 			}
 
-			requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.items_list).setVisibility(View.VISIBLE);
 			deviceListAdapter.notifyDataSetChanged();
 			//Log.d("devices", matchingDevices.toString());
+
 		} catch(Exception e) {
 			Log.e("scan", "bluetooth scan failed", e);
-			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
-			requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
-			requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -153,14 +148,5 @@ public class CbyDiscovery extends Fragment {
 		intent.putExtra("event", "connect");
 		intent.putExtra("mac", mac);
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
-	}
-
-	// listing is instant but let's give some fake feedback to the user so
-	// they don't think nothing happened if the list stays the same
-	protected void showPlaceboLoader(int extraLoadingTime) {
-		loaderThreadHandler.removeCallbacks(hideLoader);
-
-		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);
-		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*500 + 500 + extraLoadingTime));
 	}
 }

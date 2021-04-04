@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class CbyDiscovery extends Fragment {
 	private final Handler loaderThreadHandler = new Handler(Looper.getMainLooper());
 	private final Runnable hideLoader = () ->
 		requireView().findViewById(R.id.loader).setVisibility(View.INVISIBLE);
+	private final Runnable doScan = this::listDevices;
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -96,42 +98,52 @@ public class CbyDiscovery extends Fragment {
 		recyclerViewDevices.setItemAnimator(new DefaultItemAnimator());
 
 		view.findViewById(R.id.button_connect).setOnClickListener(v -> listDevices());
-		listDevices();
+
+		showPlaceboLoader();
+		loaderThreadHandler.removeCallbacks(doScan);
+		loaderThreadHandler.postDelayed(doScan, 1000);
 	}
 
 	protected void listDevices() {
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		try {
+			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-		requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
-		requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
-		requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
+			requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+			requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
 
-		matchingDevices.clear();
+			matchingDevices.clear();
 
-		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
-			return;
-		}
-
-		if(!firstRun) showPlaceboLoader();
-		firstRun = false;
-
-		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-		for(BluetoothDevice device : pairedDevices) {
-			if(device.getName().equals("COWBOY")) {
-				matchingDevices.add(device);
+			if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+				requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
+				return;
 			}
-		}
 
-		if (matchingDevices.size() < 1) {
-			requireView().findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
-			return;
-		}
+			if (!firstRun) showPlaceboLoader();
+			firstRun = false;
 
-		requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
-		deviceListAdapter.notifyDataSetChanged();
-		//Log.d("devices", matchingDevices.toString());
+			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+			for (BluetoothDevice device : pairedDevices) {
+				if (device.getName().equals("COWBOY")) {
+					matchingDevices.add(device);
+				}
+			}
+
+			if (matchingDevices.size() < 1) {
+				requireView().findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
+				return;
+			}
+
+			requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
+			deviceListAdapter.notifyDataSetChanged();
+			//Log.d("devices", matchingDevices.toString());
+		} catch(Exception e) {
+			Log.e("scan", "bluetooth scan failed", e);
+			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
+			requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+			requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+		}
 	}
 
 	protected void connect(String mac) {
@@ -149,6 +161,6 @@ public class CbyDiscovery extends Fragment {
 		loaderThreadHandler.removeCallbacks(hideLoader);
 
 		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);
-		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*400 + 400));
+		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*500 + 500));
 	}
 }

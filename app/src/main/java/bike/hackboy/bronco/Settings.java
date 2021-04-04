@@ -21,10 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import bike.hackboy.bronco.bean.SettingBean;
-import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.view.SettingsAdapter;
 

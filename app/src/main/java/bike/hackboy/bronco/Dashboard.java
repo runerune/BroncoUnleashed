@@ -25,10 +25,7 @@ import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.util.Arrays;
-
 import bike.hackboy.bronco.bean.DashboardBean;
-import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 
 public class Dashboard extends Fragment {

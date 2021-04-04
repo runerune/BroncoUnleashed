@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import bike.hackboy.bronco.R;
@@ -25,12 +23,10 @@ import bike.hackboy.bronco.bean.BikePropertyBean;
 public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.ViewHolder> {
 	private final List<BikePropertyBean> data;
 	private final LayoutInflater inflater;
-	private final Context context;
 
 	public DetailsViewAdapter(Context context, List<BikePropertyBean> data) {
 		this.inflater = LayoutInflater.from(context);
 		this.data = data;
-		this.context = context;
 	}
 
 	@NotNull

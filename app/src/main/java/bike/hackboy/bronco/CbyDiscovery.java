@@ -2,6 +2,7 @@ package bike.hackboy.bronco;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -100,7 +101,7 @@ public class CbyDiscovery extends Fragment {
 	}
 
 	protected void listDevices() {
-		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		BluetoothManager bluetoothManager = (BluetoothManager) requireContext().getSystemService(Context.BLUETOOTH_SERVICE);
 
 		requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
 		requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
@@ -108,7 +109,7 @@ public class CbyDiscovery extends Fragment {
 
 		matchingDevices.clear();
 
-		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+		if (!bluetoothManager.getAdapter().isEnabled()) {
 			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
 			return;
 		}
@@ -116,7 +117,7 @@ public class CbyDiscovery extends Fragment {
 		if(!firstRun) showPlaceboLoader();
 		firstRun = false;
 
-		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+		Set<BluetoothDevice> pairedDevices = bluetoothManager.getAdapter().getBondedDevices();
 
 		for(BluetoothDevice device : pairedDevices) {
 			if(device.getName().equals("COWBOY")) {

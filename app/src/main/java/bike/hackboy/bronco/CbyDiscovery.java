@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +31,11 @@ public class CbyDiscovery extends Fragment {
 	protected final ArrayList<BluetoothDevice> matchingDevices = new ArrayList<>();
 	protected RecyclerView recyclerViewDevices;
 	protected DeviceListAdapter deviceListAdapter;
-
-	protected View view;
+	protected boolean firstRun = true;
 
 	private final Handler loaderThreadHandler = new Handler(Looper.getMainLooper());
+	private final Runnable hideLoader = () ->
+		requireView().findViewById(R.id.loader).setVisibility(View.INVISIBLE);
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -68,14 +68,12 @@ public class CbyDiscovery extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.discovery, container, false);
-		this.view = rootView;
-
+		View rootView =  inflater.inflate(R.layout.discovery, container, false);
 		recyclerViewDevices = rootView.findViewById(R.id.items_list);
 
 		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
 		assert bar != null;
-
+		
 		bar.setTitle(R.string.app_name);
 		bar.setDisplayHomeAsUpEnabled(false);
 
@@ -102,43 +100,38 @@ public class CbyDiscovery extends Fragment {
 	}
 
 	protected void listDevices() {
-		try {
-			BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-			view.findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
-			view.findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
-			view.findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+		requireView().findViewById(R.id.bluetooth_off).setVisibility(View.INVISIBLE);
+		requireView().findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
+		requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
 
-			matchingDevices.clear();
+		matchingDevices.clear();
 
-			if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-				requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
-				return;
-			}
-
-			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-			for (BluetoothDevice device : pairedDevices) {
-				if (device.getName().equals("COWBOY")) {
-					matchingDevices.add(device);
-				}
-			}
-
-			if (matchingDevices.size() < 1) {
-				view.findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
-				return;
-			}
-
-			view.findViewById(R.id.items_list).setVisibility(View.VISIBLE);
-			deviceListAdapter.notifyDataSetChanged();
-			//Log.d("devices", matchingDevices.toString());
-
-		} catch(Exception e) {
-			Log.e("scan", "bluetooth scan failed", e);
-			view.findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
-			view.findViewById(R.id.no_devices).setVisibility(View.INVISIBLE);
-			view.findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
+			return;
 		}
+
+		if(!firstRun) showPlaceboLoader();
+		firstRun = false;
+
+		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+
+		for(BluetoothDevice device : pairedDevices) {
+			if(device.getName().equals("COWBOY")) {
+				matchingDevices.add(device);
+			}
+		}
+
+		if (matchingDevices.size() < 1) {
+			requireView().findViewById(R.id.no_devices).setVisibility(View.VISIBLE);
+			return;
+		}
+
+		requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
+		deviceListAdapter.notifyDataSetChanged();
+		//Log.d("devices", matchingDevices.toString());
 	}
 
 	protected void connect(String mac) {
@@ -148,5 +141,14 @@ public class CbyDiscovery extends Fragment {
 		intent.putExtra("event", "connect");
 		intent.putExtra("mac", mac);
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
+	}
+
+	// listing is instant but let's give some fake feedback to the user so
+	// they don't think nothing happened if the list stays the same
+	protected void showPlaceboLoader() {
+		loaderThreadHandler.removeCallbacks(hideLoader);
+
+		requireView().findViewById(R.id.loader).setVisibility(View.VISIBLE);
+		loaderThreadHandler.postDelayed(hideLoader, (int) (Math.random()*400 + 400));
 	}
 }

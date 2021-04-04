@@ -43,38 +43,32 @@ public class DetailsViewAdapter extends RecyclerView.Adapter<DetailsViewAdapter.
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		BikePropertyBean entry = data.get(position);
+		Context context = holder.itemView.getContext();
 
-		try {
-			Field resourceField = R.string.class.getDeclaredField(entry.getName());
-			int resourceId = resourceField.getInt(resourceField);
+		holder.name.setText(context.getString(entry.getName()));
+		holder.value.setText(entry.getValue());
+		holder.value.setText(entry.getValue());
 
-			holder.name.setText(context.getString(resourceId));
+		if(entry.hasLink()) {
+			SpannableString spanStr = new SpannableString(entry.getValue());
+			spanStr.setSpan(new UnderlineSpan(), 0, spanStr.length(), 0);
+			holder.value.setText(spanStr);
+
+			holder.container.setOnClickListener(v -> {
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(entry.getLink()));
+				context.startActivity(intent);
+			});
+
+			holder.arrow.setVisibility(View.VISIBLE);
+		} else {
+			holder.arrow.setVisibility(View.GONE);
 			holder.value.setText(entry.getValue());
-			holder.value.setText(entry.getValue());
+		}
 
-			if(entry.hasLink()) {
-				SpannableString spanStr = new SpannableString(entry.getValue());
-				spanStr.setSpan(new UnderlineSpan(), 0, spanStr.length(), 0);
-				holder.value.setText(spanStr);
-
-				holder.container.setOnClickListener(v -> {
-					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(entry.getLink()));
-					context.startActivity(intent);
-				});
-
-				holder.arrow.setVisibility(View.VISIBLE);
-			} else {
-				holder.arrow.setVisibility(View.GONE);
-				holder.value.setText(entry.getValue());
-			}
-
-			if (entry.isLast()) {
-				holder.setIsRecyclable(false);
-				holder.divider.setVisibility(View.INVISIBLE);
-				holder.value.setPadding(0, 0, 0, 164);
-			}
-		} catch (NoSuchFieldException | IllegalAccessException e) {
-			Log.e("details_view", e.getMessage(), e);
+		if (entry.isLast()) {
+			holder.setIsRecyclable(false);
+			holder.divider.setVisibility(View.INVISIBLE);
+			holder.value.setPadding(0, 0, 0, 164);
 		}
 	}
 

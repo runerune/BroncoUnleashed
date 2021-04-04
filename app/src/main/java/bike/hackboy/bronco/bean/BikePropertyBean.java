@@ -3,16 +3,16 @@ package bike.hackboy.bronco.bean;
 import org.jetbrains.annotations.NotNull;
 
 public class BikePropertyBean {
-	private String name;
+	private int name;
 	private String value;
 	private String link;
 	private boolean last = false;
 
-	public String getName() {
+	public int getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(int name) {
 		this.name = name;
 	}
 

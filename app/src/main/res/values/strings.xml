@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Bronco Unleashed</string>
     <string name="cancel">Back</string>
     <string name="apply">Apply</string>
@@ -55,22 +55,22 @@
     <string name="log_out">Log out</string>
     <string name="log_in_with_cby">Log in with CBY</string>
 
-    <string name="bike_name" tools:ignore="UnusedResources">Bike name</string>
-    <string name="location" tools:ignore="UnusedResources">Location</string>
-    <string name="last_seen" tools:ignore="UnusedResources">Last seen</string>
-    <string name="total_distance" tools:ignore="UnusedResources">Total distance</string>
-    <string name="co2_saved" tools:ignore="UnusedResources">CO2 saved</string>
-    <string name="coords" tools:ignore="UnusedResources">Coordinates</string>
-    <string name="bike_battery" tools:ignore="UnusedResources">Bike battery level</string>
-    <string name="pcb_battery" tools:ignore="UnusedResources">Backup PCB battery</string>
-    <string name="range_estimate" tools:ignore="UnusedResources">Estimated range with current use</string>
-    <string name="serial_number" tools:ignore="UnusedResources">Serial number</string>
-    <string name="color" tools:ignore="UnusedResources">Color</string>
-    <string name="mac_address" tools:ignore="UnusedResources">MAC address</string>
-    <string name="firmware_version" tools:ignore="UnusedResources">Firmware version</string>
-    <string name="activated_at" tools:ignore="UnusedResources">Activated at</string>
-    <string name="market" tools:ignore="UnusedResources">Market</string>
-    <string name="pairing_code" tools:ignore="UnusedResources">Pairing code</string>
+    <string name="bike_name">Bike name</string>
+    <string name="location">Location</string>
+    <string name="last_seen">Last seen</string>
+    <string name="total_distance">Total distance</string>
+    <string name="co2_saved">CO2 saved</string>
+    <string name="coords">Coordinates</string>
+    <string name="bike_battery">Bike battery level</string>
+    <string name="pcb_battery">Backup PCB battery</string>
+    <string name="range_estimate">Estimated range with current use</string>
+    <string name="serial_number">Serial number</string>
+    <string name="color">Color</string>
+    <string name="mac_address">MAC address</string>
+    <string name="firmware_version">Firmware version</string>
+    <string name="activated_at">Activated at</string>
+    <string name="market">Market</string>
+    <string name="pairing_code">Pairing code</string>
 
     <string name="your_password_is_never_stored">Bronco Unleashed will never store your password.</string>
     <string name="retry_scan">Retry scan</string>

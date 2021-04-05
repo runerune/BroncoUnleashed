@@ -1,5 +1,6 @@
 package bike.hackboy.bronco.view;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 		return new ViewHolder(view);
 	}
 
+	@SuppressLint("SetTextI18n")
 	@Override
 	public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
 		BluetoothDevice device = data.get(position);
@@ -50,6 +52,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 
 		if(alias != null && !alias.isEmpty() && !alias.equals(name)) {
 			holder.name.setText(alias);
+		} else if(name != null && !name.isEmpty()) {
+			holder.name.setText(name);
+		} else {
+			// idk...
+			holder.name.setText("COWBOY");
 		}
 
 		if (onDeviceClickListener != null) {

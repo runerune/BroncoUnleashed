@@ -31,6 +31,9 @@ public class Settings extends Fragment {
 	protected RecyclerView recyclerViewSettings;
 	protected SettingsAdapter settingsListAdapter;
 
+	protected boolean isUnlocked;
+	protected int autoLockTimer = -1;
+
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -40,12 +43,22 @@ public class Settings extends Fragment {
 			String uuid = intent.getStringExtra("uuid");
 			byte[] value = (intent.getByteArrayExtra("value"));
 
-			if(uuid.toUpperCase().equals(Uuid.characteristicUnlockString)) {
-				buildSettings(value[0] == 0x1);
+			switch(uuid.toUpperCase()) {
+				case Uuid.characteristicUnlockString:
+					Settings.this.isUnlocked = (value[0] == 0x1);
+					buildSettings();
+				break;
+
+				case Uuid.characteristicSettingsReadString:
+					if(value[0] == 0xa && value[1] == 0x3) {
+						Settings.this.autoLockTimer = value[4];
+						buildSettings();
+					}
+				break;
+
 			}
 		}
 	};
-
 
 	@Override
 	public void onResume() {
@@ -86,12 +99,14 @@ public class Settings extends Fragment {
 		recyclerViewSettings.setAdapter(settingsListAdapter);
 		recyclerViewSettings.setItemAnimator(new DefaultItemAnimator());
 
-		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
-			new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-lock")
-		);
+		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
+
+		// lock state read is instant so shouldn't block
+		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-lock"));
+		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-auto-lock"));
 	}
 
-	protected void buildSettings(boolean isUnlocked) {
+	protected void buildSettings() {
 		settings.clear();
 
 		if (isUnlocked) {
@@ -123,6 +138,31 @@ public class Settings extends Fragment {
 					.navigate(R.id.action_settings_to_UserData))
 		);
 
+		int[] values = {0, 5, 10, 15, 30};
+		String[] items = {
+			getString(R.string.disabled),
+			String.format(getString(R.string.number_minutes), "5"),
+			String.format(getString(R.string.number_minutes), "10"),
+			String.format(getString(R.string.number_minutes), "15"),
+			String.format(getString(R.string.number_minutes), "30"),
+		};
+
+		String autoLockTimerValue = (autoLockTimer > 0) ? String.valueOf(autoLockTimer) : getString(R.string.off);
+
+		settings.add(new SettingBean()
+			.setName((String) getText(R.string.auto_lock))
+			.setDescription((String) getText(R.string.description_auto_lock))
+			.setValue(autoLockTimer > -1 ? autoLockTimerValue : "")
+			.setOnClickListener(v -> {
+				if(autoLockTimer < 0) return;
+
+				new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
+					.setTitle(R.string.auto_lock)
+					.setItems(items, (dialog, which) -> setAutoLockTimer(values[which]))
+					.show();
+			})
+		);
+
 		settings.add(new SettingBean()
 			.setName((String) getText(R.string.disconnect))
 			.setDescription((String) getText(R.string.description_disconnect))
@@ -152,6 +192,18 @@ public class Settings extends Fragment {
 		requireView().findViewById(R.id.items_list).setVisibility(View.VISIBLE);
 
 		settingsListAdapter.notifyDataSetChanged();
+	}
+
+	protected void setAutoLockTimer(int time) {
+		autoLockTimer = -1;
+		buildSettings();
+
+		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(
+			new Intent(BuildConfig.APPLICATION_ID)
+				.putExtra("event", "set-auto-lock")
+				.putExtra("value", time)
+		);
+
 	}
 
 }

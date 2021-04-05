@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -39,7 +41,21 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 		holder.name.setText(entry.getName());
 		holder.description.setText(entry.getDescription());
 
-		holder.arrow.setVisibility(entry.isHasArrow() ? View.VISIBLE : View.GONE);
+		if(entry.isHasArrow()) {
+			holder.setIsRecyclable(false);
+			holder.arrow.setVisibility(View.VISIBLE);
+		} else if (entry.getValue() != null) {
+			holder.setIsRecyclable(false);
+
+			if(entry.getValue().isEmpty()) {
+				holder.loader.setVisibility(View.VISIBLE);
+				holder.value.setVisibility(View.GONE);
+			} else {
+				holder.value.setText(entry.getValue());
+				holder.value.setVisibility(View.VISIBLE);
+				holder.loader.setVisibility(View.GONE);
+			}
+		}
 
 		holder.container.setOnClickListener(view -> {
 			View.OnClickListener listener = entry.getOnClickListener();
@@ -56,6 +72,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 		final TextView name;
 		final TextView description;
 		final ImageView arrow;
+		final TextView value;
+		final ProgressBar loader;
 		final ConstraintLayout container;
 
 		ViewHolder(View itemView) {
@@ -63,6 +81,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 			name = itemView.findViewById(R.id.settings_name);
 			description = itemView.findViewById(R.id.settings_description);
 			arrow = itemView.findViewById(R.id.settings_arrow);
+			value = itemView.findViewById(R.id.settings_value);
+			loader = itemView.findViewById(R.id.settings_loader);
 			container = itemView.findViewById(R.id.settings_item);
 		}
 	}

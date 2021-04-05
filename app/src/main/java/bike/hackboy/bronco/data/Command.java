@@ -8,6 +8,9 @@ public class Command {
 	public static final byte[] SET_SPEED = {10, 16, 0, 4, 0, 1, 2, 0, 30};
 	public static final byte[] READ_SPEED = {10, 3, 0, 4, 0, 1};
 
+	public static final byte[] SET_AUTO_LOCK = {10, 16, 0, 0, 0, 1, 2, 0, 0};
+	public static final byte[] READ_AUTO_LOCK = {10, 3, 0, 0, 0, 1};
+
 	public static final byte[] SET_FIELD_WEAKENING = {1, 16, 0, (byte) 129, 0, 1, 2, 0, 0};
 	public static final byte[] READ_FIELD_WEAKENING = {1, 3, 0, (byte) 129, 0, 1};
 

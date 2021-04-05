@@ -110,7 +110,6 @@ public class BikeService extends Service {
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, lightOnCommand);
-
 					break;
 					//</editor-fold>
 
@@ -213,13 +212,13 @@ public class BikeService extends Service {
 					//<editor-fold desc="combo speed+motor mode">
 					case "read-speed-and-motor-mode":
 						byte[] readMotorModeCommandSeq = Command.withChecksum(Command.READ_MOTOR_MODE);
-						byte[] readSpeedCommandWithChecksumSeq = Command.withChecksum(Command.READ_SPEED);
+						byte[] readSpeedCommandSeq = Command.withChecksum(Command.READ_SPEED);
 
 						SequencedWriter writer = new SequencedWriter();
 						writer.setConnection(connection);
 
 						writer.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readMotorModeCommandSeq);
-						writer.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readSpeedCommandWithChecksumSeq);
+						writer.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readSpeedCommandSeq);
 
 						writer.run();
 					break;
@@ -240,6 +239,34 @@ public class BikeService extends Service {
 
 						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
 						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, closeFlashCommand);
+					break;
+					//</editor-fold>
+
+					//<editor-fold desc="auto lock">
+					case "read-auto-lock":
+						SequencedWriter writerReadAutoLock = new SequencedWriter();
+						writerReadAutoLock.setConnection(connection);
+
+						byte[] readAutoLockCommand = Command.withChecksum(Command.READ_AUTO_LOCK);
+
+						writerReadAutoLock.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readAutoLockCommand);
+						writerReadAutoLock.run();
+					break;
+
+					case "set-auto-lock":
+						SequencedWriter writerSetAutoLock = new SequencedWriter();
+						writerSetAutoLock.setConnection(connection);
+
+						int newAutoLockValue = intent.getIntExtra("value", 0);
+
+						byte[] setAutoLockCommand = Command.withValue(Command.SET_AUTO_LOCK, newAutoLockValue);
+						byte[] setAutoLockCommandWithChecksum = Command.withChecksum(setAutoLockCommand);
+						byte[] readAutoLockCommandAfterSet = Command.withChecksum(Command.READ_AUTO_LOCK);
+
+						writerSetAutoLock.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setAutoLockCommandWithChecksum);
+						writerSetAutoLock.add(Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readAutoLockCommandAfterSet);
+
+						writerSetAutoLock.run();
 					break;
 					//</editor-fold>
 

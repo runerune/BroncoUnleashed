@@ -195,6 +195,8 @@ public class Settings extends Fragment {
 	}
 
 	protected void setAutoLockTimer(int time) {
+		if(autoLockTimer == time) return;
+
 		autoLockTimer = -1;
 		buildSettings();
 

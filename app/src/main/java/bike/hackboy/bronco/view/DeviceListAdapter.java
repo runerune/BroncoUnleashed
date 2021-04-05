@@ -48,7 +48,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 		holder.name.setText(name);
 		holder.mac.setText(mac);
 
-		if(!alias.isEmpty() && !alias.equals(name)) {
+		if(alias != null && !alias.isEmpty() && !alias.equals(name)) {
 			holder.name.setText(alias);
 		}
 

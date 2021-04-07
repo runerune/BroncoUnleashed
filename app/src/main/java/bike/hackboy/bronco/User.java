@@ -187,6 +187,7 @@ public class User extends Fragment {
 			@Override
 			public void onError(Exception e) {
 				requireActivity().runOnUiThread(() -> {
+					setupUi(false, false);
 					if (isAdded()) Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
 				});
 
@@ -267,7 +268,8 @@ public class User extends Fragment {
 			@Override
 			public void onError(Exception e) {
 				requireActivity().runOnUiThread(() -> {
-					if (isAdded()) Toast.makeText(requireContext(), "Failed to log in: "+e.getMessage(), Toast.LENGTH_LONG).show();
+					if (isAdded()) Toast.makeText(requireContext(), "Failed: "+e.getMessage(), Toast.LENGTH_LONG).show();
+					setupUi(false, false);
 				});
 
 				e.printStackTrace();

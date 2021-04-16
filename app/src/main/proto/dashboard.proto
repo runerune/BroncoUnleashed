@@ -4,7 +4,8 @@ option java_package = "bike.hackboy.bronco";
 option java_outer_classname = "DashboardProto";
 
 message Dashboard {
-    int32 unknown0 = 1;
+    /// Randomly generated trip ID.
+    int32 tripId = 1;
     int32 duration = 2;
     int32 speed = 3;
     int32 power = 4;

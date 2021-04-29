@@ -11,49 +11,28 @@
         android:id="@+id/parsed_value_display"
         android:layout_width="260dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/read"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/parsed_value" />
 
     <TextView
         android:id="@+id/parsed_value"
         android:layout_width="260dp"
         android:layout_height="24dp"
+        android:layout_marginTop="128dp"
         android:gravity="center"
         android:text="@string/parsed_value"
         android:textColor="@color/pink"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/parsed_value_display"
+        android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/raw_response_display"
-        android:layout_width="260dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/parsed_value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/raw_response"
-        android:layout_width="260dp"
-        android:layout_height="24dp"
-        android:gravity="center"
-        android:text="@string/raw_response"
-        android:textColor="@color/pink"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/raw_response_display"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register" />
 
     <TextView
         android:id="@+id/raw_response2"
@@ -76,6 +55,7 @@
         android:gravity="center"
         android:hint="id"
         android:inputType="number"
+        android:maxLength="3"
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

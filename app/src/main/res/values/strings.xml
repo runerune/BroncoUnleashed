@@ -105,8 +105,7 @@
     <string name="number_minutes">%s minutes</string>
 
     <string name="read_register">Read ASI register</string>
-    <string name="raw_response">Raw response</string>
-    <string name="parsed_value">Parsed value</string>
+    <string name="parsed_value">Read value</string>
     <string name="warning_developer_option">⚠ developer feature ⚠</string>
 
     <string name="version">App version</string>

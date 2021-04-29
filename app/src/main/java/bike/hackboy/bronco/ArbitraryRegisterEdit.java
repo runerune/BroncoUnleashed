@@ -39,7 +39,7 @@ public class ArbitraryRegisterEdit extends Fragment {
 			Log.d("value", stringValue);
 
 			if(stringValue.equals("FF01")) {
-				setResultValue(stringValue, "(no value)");
+				setResultValue("(no value)");
 				return;
 			}
 
@@ -49,7 +49,7 @@ public class ArbitraryRegisterEdit extends Fragment {
 						int rawValue = (value[3] << 8) + (value[4] & 0xff);
 						Log.d("rawValue", String.valueOf(rawValue));
 
-						setResultValue(stringValue, String.valueOf(rawValue));
+						setResultValue(String.valueOf(rawValue));
 					break;
 					case 0x10: // write success notification
 
@@ -89,22 +89,25 @@ public class ArbitraryRegisterEdit extends Fragment {
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		EditText foo = view.findViewById(R.id.register);
+		EditText input = view.findViewById(R.id.register);
 
 		view.findViewById(R.id.read).setOnClickListener(v -> {
+			if(input.getText().length() < 1) return;
+
 			LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
 
 			lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
 				.putExtra("event", "read-register")
-				.putExtra("register", Integer.parseInt(foo.getText().toString()))
+				.putExtra("register", Integer.parseInt(input.getText().toString()))
 			);
 		});
 	}
 
-	protected void setResultValue(String raw, String parsed) {
+	protected void setResultValue(String parsed) {
 		View view = requireView();
 
-		((TextView) view.findViewById(R.id.raw_response_display)).setText(raw);
+		((TextView) view.findViewById(R.id.parsed_value)).setVisibility(View.VISIBLE);
+		((TextView) view.findViewById(R.id.parsed_value_display)).setVisibility(View.VISIBLE);
 		((TextView) view.findViewById(R.id.parsed_value_display)).setText(parsed);
 	}
 }

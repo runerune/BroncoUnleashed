@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,9 @@ public class Settings extends Fragment {
 	protected final ArrayList<SettingBean> settings = new ArrayList<>();
 	protected RecyclerView recyclerViewSettings;
 	protected SettingsAdapter settingsListAdapter;
+
+	protected int aboutTapCount = 0;
+	protected boolean developerModeNotified = false;
 
 	protected boolean isUnlocked;
 	protected int autoLockTimer = -1;
@@ -55,7 +59,6 @@ public class Settings extends Fragment {
 						buildSettings();
 					}
 				break;
-
 			}
 		}
 	};
@@ -127,6 +130,17 @@ public class Settings extends Fragment {
 					NavHostFragment.findNavController(Settings.this)
 						.navigate(R.id.action_settings_to_FieldWeakening))
 			);
+
+			if(aboutTapCount > 7) {
+				settings.add(new SettingBean()
+					.setName((String) getText(R.string.arbitrary_register_read))
+					.setDescription((String) getText(R.string.description_arbitrary_register_read))
+					.setHasArrow(true)
+					.setOnClickListener(v ->
+						NavHostFragment.findNavController(Settings.this)
+							.navigate(R.id.action_Settings_to_arbitraryRegisterEdit))
+				);
+			}
 		}
 
 		settings.add(new SettingBean()
@@ -186,6 +200,25 @@ public class Settings extends Fragment {
 						startActivity(browserIntent);
 					})
 					.show())
+		);
+
+		settings.add(new SettingBean()
+			.setName((String) getText(R.string.version))
+			.setDescription(String.format(
+				"%s (%s) - %s",
+				BuildConfig.VERSION_NAME,
+				BuildConfig.VERSION_CODE,
+				BuildConfig.BUILD_TYPE
+			))
+			.setOnClickListener(v -> {
+				aboutTapCount++;
+
+				if(aboutTapCount > 7 && !developerModeNotified) {
+					developerModeNotified = true;
+					Toast.makeText(requireContext(), "You are now a developer \uD83E\uDDD9", Toast.LENGTH_LONG).show();
+					buildSettings();
+				}
+			})
 		);
 
 		requireView().findViewById(R.id.unlock_for_more_options).setVisibility(isUnlocked ? View.GONE : View.VISIBLE);

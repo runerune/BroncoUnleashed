@@ -95,10 +95,19 @@
     <string name="description_about">Credits and links</string>
     <string name="unlock_for_more_options">Speed settings are unavailable when the bike is locked.</string>
 
+    <string name="arbitrary_register_read">Read ASI register</string>
+    <string name="description_arbitrary_register_read">Read value of arbitrary ASI register. Useful for tuning, diagnostics and debugging.</string>
+
     <string name="auto_lock">Auto lock timer</string>
     <string name="description_auto_lock">Automatically lock the bike after set number of minutes of inactivity</string>
     <string name="off">Off</string>
     <string name="disabled">Disabled</string>
     <string name="number_minutes">%s minutes</string>
 
+    <string name="read_register">Read ASI register</string>
+    <string name="raw_response">Raw response</string>
+    <string name="parsed_value">Parsed value</string>
+    <string name="warning_developer_option">⚠ developer feature ⚠</string>
+
+    <string name="version">App version</string>
 </resources>

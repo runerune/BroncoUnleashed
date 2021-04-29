@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SpeedSetting">
+
+    <TextView
+        android:id="@+id/parsed_value_display"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/read"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/parsed_value"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="@string/parsed_value"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/parsed_value_display"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/raw_response_display"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/parsed_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/raw_response"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="@string/raw_response"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/raw_response_display"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/raw_response2"
+        android:layout_width="260dp"
+        android:layout_height="24dp"
+        android:gravity="center"
+        android:text="@string/warning_developer_option"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_read_header" />
+
+    <EditText
+        android:id="@+id/register"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="id"
+        android:inputType="number"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_read_header" />
+
+    <Button
+        android:id="@+id/read"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginBottom="24dp"
+        android:text="read"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/register_read_header"
+        style="@style/Widget.AppCompat.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/read_register"
+        android:textColor="@color/pink"
+        android:textColorHighlight="@color/pink"
+        android:textColorLink="@color/pink"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

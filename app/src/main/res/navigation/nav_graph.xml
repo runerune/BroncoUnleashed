@@ -64,5 +64,16 @@
         <action
             android:id="@+id/action_settings_to_UserData"
             app:destination="@id/UserData" />
+        <action
+            android:id="@+id/action_Settings_to_arbitraryRegisterEdit"
+            app:destination="@id/arbitraryRegisterEdit" />
+    </fragment>
+    <fragment
+        android:id="@+id/arbitraryRegisterEdit"
+        android:name="bike.hackboy.bronco.ArbitraryRegisterEdit"
+        android:label="ArbitraryRegisterEdit" >
+        <action
+            android:id="@+id/action_arbitraryRegisterEdit_to_Settings"
+            app:destination="@id/Settings" />
     </fragment>
 </navigation>

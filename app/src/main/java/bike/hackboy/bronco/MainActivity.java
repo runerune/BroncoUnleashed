@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         backable.add((String) getText(R.string.speed_setting));
         backable.add((String) getText(R.string.field_weakening));
         backable.add((String) getText(R.string.settings));
+        backable.add((String) getText(R.string.arbitrary_register_read));
 
         assert getSupportActionBar() != null;
         assert getSupportActionBar().getTitle() != null;

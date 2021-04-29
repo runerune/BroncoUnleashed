@@ -14,6 +14,11 @@ public class Command {
 	public static final byte[] SET_FIELD_WEAKENING = {1, 16, 0, (byte) 129, 0, 1, 2, 0, 0};
 	public static final byte[] READ_FIELD_WEAKENING = {1, 3, 0, (byte) 129, 0, 1};
 
+	public static final byte[] SET_JOG_MODE_DISTANCE = {1, 16, 0, (byte) 228, 0, 1, 2, 0, 0};
+	public static final byte[] READ_JOG_MODE_DISTANCE = {1, 3, 0, (byte) 228, 0, 1};
+
+	public static final byte[] READ_REGISTER = {1, 3, 0, 0, 0, 1};
+
 	public static final byte[] READ_MOTOR_MODE = {1, 3, 0, 11, 0, 1};
 	public static final byte[] SET_MOTOR_MODE_TORQUE = {1, 16, 0, 11, 0, 1, 2, 0, 1};
 	public static final byte[] SET_MOTOR_MODE_TORQUE_WITH_LIMIT = {1, 16, 0, 11, 0, 1, 2, 0, 2};
@@ -48,5 +53,18 @@ public class Command {
 		changedCommandWithChecksum[command.length + 1] = checksum[1];
 
 		return changedCommandWithChecksum;
+	}
+
+	public static byte[] withRegister(byte[] command, int register) {
+		byte[] changedCommand = Arrays.copyOf(command, 6);
+
+		if (register > 0xff) {
+			changedCommand[3] = (byte) (register & 0xff);
+			changedCommand[2] = (byte) (register >> 8 & 0xff);
+		} else {
+			changedCommand[3] = (byte) register;
+		}
+
+		return changedCommand;
 	}
 }

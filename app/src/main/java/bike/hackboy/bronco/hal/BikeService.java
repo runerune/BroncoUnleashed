@@ -186,6 +186,14 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
+					case "read-register":
+						int register = intent.getIntExtra("register", 0);
+						byte[] readCommand = Command.withChecksum(Command.withRegister(Command.READ_REGISTER, register));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readCommand);
+					break;
+
 					//<editor-fold desc="motor">
 					case "read-motor-mode":
 						byte[] readMotorModeCommand = Command.withChecksum(Command.READ_MOTOR_MODE);

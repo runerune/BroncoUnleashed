@@ -110,4 +110,14 @@
     <string name="warning_developer_option">⚠ developer feature ⚠</string>
 
     <string name="version">App version</string>
+
+    <string name="standstill_optimization">Initial torque</string>
+    <string name="description_standstill_optimization">Adjust torque response at standstill to prevent motor noise and excess vibration</string>
+    <string name="rough">Rough</string>
+    <string name="medium">Medium</string>
+    <string name="soft">Soft</string>
+    <string name="standstill_optimization_layman_explanation">
+        Changes how the bike reacts to moving from standstill. Rough response accelerates faster but generates noise
+        and vibration, soft response is slower but won\'t cause chatter.
+    </string>
 </resources>

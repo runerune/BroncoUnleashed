@@ -14,8 +14,8 @@ public class Command {
 	public static final byte[] SET_FIELD_WEAKENING = {1, 16, 0, (byte) 129, 0, 1, 2, 0, 0};
 	public static final byte[] READ_FIELD_WEAKENING = {1, 3, 0, (byte) 129, 0, 1};
 
-	public static final byte[] SET_JOG_MODE_DISTANCE = {1, 16, 0, (byte) 228, 0, 1, 2, 0, 0};
-	public static final byte[] READ_JOG_MODE_DISTANCE = {1, 3, 0, (byte) 228, 0, 1};
+	public static final byte[] READ_HALL_INTERPOLATION =  {1, 3, 0, (byte) 128, 0, 1};
+	public static final byte[] SET_HALL_INTERPOLATION = {1, 16, 0, (byte) 128, 0, 1, 2, 0, 0};
 
 	public static final byte[] READ_REGISTER = {1, 3, 0, 0, 0, 1};
 

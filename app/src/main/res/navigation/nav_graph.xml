@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_Settings_to_arbitraryRegisterEdit"
             app:destination="@id/arbitraryRegisterEdit" />
+        <action
+            android:id="@+id/action_Settings_to_standstillOptimization"
+            app:destination="@id/standstillOptimization" />
     </fragment>
     <fragment
         android:id="@+id/arbitraryRegisterEdit"
@@ -74,6 +77,15 @@
         android:label="ArbitraryRegisterEdit" >
         <action
             android:id="@+id/action_arbitraryRegisterEdit_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/standstillOptimization"
+        android:name="bike.hackboy.bronco.StandstillOptimization"
+        android:label="standstill_optimization"
+        tools:layout="@layout/standstill_optimization" >
+        <action
+            android:id="@+id/action_standstillOptimization_to_Settings"
             app:destination="@id/Settings" />
     </fragment>
 </navigation>

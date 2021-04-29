@@ -186,6 +186,26 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
+					//<editor-fold desc="hall transitions">
+					case "set-hall-transitions":
+						int newHallTransitionsValue = intent.getIntExtra("value", 0);
+
+						byte[] setHallTransitionsCommand =  Command.withChecksum(Command.withValue(Command.SET_HALL_INTERPOLATION, newHallTransitionsValue));
+
+						//Log.d("gatt_command", Converter.byteArrayToHexString(setFieldWeakeningCommandWithChecksum));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setHallTransitionsCommand);
+					break;
+
+					case "read-hall-transitions":
+						byte[] readHallTransitionsCommand = Command.withChecksum(Command.READ_HALL_INTERPOLATION);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readHallTransitionsCommand);
+					break;
+					//</editor-fold>
+
 					case "read-register":
 						int register = intent.getIntExtra("register", 0);
 						byte[] readCommand = Command.withChecksum(Command.withRegister(Command.READ_REGISTER, register));

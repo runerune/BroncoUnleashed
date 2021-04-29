@@ -131,6 +131,15 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_settings_to_FieldWeakening))
 			);
 
+			settings.add(new SettingBean()
+				.setName((String) getText(R.string.standstill_optimization))
+				.setDescription((String) getText(R.string.description_standstill_optimization))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+					NavHostFragment.findNavController(Settings.this)
+						.navigate(R.id.action_Settings_to_standstillOptimization))
+			);
+
 			if(aboutTapCount > 7) {
 				settings.add(new SettingBean()
 					.setName((String) getText(R.string.arbitrary_register_read))

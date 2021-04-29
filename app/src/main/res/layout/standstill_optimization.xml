@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_gauges"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StandstillOptimization">
+
+
+    <TextView
+        android:id="@+id/torque_layman_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/standstill_optimization_layman_explanation"
+        android:textAlignment="center"
+        android:textColor="@color/gray_600"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/button_standstill_optimization_apply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/reading_from_bike_text"
+        android:layout_width="260dp"
+        android:layout_height="74dp"
+        android:gravity="center"
+        android:text="@string/reading_from_bike"
+        android:textColor="@color/pink"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/standstill_optimization_header"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/button_standstill_optimization_cancel"
+        android:layout_width="128dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_standstill_optimization_apply"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_standstill_optimization_apply"
+        android:layout_width="128dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/apply"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:backgroundTint="@color/pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/button_standstill_optimization_cancel" />
+
+    <TextView
+        android:id="@+id/standstill_optimization_header"
+        style="@style/Widget.AppCompat.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/standstill_optimization"
+        android:textColor="@color/pink"
+        android:textColorHighlight="@color/pink"
+        android:textColorLink="@color/pink"
+        android:textSize="30sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/reading_from_bike_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/reading_from_bike_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/standstill_reading_from_bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="reading_from_bike_progress,reading_from_bike_text" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/standstill_optimization_ui"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/torque_layman_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/standstill_optimization_header">
+
+        <TextView
+            android:id="@+id/standstill_optimization_ui_description"
+            android:layout_width="200sp"
+            android:layout_height="48sp"
+            android:layout_marginTop="24dp"
+            android:elegantTextHeight="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="ROUGH"
+            android:textColor="@color/pink"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <SeekBar
+            android:id="@+id/standstill_optimization_ui_value"
+            style="@android:style/Widget.Material.SeekBar"
+            android:layout_width="311dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="24dp"
+            android:indeterminate="false"
+            android:max="2"
+            android:progress="0"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tickMarkTint="#00E91E63" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/torque_standstill_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="standstill_optimization_ui,torque_layman_info,button_standstill_optimization_apply,button_standstill_optimization_cancel,standstill_optimization_header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

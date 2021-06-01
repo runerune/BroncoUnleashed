@@ -140,6 +140,15 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_Settings_to_standstillOptimization))
 			);
 
+			settings.add(new SettingBean()
+				.setName((String) getText(R.string.torque_gain))
+				.setDescription((String) getText(R.string.description_torque_gain))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+					NavHostFragment.findNavController(Settings.this)
+						.navigate(R.id.action_Settings_to_torqueGain))
+			);
+
 			if(aboutTapCount > 7) {
 				settings.add(new SettingBean()
 					.setName((String) getText(R.string.arbitrary_register_read))

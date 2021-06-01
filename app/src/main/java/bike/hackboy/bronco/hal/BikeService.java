@@ -206,6 +206,26 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
+					//<editor-fold desc="torque gain">
+					case "set-torque-gain":
+						int newTorqueGainValue = intent.getIntExtra("value", 0);
+
+						byte[] setTorqueGainCommand =  Command.withChecksum(Command.withValue(Command.SET_TORQUE_GAIN, newTorqueGainValue));
+
+						//Log.d("gatt_command", Converter.byteArrayToHexString(setFieldWeakeningCommandWithChecksum));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, setTorqueGainCommand);
+					break;
+
+					case "read-torque-gain":
+						byte[] readTorqueGainCommand = Command.withChecksum(Command.READ_TORQUE_GAIN);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readTorqueGainCommand);
+					break;
+					//</editor-fold>
+
 					case "read-register":
 						int register = intent.getIntExtra("register", 0);
 						byte[] readCommand = Command.withChecksum(Command.withRegister(Command.READ_REGISTER, register));

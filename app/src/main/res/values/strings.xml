@@ -119,4 +119,11 @@
         Changes how the bike reacts to moving from standstill. Rough response accelerates faster but generates noise
         and vibration, soft response is slower but won\'t cause chatter.
     </string>
+
+    <string name="torque_gain">Power gain</string>
+    <string name="description_torque_gain">description_torque_gain</string>
+    <string name="torque_gain_layman_explanation">
+        torque_gain_layman_explanation
+    </string>
+
 </resources>

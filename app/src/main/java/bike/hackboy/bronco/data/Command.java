@@ -17,6 +17,9 @@ public class Command {
 	public static final byte[] READ_HALL_INTERPOLATION =  {1, 3, 0, (byte) 128, 0, 1};
 	public static final byte[] SET_HALL_INTERPOLATION = {1, 16, 0, (byte) 128, 0, 1, 2, 0, 0};
 
+	public static final byte[] READ_TORQUE_GAIN =  {1, 3, 0, (byte) 179, 0, 1};
+	public static final byte[] SET_TORQUE_GAIN = {1, 16, 0, (byte) 179, 0, 1, 2, 0, 0};
+
 	public static final byte[] READ_REGISTER = {1, 3, 0, 0, 0, 1};
 
 	public static final byte[] READ_MOTOR_MODE = {1, 3, 0, 11, 0, 1};

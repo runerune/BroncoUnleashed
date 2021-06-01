@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_Settings_to_standstillOptimization"
             app:destination="@id/standstillOptimization" />
+        <action
+            android:id="@+id/action_Settings_to_torqueGain"
+            app:destination="@id/torqueGain" />
     </fragment>
     <fragment
         android:id="@+id/arbitraryRegisterEdit"
@@ -86,6 +89,15 @@
         tools:layout="@layout/standstill_optimization" >
         <action
             android:id="@+id/action_standstillOptimization_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/torqueGain"
+        android:name="bike.hackboy.bronco.TorqueGain"
+        android:label="torque_gain"
+        tools:layout="@layout/torque_gain" >
+        <action
+            android:id="@+id/action_torqueGain_to_Settings"
             app:destination="@id/Settings" />
     </fragment>
 </navigation>

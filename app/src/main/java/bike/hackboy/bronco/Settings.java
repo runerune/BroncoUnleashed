@@ -149,6 +149,15 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_Settings_to_torqueGain))
 			);*/
 
+			settings.add(new SettingBean()
+				.setName((String) getText(R.string.faults))
+				.setDescription((String) getText(R.string.description_faults))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+					NavHostFragment.findNavController(Settings.this)
+						.navigate(R.id.action_Settings_to_faults))
+			);
+
 			if(aboutTapCount > 7) {
 				settings.add(new SettingBean()
 					.setName((String) getText(R.string.arbitrary_register_read))

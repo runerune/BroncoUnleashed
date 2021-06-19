@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/faults_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Faults">
+
+    <Button
+        android:id="@+id/button_faults_cancel"
+        android:layout_width="272dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/faults2_bit12"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit13"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit13"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit14"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit14"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit13"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit15"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit15"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit0"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit1"
+        app:layout_constraintTop_toBottomOf="@+id/faults1_header" />
+
+    <TextView
+        android:id="@+id/faults2_bit0"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit1"
+        app:layout_constraintTop_toBottomOf="@+id/faults2_header" />
+
+    <TextView
+        android:id="@+id/faults2_bit1"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit2"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit3"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit4"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit9"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit10"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit10"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit11"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit11"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit10"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit12"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit2"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit3"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit6"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit7"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit4"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit5"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit5"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit6"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit7"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit8"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults2_bit8"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults2_bit7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults2_bit9"
+        app:layout_constraintTop_toTopOf="@+id/faults2_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit1"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit2"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit2"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit3"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit3"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit4"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit4"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit5"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit5"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit6"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit6"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit7"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit7"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit6"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit8"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit8"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit7"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit9"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit9"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit10"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit10"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit12"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit11"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit13"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit12"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit10"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit11"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit13"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit14"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit14"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit13"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit15"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_bit15"
+        android:layout_width="15sp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
+
+    <TextView
+        android:id="@+id/faults1_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/faults1_header"
+        android:textColor="@color/pink"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/faults2_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/faults2_header"
+        android:textColor="@color/pink"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/faults1_bit0" />
+
+    <ScrollView
+        android:id="@+id/faults_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/faults2_bit8">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="32dp"
+                android:paddingTop="16dp"
+                android:paddingRight="32dp"
+                android:paddingBottom="6dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. "
+                tools:layout_conversion_absoluteHeight="19dp"
+                tools:layout_conversion_absoluteWidth="241dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="294dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_Settings_to_torqueGain"
             app:destination="@id/torqueGain" />
+        <action
+            android:id="@+id/action_Settings_to_faults"
+            app:destination="@id/faults" />
     </fragment>
     <fragment
         android:id="@+id/arbitraryRegisterEdit"
@@ -100,4 +103,9 @@
             android:id="@+id/action_torqueGain_to_Settings"
             app:destination="@id/Settings" />
     </fragment>
+    <fragment
+        android:id="@+id/faults"
+        android:name="bike.hackboy.bronco.Faults"
+        android:label="faults"
+        tools:layout="@layout/faults" />
 </navigation>

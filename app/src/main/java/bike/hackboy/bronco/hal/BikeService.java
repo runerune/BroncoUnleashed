@@ -318,6 +318,22 @@ public class BikeService extends Service {
 					break;
 					//</editor-fold>
 
+					//<editor-fold desc="faults">
+					case "read-faults-1":
+						byte[] readFaultsOneCommandWithChecksum = Command.withChecksum(Command.withRegister(Command.READ_REGISTER, 258));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readFaultsOneCommandWithChecksum);
+					break;
+
+					case "read-faults-2":
+						byte[] readFaultsTwoCommandWithChecksum = Command.withChecksum(Command.withRegister(Command.READ_REGISTER, 299));
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite);
+						Gatt.writeCharacteristic(connection, Uuid.serviceSettings, Uuid.characteristicSettingsWrite, readFaultsTwoCommandWithChecksum);
+					break;
+					//</editor-fold>
+
 					//<editor-fold desc="generic gatt">
 					case "enable-notify":
 						NotificationEnabler ne = new NotificationEnabler();

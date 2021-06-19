@@ -126,4 +126,9 @@
         torque_gain_layman_explanation
     </string>
 
+    <string name="faults">Fault diagnostics</string>
+    <string name="description_faults">Actively scan for faults and log those that were caught</string>
+    <string name="faults1_header">Faults 1</string>
+    <string name="faults2_header">Faults 2</string>
+
 </resources>

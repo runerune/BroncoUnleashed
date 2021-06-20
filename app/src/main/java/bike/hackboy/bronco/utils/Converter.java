@@ -69,4 +69,14 @@ public class Converter {
 		decimalFormat.setRoundingMode(RoundingMode.CEILING);
 		return decimalFormat.format(number);
 	}
+
+	public static String concatList(Iterable<String> strings, String separator) {
+		StringBuilder sb = new StringBuilder();
+		String sep = "";
+		for(String s: strings) {
+			sb.append(sep).append(s);
+			sep = separator;
+		}
+		return sb.toString();
+	}
 }

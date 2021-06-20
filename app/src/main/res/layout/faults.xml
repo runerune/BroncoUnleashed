@@ -376,11 +376,11 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/faults1_bit9"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/faults1_bit12"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit11"
         app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
 
     <TextView
-        android:id="@+id/faults1_bit11"
+        android:id="@+id/faults1_bit12"
         android:layout_width="15sp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -388,13 +388,13 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/faults1_bit12"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit11"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/faults1_bit13"
         app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
 
     <TextView
-        android:id="@+id/faults1_bit12"
+        android:id="@+id/faults1_bit11"
         android:layout_width="15sp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -403,7 +403,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/faults1_bit10"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/faults1_bit11"
+        app:layout_constraintStart_toEndOf="@+id/faults1_bit12"
         app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
 
     <TextView
@@ -414,7 +414,7 @@
         android:text="0"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/faults1_bit11"
+        app:layout_constraintEnd_toStartOf="@+id/faults1_bit12"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/faults1_bit14"
         app:layout_constraintTop_toTopOf="@+id/faults1_bit0" />
@@ -491,14 +491,15 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/faults_list_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="32dp"
+                android:paddingLeft="24dp"
                 android:paddingTop="16dp"
-                android:paddingRight="32dp"
+                android:paddingRight="24dp"
                 android:paddingBottom="6dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id tellus gravida, aliquam dolor eu, interdum lorem. Mauris egestas dapibus ex eget bibendum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque consectetur magna in accumsan consequat. Cras sollicitudin neque eu augue sollicitudin aliquam. Fusce eget enim congue, auctor quam quis, porta augue. Sed nunc tellus, facilisis vel dignissim id, semper posuere metus. Duis nec erat eu ligula sodales pellentesque id et massa. Maecenas et mi in diam eleifend aliquet. Suspendisse non rhoncus erat. Phasellus non placerat sem. Nulla efficitur, dui luctus luctus sagittis, quam urna accumsan mauris, ut mattis turpis urna a felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin interdum ligula tristique purus commodo sodales. Suspendisse porttitor, lectus eget varius maximus, ex massa ultrices orci, in blandit lectus metus vitae lectus. Aenean odio nisi, consequat ut fermentum nec, accumsan ac ipsum. "
+                android:textColor="@color/pink"
+                android:textSize="15sp"
                 tools:layout_conversion_absoluteHeight="19dp"
                 tools:layout_conversion_absoluteWidth="241dp"
                 tools:layout_editor_absoluteX="0dp"

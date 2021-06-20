@@ -18,11 +18,64 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.utils.Converter;
 
 public class Faults extends Fragment {
 	protected int readingFaultRegisterNumber = 1;
-	protected String[] caughtFaults;
+	protected List<String> caughtFaults;
+
+	private static  final Map<String, String> faults;
+	static {
+		Map<String, String> faultMap = new HashMap<>();
+
+		faultMap.put("10", "Controller over voltage");
+		faultMap.put("11", "Phase over current");
+		faultMap.put("12", "Current sensor calibration");
+		faultMap.put("13", "Current sensor over current");
+		faultMap.put("14", "Controller over temperature");
+		faultMap.put("15", "Motor Hall sensor fault");
+		faultMap.put("16", "Controller under voltage");
+		faultMap.put("17", "POST static gating test");
+		faultMap.put("18", "Network communication timeout");
+		faultMap.put("19", "Instantaneous phase over current");
+		faultMap.put("110", "Motor over temperature");
+		faultMap.put("111", "Throttle voltage outside range");
+		faultMap.put("112", "Instantaneous controller over voltage");
+		faultMap.put("113", "Internal error");
+		faultMap.put("114", "POST dynamic gating test");
+		faultMap.put("115", "Instantaneous under voltage");
+		faultMap.put("20", "Parameter CRC invalid");
+		faultMap.put("21", "Current scaling out of range");
+		faultMap.put("22", "Voltage scaling out of range");
+		faultMap.put("23", "Headlight undervoltage");
+		faultMap.put("24", "Torque sensor error");
+		faultMap.put("25", "CAN bus error");
+		faultMap.put("26", "Hall stall");
+		faultMap.put("27", "Bootloader error");
+		faultMap.put("28", "Parameter2 CRC invalid");
+		faultMap.put("29", "Hall vs Sensorless position disagree");
+		faultMap.put("210", "Unknown fault 210");
+		faultMap.put("211", "Unknown fault 211");
+		faultMap.put("212", "Unknown fault 212");
+		faultMap.put("213", "Unknown fault 213");
+		faultMap.put("214", "Unknown fault 214");
+		faultMap.put("215", "Unknown fault 215");
+
+		faults = Collections.unmodifiableMap(faultMap);
+	}
 
 	public Faults() { }
 
@@ -69,6 +122,9 @@ public class Faults extends Fragment {
 		LocalBroadcastManager.getInstance(requireContext())
 			.registerReceiver(messageReceiver, new IntentFilter(BuildConfig.APPLICATION_ID));
 
+		caughtFaults = new ArrayList<>();
+		displayFaultList();
+
 		setPendingFaultReadDisplay(1);
 		setPendingFaultReadDisplay(2);
 		queryFaultsOne();
@@ -112,11 +168,18 @@ public class Faults extends Fragment {
 	}
 
 	protected void handleFaultsResponse(int register, int value) {
-		Log.d("current_reg", String.valueOf(register));
-		Log.d("value", String.valueOf(value));
+		//Log.d("current_reg", String.valueOf(register));
+		//Log.d("value", String.valueOf(value));
 
 		for (int bit = 0; bit <= 15; bit++) {
-			setDisplayValue(register, bit, "0");
+			int bitAtPosition = getBitAtPosition(value, bit);
+			setDisplayValue(register, bit, String.valueOf(bitAtPosition));
+
+			if(bitAtPosition == 1) {
+				addFault(register, bit);
+			}
+
+			displayFaultList();
 		}
 	}
 
@@ -128,5 +191,38 @@ public class Faults extends Fragment {
 		);
 
 		textView.setText(value);
+	}
+
+	protected int getBitAtPosition(int value, int position) {
+		return (value >> position) & 1;
+	}
+
+	protected void addFault(int register, int bit) {
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		String hour = formatter.format(date);
+
+		String faultKey = String.format("%s%s", register, bit);
+		try {
+			String faultText = faults.get(faultKey);
+			caughtFaults.add(String.format("%s %s", hour, faultText));
+		} catch(Exception e) {
+			Log.e("faults", "Failed to append fault", e);
+		}
+	}
+
+	protected void displayFaultList() {
+		int faultListSize = caughtFaults.size();
+
+		if(faultListSize == 0) {
+			((TextView) requireView().findViewById(R.id.faults_list_text)).setText(R.string.faults_placeholder);
+			return;
+		}
+
+		if(faultListSize > 200) {
+			caughtFaults = caughtFaults.subList(faultListSize-200, faultListSize);
+		}
+
+		((TextView) requireView().findViewById(R.id.faults_list_text)).setText(Converter.concatList(caughtFaults, "\n"));
 	}
 }

@@ -130,5 +130,6 @@
     <string name="description_faults">Actively scan for faults and log those that were caught</string>
     <string name="faults1_header">Faults 1</string>
     <string name="faults2_header">Faults 2</string>
+    <string name="faults_placeholder">No faults yet. Scanning continues until you leave this screen.</string>
 
 </resources>

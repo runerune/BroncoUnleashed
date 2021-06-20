@@ -56,6 +56,7 @@ public class Settings extends Fragment {
 				case Uuid.characteristicSettingsReadString:
 					if(value[0] == 0xa && value[1] == 0x3) {
 						Settings.this.autoLockTimer = value[4];
+						setOverlayVisible(false);
 						buildSettings();
 					}
 				break;
@@ -104,7 +105,7 @@ public class Settings extends Fragment {
 
 		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
 
-		// lock state read is instant so shouldn't block
+		setOverlayVisible(true);
 		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-lock"));
 		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID).putExtra("event", "read-auto-lock"));
 	}
@@ -265,7 +266,10 @@ public class Settings extends Fragment {
 				.putExtra("event", "set-auto-lock")
 				.putExtra("value", time)
 		);
+	}
 
+	protected void setOverlayVisible(boolean visible) {
+		requireView().findViewById(R.id.settings_loading).setVisibility(visible ? View.VISIBLE : View.GONE);
 	}
 
 }

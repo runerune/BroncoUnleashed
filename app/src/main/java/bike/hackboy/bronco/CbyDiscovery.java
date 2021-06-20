@@ -107,7 +107,6 @@ public class CbyDiscovery extends Fragment {
 		requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
 
 		matchingDevices.clear();
-
 		if (!bluetoothManager.getAdapter().isEnabled()) {
 			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
 			return;
@@ -144,6 +143,7 @@ public class CbyDiscovery extends Fragment {
 		}
 
 		//Log.d("connect", mac);
+		requireView().findViewById(R.id.discovery_overlay).setVisibility(View.VISIBLE);
 
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 		intent.putExtra("event", "connect");

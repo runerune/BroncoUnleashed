@@ -507,4 +507,21 @@
         </LinearLayout>
     </ScrollView>
 
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:indeterminate="true"
+            android:scaleY="2" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,5 +107,9 @@
         android:id="@+id/faults"
         android:name="bike.hackboy.bronco.Faults"
         android:label="faults"
-        tools:layout="@layout/faults" />
+        tools:layout="@layout/faults" >
+        <action
+            android:id="@+id/action_Faults_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
 </navigation>

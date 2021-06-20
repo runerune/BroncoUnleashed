@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,8 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -142,8 +143,24 @@ public class Faults extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		ActionBar bar = ((MainActivity) requireActivity()).getSupportActionBar();
+		assert bar != null;
+
+		bar.setTitle(R.string.faults);
+		bar.setDisplayHomeAsUpEnabled(true);
+
 		return inflater.inflate(R.layout.faults, container, false);
 	}
+
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		view.findViewById(R.id.button_faults_cancel).setOnClickListener(view1 -> NavHostFragment
+			.findNavController(Faults.this)
+			.navigate(R.id.action_Faults_to_Settings));
+	}
+
+	// ------------------------------------------------
 
 	protected void sendIntent(String event) {
 		LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(

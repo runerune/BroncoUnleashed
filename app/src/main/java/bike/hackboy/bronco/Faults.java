@@ -38,7 +38,8 @@ public class Faults extends Fragment {
 	protected int readingFaultRegisterNumber = 1;
 	protected List<String> caughtFaults;
 
-	private static  final Map<String, String> faults;
+	private static final Map<String, String> faults;
+
 	static {
 		Map<String, String> faultMap = new HashMap<>();
 

@@ -135,6 +135,14 @@ public class CbyDiscovery extends Fragment {
 	}
 
 	protected void connect(String mac) {
+		BluetoothManager bluetoothManager = (BluetoothManager) requireContext().getSystemService(Context.BLUETOOTH_SERVICE);
+
+		if (!bluetoothManager.getAdapter().isEnabled()) {
+			requireView().findViewById(R.id.items_list).setVisibility(View.INVISIBLE);
+			requireView().findViewById(R.id.bluetooth_off).setVisibility(View.VISIBLE);
+			return;
+		}
+
 		//Log.d("connect", mac);
 
 		Intent intent = new Intent(BuildConfig.APPLICATION_ID);

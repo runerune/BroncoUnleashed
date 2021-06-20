@@ -182,7 +182,7 @@ public class Faults extends Fragment {
 	protected void setPendingFaultReadDisplay(int register) {
 		for (int bit = 0; bit <= 15; bit++) {
 			try {
-				setDisplayValue(register, bit, "-");
+				setDisplayValue(register, bit, "·");
 			} catch(IllegalStateException ignored) {
 				// when view ceases to exist due to navigating away but delayed thread calls setPendingFaultReadDisplay
 			}

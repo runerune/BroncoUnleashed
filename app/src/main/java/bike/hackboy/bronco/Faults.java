@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -37,6 +38,7 @@ import bike.hackboy.bronco.utils.Converter;
 public class Faults extends Fragment {
 	protected int readingFaultRegisterNumber = 1;
 	protected List<String> caughtFaults;
+	protected boolean logDebugValues = false;
 
 	private static final Map<String, String> faults;
 
@@ -95,6 +97,10 @@ public class Faults extends Fragment {
 			int operation = value[1];
 
 			int faultValue = (value[3] << 8) + (value[4] & 0xff);
+
+			if(logDebugValues) {
+				caughtFaults.add(String.format("[DEBUG] %s", Converter.byteArrayToHexString(value)));
+			}
 
 			if(service == 0x1 && operation == 0x3) {
 				handleFaultsResponse(readingFaultRegisterNumber, faultValue);
@@ -159,6 +165,10 @@ public class Faults extends Fragment {
 		view.findViewById(R.id.button_faults_cancel).setOnClickListener(view1 -> NavHostFragment
 			.findNavController(Faults.this)
 			.navigate(R.id.action_Faults_to_Settings));
+
+		((CompoundButton) view.findViewById(R.id.fault_debug_switch)).setOnCheckedChangeListener((buttonView, isChecked) -> {
+			logDebugValues = isChecked;
+		});
 	}
 
 	// ------------------------------------------------

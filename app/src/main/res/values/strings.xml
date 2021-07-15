@@ -131,5 +131,6 @@
     <string name="faults1_header">Faults 1</string>
     <string name="faults2_header">Faults 2</string>
     <string name="faults_placeholder">No faults yet. Scanning continues until you leave this screen.</string>
+    <string name="showDebugInfo">Log raw response (debug)</string>
 
 </resources>

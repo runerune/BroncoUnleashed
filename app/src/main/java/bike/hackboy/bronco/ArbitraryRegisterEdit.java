@@ -36,7 +36,7 @@ public class ArbitraryRegisterEdit extends Fragment {
 			int operation = value[1];
 
 			String stringValue = Converter.byteArrayToHexString(value);
-			Log.d("value", stringValue);
+			//Log.d("value", stringValue);
 
 			if(stringValue.equals("FF01")) {
 				setResultValue("(no value)");
@@ -47,12 +47,9 @@ public class ArbitraryRegisterEdit extends Fragment {
 				switch(operation) {
 					case 0x3: // read notification
 						int rawValue = (value[3] << 8) + (value[4] & 0xff);
-						Log.d("rawValue", String.valueOf(rawValue));
+						//Log.d("rawValue", String.valueOf(rawValue));
 
 						setResultValue(String.valueOf(rawValue));
-					break;
-					case 0x10: // write success notification
-
 					break;
 				}
 			}
@@ -91,16 +88,25 @@ public class ArbitraryRegisterEdit extends Fragment {
 
 		EditText input = view.findViewById(R.id.register);
 
-		view.findViewById(R.id.read).setOnClickListener(v -> {
-			if(input.getText().length() < 1) return;
+		view.findViewById(R.id.read).setOnClickListener(v -> onPressReadAction());
 
-			LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
-
-			lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
-				.putExtra("event", "read-register")
-				.putExtra("register", Integer.parseInt(input.getText().toString()))
-			);
+		input.setOnEditorActionListener((v, actionId, event) -> {
+			onPressReadAction();
+			return false;
 		});
+	}
+
+	protected void onPressReadAction() {
+		EditText input = requireView().findViewById(R.id.register);
+		if(input.getText().length() < 1) return;
+
+		LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(requireContext());
+		setResultValue("...");
+
+		lbm.sendBroadcast(new Intent(BuildConfig.APPLICATION_ID)
+			.putExtra("event", "read-register")
+			.putExtra("register", Integer.parseInt(input.getText().toString()))
+		);
 	}
 
 	protected void setResultValue(String parsed) {

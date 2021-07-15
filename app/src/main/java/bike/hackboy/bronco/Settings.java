@@ -159,7 +159,7 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_Settings_to_faults))
 			);
 
-			if(aboutTapCount > 7) {
+			if(aboutTapCount > 7 || ((MainActivity)getActivity()).isDeveloper())  {
 				settings.add(new SettingBean()
 					.setName((String) getText(R.string.arbitrary_register_read))
 					.setDescription((String) getText(R.string.description_arbitrary_register_read))
@@ -243,6 +243,8 @@ public class Settings extends Fragment {
 
 				if(aboutTapCount > 7 && !developerModeNotified) {
 					developerModeNotified = true;
+					((MainActivity) getActivity()).setIsDeveloper(true);
+
 					Toast.makeText(requireContext(), "You are now a developer \uD83E\uDDD9", Toast.LENGTH_LONG).show();
 					buildSettings();
 				}

@@ -24,6 +24,7 @@ import bike.hackboy.bronco.hal.BikeService;
 public class MainActivity extends AppCompatActivity {
     protected static final String ACTION_RESET_SPEED = "bike.hackboy.bronco.RESET_SPEED";
     protected LocalBroadcastManager localBroadcastManager;
+    protected boolean isDeveloper = false;
 
     private final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
@@ -167,6 +168,14 @@ public class MainActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public boolean isDeveloper() {
+        return isDeveloper;
+    }
+
+    public void setIsDeveloper(boolean isDeveloper) {
+        this.isDeveloper = isDeveloper;
     }
 
 }

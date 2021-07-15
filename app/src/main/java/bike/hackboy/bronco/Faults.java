@@ -170,13 +170,13 @@ public class Faults extends Fragment {
 	}
 
 	protected void queryFaultsOne() {
-		new Handler(Looper.getMainLooper()).postDelayed(() -> setPendingFaultReadDisplay(1), 400);
-		new Handler(Looper.getMainLooper()).postDelayed(() -> sendIntent("read-faults-1"), 500);
+		new Handler(Looper.getMainLooper()).postDelayed(() -> setPendingFaultReadDisplay(1), 800);
+		new Handler(Looper.getMainLooper()).postDelayed(() -> sendIntent("read-faults-1"), 1000);
 	}
 
 	protected void queryFaultsTwo() {
-		new Handler(Looper.getMainLooper()).postDelayed(() -> setPendingFaultReadDisplay(2), 400);
-		new Handler(Looper.getMainLooper()).postDelayed(() -> sendIntent("read-faults-2"), 500);
+		new Handler(Looper.getMainLooper()).postDelayed(() -> setPendingFaultReadDisplay(2), 800);
+		new Handler(Looper.getMainLooper()).postDelayed(() -> sendIntent("read-faults-2"), 1000);
 	}
 
 	protected void setPendingFaultReadDisplay(int register) {

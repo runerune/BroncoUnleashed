@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_Settings_to_faults"
             app:destination="@id/faults" />
+        <action
+            android:id="@+id/action_Settings_to_dfc"
+            app:destination="@id/dfc" />
     </fragment>
     <fragment
         android:id="@+id/arbitraryRegisterEdit"
@@ -110,6 +113,15 @@
         tools:layout="@layout/faults" >
         <action
             android:id="@+id/action_Faults_to_Settings"
+            app:destination="@id/Settings" />
+    </fragment>
+    <fragment
+        android:id="@+id/dfc"
+        android:name="bike.hackboy.bronco.Dfc"
+        android:label="dfc"
+        tools:layout="@layout/dfc" >
+        <action
+            android:id="@+id/action_dfc_to_Settings"
             app:destination="@id/Settings" />
     </fragment>
 </navigation>

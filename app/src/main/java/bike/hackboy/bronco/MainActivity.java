@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         backable.add((String) getText(R.string.standstill_optimization));
         backable.add((String) getText(R.string.torque_gain));
         backable.add((String) getText(R.string.faults));
+        backable.add((String) getText(R.string.dfc));
 
         assert getSupportActionBar() != null;
         assert getSupportActionBar().getTitle() != null;

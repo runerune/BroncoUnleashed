@@ -150,6 +150,18 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_Settings_to_torqueGain))
 			);*/
 
+		}
+
+		settings.add(new SettingBean()
+			.setName((String) getText(R.string.dfc))
+			.setDescription((String) getText(R.string.description_dfc))
+			.setHasArrow(true)
+			.setOnClickListener(v ->
+				NavHostFragment.findNavController(Settings.this)
+					.navigate(R.id.action_Settings_to_dfc))
+		);
+
+		if (isUnlocked) {
 			settings.add(new SettingBean()
 				.setName((String) getText(R.string.faults))
 				.setDescription((String) getText(R.string.description_faults))

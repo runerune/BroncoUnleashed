@@ -93,7 +93,7 @@
     <string name="description_bike_details">Check last location and other details of your bike (requires login)</string>
     <string name="description_disconnect">Will send you back to discovery screen</string>
     <string name="description_about">Credits and links</string>
-    <string name="unlock_for_more_options">Speed settings are unavailable when the bike is locked.</string>
+    <string name="unlock_for_more_options">Some settings are unavailable when the bike is locked.</string>
 
     <string name="arbitrary_register_read">Read ASI register</string>
     <string name="description_arbitrary_register_read">Read value of arbitrary ASI register. Useful for tuning, diagnostics and debugging.</string>

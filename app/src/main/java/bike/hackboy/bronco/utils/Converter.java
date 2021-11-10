@@ -3,6 +3,8 @@ package bike.hackboy.bronco.utils;
 import android.location.Location;
 
 import java.math.RoundingMode;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -37,10 +39,15 @@ public class Converter {
 		for (int i = 0; i < input.length(); i++) {
 			char c = input.charAt(i);
 
-			if       (c >= 'a' && c <= 'm') c += 13;
-			else if  (c >= 'A' && c <= 'M') c += 13;
-			else if  (c >= 'n' && c <= 'z') c -= 13;
-			else if  (c >= 'N' && c <= 'Z') c -= 13;
+			if (c >= 'a' && c <= 'm') {
+				c += 13;
+			} else if (c >= 'A' && c <= 'M') {
+				c += 13;
+			} else if (c >= 'n' && c <= 'z') {
+				c -= 13;
+			} else if (c >= 'N' && c <= 'Z') {
+				c -= 13;
+			}
 
 			sb.append(c);
 		}
@@ -78,5 +85,9 @@ public class Converter {
 			sep = separator;
 		}
 		return sb.toString();
+	}
+
+	public static byte[] intToFourByteArray(int value) {
+		return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(value).array();
 	}
 }

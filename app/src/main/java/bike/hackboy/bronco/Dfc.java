@@ -56,8 +56,8 @@ public class Dfc extends Fragment {
 
 			if(payload.length != expectedLength) throw new Exception("payload has invalid length");
 
-			DfcProto.DFC_data entry = DfcProto.DFC_data.parseFrom(payload);
-			Log.d("debug", entry.getDfcId().toString());
+			DfcProto.Dfc entry = DfcProto.Dfc.parseFrom(payload);
+			Log.d("debug", entry.toString());
 		} catch (InvalidProtocolBufferException e) {
 			Log.e("debug", "failed to parse this dfc");
 			e.printStackTrace();

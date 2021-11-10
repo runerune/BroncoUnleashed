@@ -36,7 +36,7 @@ message BatteryInfo {
     uint32 nb_cycles = 6;
 }
 
-enum DFC_ID {
+enum DfcId {
     BLE_CONNECTION_INTERVAL      = 0x00;
     BLE_LOCAL_TERMINATION        = 0x01;
     BLE_UNKNOWN                  = 0x02;
@@ -153,8 +153,8 @@ message ModbusValue {
     uint32 value = 3;
 }
 
-message DFC_data {
-    DFC_ID dfc_id = 1;
+message Dfc {
+    DfcId dfc_id = 1;
     int32 timestamp = 2;
     int32 trip_uid = 3;
     uint32 mem_offset = 4;

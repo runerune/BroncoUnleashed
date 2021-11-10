@@ -1,0 +1,209 @@
+syntax = "proto3";
+
+option java_package = "bike.hackboy.bronco";
+option java_outer_classname = "DfcProto";
+
+package Dfc;
+
+message CellInfo {
+    uint32 MCC = 1;
+    uint32 MNC = 2;
+    uint32 LAC = 3;
+    uint32 CI = 4;
+    uint32 BSIC = 5;
+    uint32 ARFCN = 6;
+}
+
+message BatteryReading {
+    uint32 trip_time = 1;
+    uint32 uptime = 2;
+    uint32 temperature = 3;
+    uint32 voltage = 4;
+    uint32 current = 5;
+    uint32 relative_state_of_charge = 6;
+    uint32 absolute_state_of_charge = 7;
+    uint32 adc_state_of_charge = 8;
+    uint32 full_charge_capacity = 9;
+    uint32 remaining_charge_capacity = 10;
+}
+
+message BatteryInfo {
+    string serial_number = 1;
+    uint32 hardware_revision = 2;
+    uint32 firmware_revision = 3;
+    uint32 bootloader_revision = 4;
+    uint32 full_charge_capacity = 5;
+    uint32 nb_cycles = 6;
+}
+
+enum DFC_ID {
+    BLE_CONNECTION_INTERVAL      = 0x00;
+    BLE_LOCAL_TERMINATION        = 0x01;
+    BLE_UNKNOWN                  = 0x02;
+
+    // API
+    API_BUFFER_OVERFLOW          = 0x03;
+    API_CONNECTION               = 0x04;
+    API_HTTP_CMD                 = 0x05;
+    API_HTTP_RSP                 = 0x06;
+
+    // MODBUS
+    COMM_ASI                     = 0x07;
+    COMM_PCB                     = 0x08;
+    COMM_BMS                     = 0x09;
+    COMM_SMARTLIGHT              = 0x0B;
+
+    // MODEM
+    MODEM_START                  = 0x0A;
+    /** Registration on the cellular network was denied */
+    NETWORK_DENIED               = 0x0C;
+    MODEM_SETUP                  = 0x0D;
+    MODEM_TLS                    = 0x0E;
+    MODEM_REGISTERING            = 0x0F;
+
+    // SENSORS AND ACTUATORS
+    SENSOR_ACCEL                 = 0x10;
+    SENSOR_TEMPHUM               = 0x11;
+    LEDS_COMM                    = 0x12;
+    LEDS_PROGRAM                 = 0x13;
+
+    // POWER
+    BATT_LOW_STARTRIDE           = 0x14;
+    /** Issue detected on the field :
+    <a href="https://github.com/cowboyhq/firmware/issues/1024">issue reference</a>
+    */
+    BATT_TICKING                 = 0x15;
+    BATT_DISCONNECTED            = 0x16;
+    BACKUPCELL_LOW_SOC           = 0x18;    //Backup cell below 25%
+    BACKUPCELL_TEMP_PROTECTION   = 0x19;    //Backup cell charge is on protection mode
+
+
+    // MODBUS (EXTRA)
+    COMM_RX_TX_SHORT             = 0x1A;
+
+    BATT_OVERTEMP                = 0x1B;
+
+    RESET                        = 0x20;
+
+    /** Settings could not be saved because flash is full. */
+    FLASH_FULL                   = 0x21;
+
+    /** Internal flash page unsuable because it's corrupt. */
+    FLASH_PAGE_CORRUPT           = 0x22;
+
+    BMS_SELFTEST                 = 0x23;
+
+    /** Could not initialize the GPS hardware. */
+    GPS_INIT                     = 0x24;
+
+    ASI_FAULT                    = 0x25;
+    ASI_WARNING                  = 0x26;
+
+    /** Motor cable disconnected */
+    MOTOR_DISCONNECTED		 = 0x27;
+    /** Torque sensor cable disconnected */
+    TORQUE_SENSOR_DISCONNECTED   = 0x28;
+
+    /** Could not get time from the GPS receiver within 5 minutes. */
+    GPS_TIME                        = 0x29;
+    ASI_FAULT_DYNAMIC_POST          = 0X2A;
+    ASI_FAULT_STATIC_POST           = 0X2B;
+    ASI_FAULT_UNDERVOLTAGE          = 0X2C;
+    ASI_FAULT_THROTTLE_OUTSIDE_RANGE = 0X2E;
+
+
+    // BMS V2 - Alarms
+    BMS_ALARM_CHARGING_OVERCURRENT     = 0x30;
+    BMS_ALARM_DISCHARGING_OVERCURRENT  = 0x31;
+    BMS_ALARM_SHORT_CIRCUIT            = 0x32;
+    BMS_ALARM_OVERVOLTAGE              = 0x33;
+    BMS_ALARM_UNDERVOLTAGE             = 0x34;
+    BMS_ALARM_CHARGING_OVERTEMP        = 0x35;
+    BMS_ALARM_CHARGING_UNDERTEMP       = 0x36;
+    BMS_ALARM_DISCHARGING_OVERTEMP     = 0x37;
+    BMS_ALARM_DISCHARGING_UNDERTEMP    = 0x38;
+
+    /** Bike was moved without being unlocked and while user's phone was not connected. */
+    THEFT_ALERT                        = 0x40;
+
+    /** Bike is not upright while riding */
+    CRASH_DETECTION                    = 0x41;
+}
+
+enum ResetReason {
+    PIN = 0;
+    SOFTWARE = 1;
+    LOCKUP = 2;
+    WATCHDOG = 3;
+    BROWNOUT = 4;
+}
+
+enum ModemAccessTechnology {
+    UNKNOWN = 0;
+    GSM = 1;
+    EDGE = 2;
+    UTRAN = 3;
+    CDMA = 4;
+    LTE = 5;
+}
+
+message ModbusValue {
+    uint32 device = 1;
+    uint32 register_num = 2;
+    uint32 value = 3;
+}
+
+message DFC_data {
+    DFC_ID dfc_id = 1;
+    int32 timestamp = 2;
+    int32 trip_uid = 3;
+    uint32 mem_offset = 4;
+    uint32 uptime = 5;
+
+    /** Temperature in 0.1 K w.r.t. absolute 0 */
+    uint32 temperature = 6;
+    /** relative humidity in % */
+    uint32 relative_humidity = 7;
+
+    uint32 backup_cell_soc = 8;
+    /** Voltage of backup cell in milli-volts */
+    uint32 backup_cell_voltage = 9;
+
+    /** Internal PCB/firmware */
+    ResetReason reset_reason = 10;
+
+    /** Cell Network related */
+    CellInfo cell_info = 11;
+    repeated ModemAccessTechnology configured_act = 12 [packed=true];
+    ModemAccessTechnology used_act = 13;
+    /** Received Signal Strength Indication (in dBm) */
+    int32 rssi = 14;
+    /** Bit Error Rate (BER) */
+    int32 bit_error_rate = 15;
+    /** HTTP status code of the HTTP response */
+    uint32 http_status_code = 16;
+    /** Low level connection error */
+    uint32 socket_error = 17;
+    int32 cme_error = 18;
+
+    /** Controller related */
+    uint32 controller_faults = 30;
+    uint32 controller_warnings = 31;
+    uint32 torqueValueMin = 32;
+    uint32 torqueValueMax = 33;
+
+    BatteryReading battery_reading = 40;
+    BatteryInfo battery_info = 41;
+
+    repeated ModbusValue modbus_values = 42;
+    uint32 rippleVoltage = 43;
+
+    /** If true indicates that the defect went away */
+    bool recovered = 50;
+}
+
+message Response {
+    bool stolen = 1;
+    uint32 dfc_mem_offset = 2;
+    uint32 trip_mem_offset = 3;
+}

@@ -38,6 +38,7 @@ import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
+import bike.hackboy.bronco.utils.Converter;
 import bike.hackboy.bronco.utils.NotificationEnabler;
 import bike.hackboy.bronco.utils.SequencedWriter;
 
@@ -342,8 +343,16 @@ public class BikeService extends Service {
 						ne.add(Uuid.serviceCby, Uuid.characteristicUnlock);
 						ne.add(Uuid.serviceCby, Uuid.characteristicDashboard);
 						ne.add(Uuid.serviceSettings, Uuid.characteristicSettingsRead);
+						ne.add(Uuid.serviceCby, Uuid.characteristicDfcRequest);
 
 						ne.run();
+					break;
+
+					case "read-dfc":
+						int offset = intent.getIntExtra("offset", 0);
+
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicDfcRequest);
+						Gatt.writeCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicDfcRequest, Converter.intToFourByteArray(offset));
 					break;
 
 					case "on-characteristic-read":

@@ -133,7 +133,8 @@
     <string name="faults_placeholder">No faults yet. Scanning continues until you leave this screen.</string>
     <string name="showDebugInfo">Log raw response (debug)</string>
 
-    <string name="dfc">DFC</string>
-    <string name="description_dfc">(((is it fault codes or what? bike state anyway)))</string>
+    <string name="dfc">Last DFCs</string>
+    <string name="description_dfc">View recent diagnostic fault codes</string>
+    <string name="unknown_date">Unknown date</string>
 
 </resources>

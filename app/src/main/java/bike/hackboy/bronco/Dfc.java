@@ -14,29 +14,26 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.utils.BikePropertyFactory;
-import bike.hackboy.bronco.utils.Converter;
-import bike.hackboy.bronco.view.DetailsViewAdapter;
 import bike.hackboy.bronco.view.DfcViewAdapter;
 
 
 public class Dfc extends Fragment {
-
-	protected final List<byte[]> dfcList = new ArrayList<>();
+	protected final List<DfcProto.Dfc> dfcList = new ArrayList<>();
 	protected RecyclerView recyclerViewDfc;
 	protected DfcViewAdapter dfcViewAdapter;
+
+	private final Handler readyHandler = new Handler(Looper.getMainLooper());
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 	@Override
@@ -48,8 +45,6 @@ public class Dfc extends Fragment {
 
 		byte[] value = intent.getByteArrayExtra("value");
 
-		Log.d("debug", Converter.byteArrayToHexString(value));
-
 		try {
 			int expectedLength = (int) value[0];
 			byte[] payload = Arrays.copyOfRange(value, 1, value.length);
@@ -57,28 +52,26 @@ public class Dfc extends Fragment {
 			if(payload.length != expectedLength) throw new Exception("payload has invalid length");
 
 			DfcProto.Dfc entry = DfcProto.Dfc.parseFrom(payload);
-			Log.d("debug", entry.toString());
-		} catch (InvalidProtocolBufferException e) {
-			Log.e("debug", "failed to parse this dfc");
-			e.printStackTrace();
+			//if(entry.getDfcId() == DfcProto.DfcId.MODEM_START) return;
+
+			//Log.d("debug", entry.toString());
+
+			dfcList.add(0, entry);
 		} catch (Exception e) {
+			//Log.e("debug", "failed to parse this dfc:");
+			//Log.e("debug", Converter.byteArrayToHexString(value));
 			e.printStackTrace();
 		}
 
-		dfcList.add(value);
-		dfcViewAdapter.notifyDataSetChanged(); // debounce this
+		debounceReady();
 		}
 	};
 
-	public Dfc() {
-
-	}
+	public Dfc() { }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-
 	}
 
 	@Override
@@ -134,5 +127,12 @@ public class Dfc extends Fragment {
 				.putExtra("event", "read-dfc")
 				.putExtra("offset", 0)
 		);
+	}
+
+	private final Runnable ready = () -> dfcViewAdapter.notifyDataSetChanged();
+
+	private void debounceReady() {
+		readyHandler.removeCallbacks(ready);
+		readyHandler.postDelayed(ready, 100);
 	}
 }

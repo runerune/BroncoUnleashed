@@ -4,18 +4,18 @@ option java_package = "bike.hackboy.bronco";
 option java_outer_classname = "DashboardProto";
 
 message Dashboard {
-    /// Randomly generated trip ID.
-    int32 tripId = 1;
-    int32 duration = 2;
-    int32 speed = 3;
-    int32 power = 4;
-    int32 distance = 5;
-    int32 battery = 6;
-    int32 assistance = 7;
-    int32 lights = 8;
-    int32 unknown1 = 9;
-    float unknown2 = 10;
-    int32 unknown3 = 11;
-    int32 unknown4 = 12;
-    int32 unknown5 = 13;
+	// Randomly generated trip ID.
+	int32 tripId = 1;
+	int32 duration = 2;
+	int32 speed = 3;
+	int32 power = 4;
+	int32 distance = 5;
+	int32 battery = 6;
+	int32 assistance = 7;
+	int32 lights = 8;
+	int32 batteryVoltage = 9; // in mV
+	uint32 unknown1 = 10; // probably motor voltage or rpm (goes negative when accelerating)
+	float batteryTemp = 11; // in0.1 K
+	uint32 unknown2 = 12;
+	uint32 unknown3 = 13; // probably torque voltage or value (goes up when pedalling w/ motor cable disconnected)
 }

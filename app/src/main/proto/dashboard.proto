@@ -14,8 +14,12 @@ message Dashboard {
 	int32 assistance = 7;
 	int32 lights = 8;
 	int32 batteryVoltage = 9; // in mV
-	uint32 unknown1 = 10; // probably motor voltage or rpm (goes negative when accelerating)
+	int32 unknown10 = 10; // probably motor voltage or rpm (goes negative when accelerating)
 	float batteryTemp = 11; // in0.1 K
-	uint32 unknown2 = 12;
-	uint32 unknown3 = 13; // probably torque voltage or value (goes up when pedalling w/ motor cable disconnected)
+	int32 unknown12 = 12;
+	int32 unknown13 = 13; // probably torque voltage or value (goes up when pedalling w/ motor cable disconnected)
+	int32 unknown14 = 14;
+	int32 activeDuration = 15;
+	int32 movingDuration = 16;
+	int32 pedalTorque = 17;
 }

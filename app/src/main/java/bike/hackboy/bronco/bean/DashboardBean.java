@@ -1,7 +1,6 @@
 package bike.hackboy.bronco.bean;
 
 import android.annotation.SuppressLint;
-
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
@@ -11,8 +10,8 @@ import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 import java.util.Locale;
 
-import bike.hackboy.bronco.DashboardProto;
 import bike.hackboy.bronco.utils.Converter;
+import bike.hackboy.bronco.utils.DashboardUpdater;
 
 @SuppressWarnings("unused")
 public class DashboardBean implements Serializable {
@@ -28,21 +27,21 @@ public class DashboardBean implements Serializable {
 	private String duration;
 
 	@SuppressLint("DefaultLocale")
-	public DashboardBean fromProtobuf(DashboardProto.Dashboard d) {
-		setLightOn(d.getLights() == 1);
+	public DashboardBean fromPersistentDashboard(DashboardUpdater.PersistentDashboard d) {
+		setLightOn(d.lights == 1);
 
-		setRawDistance(d.getDistance());
-		setRawBattery(d.getBattery());
-		setRawPower(d.getPower());
+		setRawDistance(d.distance);
+		setRawBattery(d.battery);
+		setRawPower(d.power);
 
-		setUptime(Converter.secondsToTime(d.getDuration()));
-		setSpeed(String.format("%s", d.getSpeed()));
+		setUptime(Converter.secondsToTime(d.duration));
+		setSpeed(String.format("%s", d.speed));
 		setBattery(String.format("%d%%", rawBattery));
 
-		setAssistance((d.getAssistance() == 0 || d.getAssistance() == 3) ? "S" : "D");
+		setAssistance((d.assistance == 0 || d.assistance == 3) ? "S" : "D");
 
 		if (rawDistance < 1000) {
-			setDistance(String.format("%s m", d.getDistance()));
+			setDistance(String.format("%s m", d.distance));
 		} else {
 			DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
 			DecimalFormat formatter = new DecimalFormat("#.0", symbols);

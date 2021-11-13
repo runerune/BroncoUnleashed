@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +29,18 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Uuid;
+import bike.hackboy.bronco.utils.Converter;
+import bike.hackboy.bronco.utils.DashboardUpdater;
 
 public class Dashboard extends Fragment {
 	protected boolean locked = true;
 	protected boolean hasEnabledNotifications = false;
 	protected View view = null;
+
+	DashboardUpdater dashboardUpdater = new DashboardUpdater();
+
+	private final Handler lightOffUiUpdateHandler = new Handler(Looper.getMainLooper());
+	private final Runnable forceLightOffUpdate = () -> dashboardUpdater.forceUpdateLightsOff();
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -44,6 +53,8 @@ public class Dashboard extends Fragment {
 			String uuid = intent.getStringExtra("uuid");
 			byte[] value = (intent.getByteArrayExtra("value"));
 
+			//Log.d("dashboard", Converter.byteArrayToHexString(value));
+
 			switch (uuid.toUpperCase()) {
 				case Uuid.characteristicUnlockString:
 					//Log.d("uuid_check", "is a lock service uuid");
@@ -53,8 +64,8 @@ public class Dashboard extends Fragment {
 				case Uuid.characteristicDashboardString:
 					//Log.d("uuid_check", "is a dashboard uuid");
 					try {
-						DashboardBean db = (new DashboardBean()).fromProtobuf(DashboardProto.Dashboard.parseFrom(value));
-						updateDashboard(db);
+						dashboardUpdater.updateFromPacket(DashboardProto.Dashboard.parseFrom(value));
+						updateDashboard(new DashboardBean().fromPersistentDashboard(dashboardUpdater.getCurrent()));
 					} catch (InvalidProtocolBufferException e) {
 						// ignore, this happens when bike is locked so don't spam it
 						//Log.e("ch_value", "could not parse as protobuf", e);
@@ -130,6 +141,9 @@ public class Dashboard extends Fragment {
 		});
 
 		view.findViewById(R.id.button_light_off).setOnClickListener(v -> {
+			// should not get any more notifications by 100ms after tapping the button
+			lightOffUiUpdateHandler.postDelayed(forceLightOffUpdate, 100);
+
 			sendIntent("lights-off");
 			vibrate();
 		});
@@ -158,6 +172,8 @@ public class Dashboard extends Fragment {
 
 					return;
 				}
+
+				//Log.d("dashboard_updater", db.toString());
 
 				((TextView) view.findViewById(R.id.distance)).setText(db.getDistance());
 				((TextView) view.findViewById(R.id.battery_percent)).setText(db.getBattery());

@@ -39,6 +39,7 @@ import bike.hackboy.bronco.data.Command;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.gatt.Gatt;
 import bike.hackboy.bronco.utils.Converter;
+import bike.hackboy.bronco.utils.DashboardUpdater;
 import bike.hackboy.bronco.utils.NotificationEnabler;
 import bike.hackboy.bronco.utils.SequencedWriter;
 
@@ -48,6 +49,8 @@ public class BikeService extends Service {
 	private BluetoothGatt connection = null;
 	private NotificationCompat.Builder notification = null;
 	private PowerManager.WakeLock wakeLock = null;
+
+	private DashboardUpdater dashboardUpdater = new DashboardUpdater();
 
 	private static final int NOTIFICATION_THROTTLE = 3000;
 	private long lastNotification = 0;
@@ -363,7 +366,9 @@ public class BikeService extends Service {
 							case Uuid.characteristicDashboardString:
 								//Log.d("uuid_check", "is a dashboard uuid");
 								try {
-									DashboardBean db = (new DashboardBean()).fromProtobuf(DashboardProto.Dashboard.parseFrom(value));
+									// FIXME do this better to save resources
+									dashboardUpdater.updateFromPacket(DashboardProto.Dashboard.parseFrom(value));
+									DashboardBean db = (new DashboardBean().fromPersistentDashboard(dashboardUpdater.getCurrent()));
 									updateNotification(db);
 
 									if(wakeLock == null) acquireWakeLock();

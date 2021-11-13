@@ -53,8 +53,6 @@ public class Dashboard extends Fragment {
 			String uuid = intent.getStringExtra("uuid");
 			byte[] value = (intent.getByteArrayExtra("value"));
 
-			//Log.d("dashboard", Converter.byteArrayToHexString(value));
-
 			switch (uuid.toUpperCase()) {
 				case Uuid.characteristicUnlockString:
 					//Log.d("uuid_check", "is a lock service uuid");

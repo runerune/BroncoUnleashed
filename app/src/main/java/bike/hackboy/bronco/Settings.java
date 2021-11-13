@@ -14,7 +14,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -230,29 +229,12 @@ public class Settings extends Fragment {
 		);
 
 		settings.add(new SettingBean()
-			.setName((String) getText(R.string.about))
-			.setDescription((String) getText(R.string.description_about))
-			.setOnClickListener(v ->
-				new AlertDialog.Builder(requireContext(), R.style.Theme_Bronco_AlertDialog)
-					.setTitle(R.string.about_title)
-					.setMessage(R.string.credits)
-					.setNegativeButton(R.string.got_it, null)
-					.setPositiveButton(R.string.visit_sub, (dialog, whichButton) -> {
-						dialog.dismiss();
-						Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.reddit.com/r/cowboybikes/"));
-						startActivity(browserIntent);
-					})
-					.show())
-		);
-
-		settings.add(new SettingBean()
-			.setName((String) getText(R.string.version))
-			.setDescription(String.format(
-				"%s (%s) - %s",
-				BuildConfig.VERSION_NAME,
-				BuildConfig.VERSION_CODE,
-				BuildConfig.BUILD_TYPE
+			.setName(String.format(
+				"%s %s",
+				getText(R.string.app_name),
+				BuildConfig.VERSION_NAME
 			))
+			.setDescription((String) getText(R.string.app_credit))
 			.setOnClickListener(v -> {
 				aboutTapCount++;
 

@@ -3,8 +3,6 @@
     <string name="cancel">Back</string>
     <string name="apply">Apply</string>
 
-    <string name="about">About app</string>
-
     <string name="speed_setting">Speed setting</string>
     <string name="set_new_max_speed">Speed limit</string>
     <string name="kmh">km/h</string>
@@ -37,13 +35,6 @@
     <string name="abort">Abort</string>
     <string name="enable_speed_limit">Enable speed limit</string>
     <string name="disabled_in_motor">Speed limit has been disabled. Your bike is unrestricted.</string>
-
-    <string name="about_title">About</string>
-    <string name="credits">
-        Original speed hack and app by runereader for /r/cowboybikes\n\nMotor hack by ImaginousDev\n\nUse at your own risk!
-    </string>
-    <string name="visit_sub">Visit sub</string>
-    <string name="got_it">Got it</string>
 
     <string name="bluetooth_off">Bluetooth is disabled</string>
     <string name="reading_from_bike">Retrieving data</string>
@@ -92,7 +83,6 @@
     <string name="description_field_weakening">Set how much the motor controller should compensate for back EMF current</string>
     <string name="description_bike_details">Check last location and other details of your bike (requires login)</string>
     <string name="description_disconnect">Will send you back to discovery screen</string>
-    <string name="description_about">Credits and links</string>
     <string name="unlock_for_more_options">Some settings are unavailable when the bike is locked.</string>
 
     <string name="arbitrary_register_read">Read ASI register</string>
@@ -108,7 +98,7 @@
     <string name="parsed_value">Read value</string>
     <string name="warning_developer_option">⚠ developer feature ⚠</string>
 
-    <string name="version">App version</string>
+    <string name="app_credit">by runereader | check /r/cowboybikes on reddit</string>
 
     <string name="standstill_optimization">Initial torque</string>
     <string name="description_standstill_optimization">Adjust torque response at standstill to prevent motor noise and excess vibration</string>
@@ -135,6 +125,5 @@
 
     <string name="dfc">Last DFCs</string>
     <string name="description_dfc">View recent diagnostic fault codes</string>
-    <string name="unknown_date">Unknown date</string>
 
 </resources>

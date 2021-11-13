@@ -42,7 +42,7 @@ public class Dashboard extends Fragment {
 
 	private final Handler delayedThreadHandler = new Handler(Looper.getMainLooper());
 	private final Runnable forceLightOffUpdate = () -> dashboardUpdater.forceUpdateLightsOff();
-	private final Runnable requestLastTrip = () -> sendIntent("read-trip");
+	// final Runnable requestLastTrip = () -> sendIntent("read-trip");
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -72,7 +72,7 @@ public class Dashboard extends Fragment {
 					}
 				break;
 
-				case Uuid.characteristicTripString:
+				/*case Uuid.characteristicTripString:
 					TripProto.Trip trip = null;
 
 					byte[] payload = Arrays.copyOfRange(value, 2, value.length);
@@ -84,7 +84,7 @@ public class Dashboard extends Fragment {
 					}
 
 					Log.d("debug", trip.toString());
-				break;
+				break;*/
 			}
 		}
 	};
@@ -231,9 +231,9 @@ public class Dashboard extends Fragment {
 			e.printStackTrace();
 		}
 
-		if(locked) {
+		/*if(locked) {
 			requestTrip();
-		}
+		}*/
 	}
 
 	protected void vibrate() {
@@ -241,7 +241,7 @@ public class Dashboard extends Fragment {
 		v.vibrate(100);
 	}
 
-	protected void requestTrip() {
+	/*protected void requestTrip() {
 		delayedThreadHandler.postDelayed(requestLastTrip, 1000);
-	}
+	}*/
 }

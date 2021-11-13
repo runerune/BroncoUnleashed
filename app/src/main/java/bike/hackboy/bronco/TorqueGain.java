@@ -8,12 +8,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.utils.Converter;
-import bike.hackboy.bronco.utils.FlashWriter;
 
 public class TorqueGain extends Fragment {
 	protected int gain = 0;
@@ -45,13 +41,13 @@ public class TorqueGain extends Fragment {
 			int service = value[0];
 			int operation = value[1];
 
-			Log.d("value", Converter.byteArrayToHexString(value));
+			//Log.d("value", Converter.byteArrayToHexString(value));
 
 			if(service == 0x1) {
 				switch(operation) {
 					case 0x3: // read notification
 						int rawGain = (value[3] << 8) + (value[4] & 0xff);
-						Log.d("torque_gain", String.valueOf(rawGain));
+						//Log.d("torque_gain", String.valueOf(rawGain));
 						TorqueGain.this.gain = (int) Math.ceil(rawGain / ASI_MULTIPLIER);
 
 						updateAsiValue();
@@ -59,7 +55,7 @@ public class TorqueGain extends Fragment {
 					break;
 					case 0x10: // write success notification
 						if (commitWrite) {
-							Log.d("write_flash", Converter.byteArrayToHexString(value));
+							//Log.d("write_flash", Converter.byteArrayToHexString(value));
 							writeFlash();
 						}
 						break;
@@ -152,7 +148,7 @@ public class TorqueGain extends Fragment {
 
 	private void updateAsiValue() {
 		asiGain = (int) Math.floor(ASI_MULTIPLIER * gain);
-		Log.d("asi_gain", String.valueOf(asiGain));
+		//Log.d("asi_gain", String.valueOf(asiGain));
 	}
 
 	private void writeFlash() {

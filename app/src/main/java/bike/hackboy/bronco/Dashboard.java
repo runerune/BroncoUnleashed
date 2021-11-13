@@ -31,7 +31,6 @@ import java.util.Arrays;
 
 import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Uuid;
-import bike.hackboy.bronco.utils.Converter;
 import bike.hackboy.bronco.utils.DashboardUpdater;
 
 public class Dashboard extends Fragment {

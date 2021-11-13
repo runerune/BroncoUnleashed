@@ -38,10 +38,6 @@ public class DashboardUpdater {
 		//Log.d("dash_packet", Converter.byteArrayToHexString(packet.toByteArray()));
 		//Log.d("dash_packet", packet.toString());
 
-		if(hasField(packet, DashboardProto.Dashboard.TRIPID_FIELD_NUMBER)) {
-			this.instance.tripId = packet.getTripId();
-		}
-
 		if(hasField(packet, DashboardProto.Dashboard.DURATION_FIELD_NUMBER)) {
 			this.instance.duration = packet.getDuration();
 		}

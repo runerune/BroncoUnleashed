@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "bike.hackboy.bronco";
+option java_outer_classname = "TripProto";
+
+package Trip;
+
+message Trip {
+    int32 tripId = 1;
+    float distance = 2;
+    int32 duration = 3;
+    int32 timestamp = 4;
+    BikeState currentBikeState = 5;
+    BikeState tripStartBikeState = 12;
+}
+
+message BikeState {
+    float pcb_battery_state_of_charge = 1;
+    float pcb_battery_voltage = 2;
+    float battery_voltage = 3;
+    float battery_temperature = 4;
+    float battery_state_of_charge = 5;
+    float temperature = 6;
+    float humidity = 7;
+    int32 uptime = 9;
+}

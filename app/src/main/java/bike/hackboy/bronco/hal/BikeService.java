@@ -358,6 +358,11 @@ public class BikeService extends Service {
 						Gatt.writeCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicDfcRequest, Converter.intToFourByteArray(offset));
 					break;
 
+					case "read-trip":
+						Gatt.ensureHasCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicTrip);
+						Gatt.requestReadCharacteristic(connection, Uuid.serviceCby, Uuid.characteristicTrip);
+					break;
+
 					case "on-characteristic-read":
 						String uuid = intent.getStringExtra("uuid");
 						byte[] value = (intent.getByteArrayExtra("value"));

@@ -9,7 +9,7 @@ public class Uuid {
 	public static final String characteristicSettingsWriteString = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E";
 
 	public static final String characteristicDfcRequestString = "C0B0A005-18EB-499D-B266-2F2910744274";
-	public static final String characteristicTripString = "C0B0A008-18EB-499D-B266-2F2910744274";
+	public static final String characteristicTripString = "C0B0A009-18EB-499D-B266-2F2910744274";
 
 	public static final UUID notificationDescriptor = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB");
 

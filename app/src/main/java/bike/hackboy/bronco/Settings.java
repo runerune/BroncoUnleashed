@@ -141,25 +141,28 @@ public class Settings extends Fragment {
 						.navigate(R.id.action_Settings_to_standstillOptimization))
 			);
 
-			/*settings.add(new SettingBean()
-				.setName((String) getText(R.string.torque_gain))
-				.setDescription((String) getText(R.string.description_torque_gain))
-				.setHasArrow(true)
-				.setOnClickListener(v ->
-					NavHostFragment.findNavController(Settings.this)
-						.navigate(R.id.action_Settings_to_torqueGain))
-			);*/
-
+			if(aboutTapCount > 7 || ((MainActivity)getActivity()).isDeveloper()) {
+				settings.add(new SettingBean()
+					.setName((String) getText(R.string.torque_gain))
+					.setDescription((String) getText(R.string.description_torque_gain))
+					.setHasArrow(true)
+					.setOnClickListener(v ->
+						NavHostFragment.findNavController(Settings.this)
+							.navigate(R.id.action_Settings_to_torqueGain))
+				);
+			}
 		}
 
-		settings.add(new SettingBean()
-			.setName((String) getText(R.string.dfc))
-			.setDescription((String) getText(R.string.description_dfc))
-			.setHasArrow(true)
-			.setOnClickListener(v ->
-				NavHostFragment.findNavController(Settings.this)
-					.navigate(R.id.action_Settings_to_dfc))
-		);
+		if(aboutTapCount > 7 || ((MainActivity)getActivity()).isDeveloper()) {
+			settings.add(new SettingBean()
+				.setName((String) getText(R.string.dfc))
+				.setDescription((String) getText(R.string.description_dfc))
+				.setHasArrow(true)
+				.setOnClickListener(v ->
+						NavHostFragment.findNavController(Settings.this)
+								.navigate(R.id.action_Settings_to_dfc))
+			);
+		}
 
 		if (isUnlocked) {
 			settings.add(new SettingBean()

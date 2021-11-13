@@ -18,7 +18,7 @@ This app lets you **remove speed limit** of a Cowboy bike, edit its  **speed set
 
 ---
 
-##How to build
+## How to build
 
 It's an android app so you can build it in Android Studio with a single click. :D
 

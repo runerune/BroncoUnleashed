@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.util.Arrays;
+
 import bike.hackboy.bronco.bean.DashboardBean;
 import bike.hackboy.bronco.data.Uuid;
 import bike.hackboy.bronco.utils.Converter;
@@ -39,8 +41,9 @@ public class Dashboard extends Fragment {
 
 	DashboardUpdater dashboardUpdater = new DashboardUpdater();
 
-	private final Handler lightOffUiUpdateHandler = new Handler(Looper.getMainLooper());
+	private final Handler delayedThreadHandler = new Handler(Looper.getMainLooper());
 	private final Runnable forceLightOffUpdate = () -> dashboardUpdater.forceUpdateLightsOff();
+	private final Runnable requestLastTrip = () -> sendIntent("read-trip");
 
 	protected final BroadcastReceiver messageReceiver = new BroadcastReceiver() {
 		@Override
@@ -68,6 +71,20 @@ public class Dashboard extends Fragment {
 						// ignore, this happens when bike is locked so don't spam it
 						//Log.e("ch_value", "could not parse as protobuf", e);
 					}
+				break;
+
+				case Uuid.characteristicTripString:
+					TripProto.Trip trip = null;
+
+					byte[] payload = Arrays.copyOfRange(value, 2, value.length);
+
+					try {
+						trip = TripProto.Trip.parseFrom(payload);
+					} catch (InvalidProtocolBufferException e) {
+						e.printStackTrace();
+					}
+
+					Log.d("debug", trip.toString());
 				break;
 			}
 		}
@@ -140,7 +157,7 @@ public class Dashboard extends Fragment {
 
 		view.findViewById(R.id.button_light_off).setOnClickListener(v -> {
 			// should not get any more notifications by 100ms after tapping the button
-			lightOffUiUpdateHandler.postDelayed(forceLightOffUpdate, 100);
+			delayedThreadHandler.postDelayed(forceLightOffUpdate, 100);
 
 			sendIntent("lights-off");
 			vibrate();
@@ -197,6 +214,7 @@ public class Dashboard extends Fragment {
 
 	protected void onLockedChange(boolean locked) {
 		this.locked = locked;
+
 		try {
 			requireActivity().runOnUiThread(() -> {
 				view.findViewById(R.id.group_locked).setVisibility(locked ? View.VISIBLE : View.INVISIBLE);
@@ -213,10 +231,18 @@ public class Dashboard extends Fragment {
 			Log.e("locked_update", "failed in locked update", e);
 			e.printStackTrace();
 		}
+
+		if(locked) {
+			requestTrip();
+		}
 	}
 
 	protected void vibrate() {
 		Vibrator v = (Vibrator) requireActivity().getSystemService(Context.VIBRATOR_SERVICE);
 		v.vibrate(100);
+	}
+
+	protected void requestTrip() {
+		delayedThreadHandler.postDelayed(requestLastTrip, 1000);
 	}
 }

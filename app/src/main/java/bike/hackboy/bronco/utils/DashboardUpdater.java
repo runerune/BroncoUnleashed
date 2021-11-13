@@ -5,6 +5,9 @@ import bike.hackboy.bronco.DashboardProto;
 public class DashboardUpdater {
 	PersistentDashboard instance;
 
+	long lastSpeedUpdate = 0;
+	private static final int SPEED_UPDATE_DEADBAND = 1000;
+
 	public class PersistentDashboard {
 		public int tripId = 0;
 		public int duration = 0;
@@ -32,6 +35,7 @@ public class DashboardUpdater {
 	}
 
 	public void updateFromPacket(DashboardProto.Dashboard packet) {
+		//Log.d("dash_packet", Converter.byteArrayToHexString(packet.toByteArray()));
 		//Log.d("dash_packet", packet.toString());
 
 		if(hasField(packet, DashboardProto.Dashboard.TRIPID_FIELD_NUMBER)) {
@@ -43,14 +47,18 @@ public class DashboardUpdater {
 		}
 
 		if(hasField(packet, DashboardProto.Dashboard.SPEED_FIELD_NUMBER)) {
+			this.lastSpeedUpdate = System.currentTimeMillis();
 			this.instance.speed = packet.getSpeed();
 		}
 
 		if(hasField(packet, DashboardProto.Dashboard.POWER_FIELD_NUMBER)) {
+			this.lastSpeedUpdate = System.currentTimeMillis();
 			this.instance.power = packet.getPower();
 		}
 
 		if(hasField(packet, DashboardProto.Dashboard.DISTANCE_FIELD_NUMBER)) {
+			this.lastSpeedUpdate = System.currentTimeMillis();
+
 			this.instance.speed = packet.getSpeed();
 			this.instance.power = packet.getPower();
 			this.instance.distance = packet.getDistance();
@@ -66,6 +74,14 @@ public class DashboardUpdater {
 		) {
 			this.instance.assistance = packet.getAssistance();
 			this.instance.lights = packet.getLights();
+		}
+
+		if (lastSpeedUpdate + SPEED_UPDATE_DEADBAND < System.currentTimeMillis()) {
+			// bike doesn't seem to send zeroes reliably
+			this.instance.speed = 0;
+			this.instance.power = 0;
+
+			lastSpeedUpdate = System.currentTimeMillis();
 		}
 	}
 

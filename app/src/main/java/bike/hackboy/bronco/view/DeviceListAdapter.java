@@ -3,6 +3,7 @@ package bike.hackboy.bronco.view;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 		BluetoothDevice device = data.get(position);
 
 		String name = device.getName();
-		String alias = device.getAlias();
+		String alias = null;
 		String mac = device.getAddress();
+
+        /* min Android API level required is 30 (R) */
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            alias = device.getAlias();
+        }
 
 		holder.name.setText(name);
 		holder.mac.setText(mac);

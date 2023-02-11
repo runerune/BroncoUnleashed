@@ -8,6 +8,12 @@ This app lets you **remove speed limit** of a Cowboy bike, edit its  **speed set
 
 ---
 
+# Deprecation warning
+
+This project is no longer actively maintained. Something else may come up in the future, or not. ;)
+
+---
+
 [Direct download](https://github.com/hackboyMcHack/bronco/releases/download/version5/BroncoUnleashed50.apk) (from Github)
 
 [View app website](https://hackboymchack.github.io/bronco/)

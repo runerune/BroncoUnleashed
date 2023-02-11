@@ -10,7 +10,10 @@ This app lets you **remove speed limit** of a Cowboy bike, edit its  **speed set
 
 # Deprecation warning
 
-This project is no longer actively maintained. Something else may come up in the future, or not. ;)
+This project is no longer actively maintained. Something else may come up in the future, or not. ;) Rationale:
+ - Android 13 came out and changed things
+ - I know how to do BLE in a less stupid way now
+ - I don't want to be tech support for users 🙃
 
 ---
 
